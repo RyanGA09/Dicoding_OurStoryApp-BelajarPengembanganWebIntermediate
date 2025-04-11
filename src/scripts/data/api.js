@@ -1,10 +1,15 @@
-import CONFIG from '../config';
+import CONFIG from "../config";
 
 const ENDPOINTS = {
-  ENDPOINT: `${CONFIG.BASE_URL}/your/endpoint/here`,
+  STORIES: `${CONFIG.BASE_URL}/stories`,
 };
 
-export async function getData() {
-  const fetchResponse = await fetch(ENDPOINTS.ENDPOINT);
-  return await fetchResponse.json();
+export async function getAllStories() {
+  const response = await fetch(ENDPOINTS.STORIES, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+  const responseJson = await response.json();
+  return responseJson.listStory;
 }
