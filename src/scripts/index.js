@@ -1,5 +1,6 @@
 // CSS imports
 import '../styles/styles.css';
+console.log("CSS Loaded!");
 
 import App from './pages/app';
 

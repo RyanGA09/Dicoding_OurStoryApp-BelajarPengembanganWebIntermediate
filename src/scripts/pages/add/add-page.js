@@ -1,6 +1,7 @@
 import StorySource from "../../data/api";
 
 export default class AddStoryPage {
+
   async render() {
     return `
       <section class="container">

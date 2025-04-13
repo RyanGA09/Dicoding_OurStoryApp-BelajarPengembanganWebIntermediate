@@ -1,4 +1,4 @@
-import CONFIG from "../../globals/config";
+import CONFIG from "../../config";
 import StorySource from "../../data/api";
 import { showFormattedDate } from "../../utils/date-formatter";
 
