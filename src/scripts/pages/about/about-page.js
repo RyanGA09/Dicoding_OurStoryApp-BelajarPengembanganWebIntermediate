@@ -1,13 +1,15 @@
-export default class AboutPage {
+const AboutPage = {
   async render() {
     return `
-      <section class="container">
-        <h1>About Page</h1>
-      </section>
+      <div class="content">
+        <h2 class="section-title">Tentang Aplikasi</h2>
+        <p>Aplikasi ini dibuat untuk membagikan cerita-cerita inspiratif dari pengguna. Dibangun menggunakan HTML, CSS, JavaScript ES6, Webpack, dan API Story Dicoding.</p>
+      </div>
     `;
-  }
-
+  },
   async afterRender() {
-    // Do your job here
-  }
-}
+    // Kosong
+  },
+};
+
+export default AboutPage;

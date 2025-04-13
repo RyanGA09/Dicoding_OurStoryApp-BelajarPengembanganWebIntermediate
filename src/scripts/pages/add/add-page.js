@@ -1,3 +1,5 @@
+import StorySource from "../../data/api";
+
 export default class AddStoryPage {
   async render() {
     return `
@@ -16,7 +18,22 @@ export default class AddStoryPage {
     const form = document.querySelector("#storyForm");
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      // Kirim ke API
+      const photo = document.querySelector("#photo").files[0];
+      const description = document.querySelector("#description").value;
+
+      if (!photo || !description) {
+        alert("Harap lengkapi form!");
+        return;
+      }
+
+      try {
+        await StorySource.postStory(photo, description);
+        alert("Cerita berhasil ditambahkan!");
+        window.location.hash = "/";
+      } catch (error) {
+        alert("Gagal menambahkan cerita!");
+        console.error(error);
+      }
     });
   }
 }

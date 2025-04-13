@@ -16,12 +16,15 @@ export default class HomePage {
     container.innerHTML = stories
       .map(
         (story) => `
-      <article class="story-item">
-        <img src="${story.photoUrl}" alt="${story.name}" />
-        <h2>${story.name}</h2>
-        <p>${story.description}</p>
-        <a href="#/detail/${story.id}">Baca Selengkapnya</a>
-      </article>
+      <div class="story-item">
+        <img src="${CONFIG.BASE_IMAGE_URL + story.photoUrl}" alt="${
+          story.name
+        }">
+        <h3>${story.name}</h3>
+        <p class="date">${showFormattedDate(story.createdAt)}</p>
+        <p>${story.description.slice(0, 100)}...</p>
+        <a href="#/detail?id=${story.id}" class="btn-detail">Lihat Detail</a>
+      </div>
     `
       )
       .join("");
