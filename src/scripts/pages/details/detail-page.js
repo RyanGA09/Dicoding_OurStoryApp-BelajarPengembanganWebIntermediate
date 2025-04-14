@@ -13,15 +13,12 @@ export default class DetailStoryPage {
   }
 
   async afterRender() {
-    const url = new URL(window.location.href);
-    const id = url.searchParams.get("id");
+    const id = window.location.hash.split("/")[2];
     const story = await getStoryById(id);
 
     const detailContainer = document.querySelector("#story-detail");
     detailContainer.innerHTML = `
-      <img src="${CONFIG.BASE_IMAGE_URL + story.photoUrl}" alt="${
-      story.name
-    }" class="detail-img">
+    <img src="${story.photoUrl}" alt="${story.name}" class="detail-img">
       <h3>${story.name}</h3>
       <p class="date">${showFormattedDate(story.createdAt)}</p>
       <p>${story.description}</p>
