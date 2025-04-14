@@ -1,7 +1,6 @@
-import StorySource from "../../data/api";
+import { postStory } from "../../data/api";
 
 export default class AddStoryPage {
-
   async render() {
     return `
       <section class="container">
@@ -28,7 +27,7 @@ export default class AddStoryPage {
       }
 
       try {
-        await StorySource.postStory(photo, description);
+        await postStory(photo, description);
         alert("Cerita berhasil ditambahkan!");
         window.location.hash = "/";
       } catch (error) {

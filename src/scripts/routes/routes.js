@@ -9,3 +9,5 @@ const routes = {
   "/add": new AddStoryPage(),
   "/detail/:id": new DetailStoryPage(),
 };
+
+export { routes };

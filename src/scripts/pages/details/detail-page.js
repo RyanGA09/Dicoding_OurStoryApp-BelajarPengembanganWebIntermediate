@@ -1,8 +1,8 @@
 import CONFIG from "../../config";
-import StorySource from "../../data/api";
+import { getStoryById } from "../../data/api";
 import { showFormattedDate } from "../../utils/date-formatter";
 
-const DetailPage = {
+export default class DetailStoryPage {
   async render() {
     return `
       <div class="content">
@@ -10,12 +10,12 @@ const DetailPage = {
         <div id="story-detail" class="story-detail"></div>
       </div>
     `;
-  },
+  }
 
   async afterRender() {
-    const url = new URL(window.location);
+    const url = new URL(window.location.href);
     const id = url.searchParams.get("id");
-    const story = await StorySource.getStoryById(id);
+    const story = await getStoryById(id);
 
     const detailContainer = document.querySelector("#story-detail");
     detailContainer.innerHTML = `
@@ -26,7 +26,5 @@ const DetailPage = {
       <p class="date">${showFormattedDate(story.createdAt)}</p>
       <p>${story.description}</p>
     `;
-  },
-};
-
-export default DetailPage;
+  }
+}
