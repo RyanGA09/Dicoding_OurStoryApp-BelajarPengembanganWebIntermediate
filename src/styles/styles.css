@@ -1,3 +1,8 @@
+html,
+body {
+  height: 100%;
+}
+
 /* Global Styles */
 body {
   font-family: "Poppins", sans-serif;
@@ -5,6 +10,8 @@ body {
   color: #333;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 a {
@@ -34,8 +41,8 @@ button:hover {
 }
 
 /* Header Styles */
-header {
-  background-color: #fff;
+.header {
+  background-color: #000000;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -44,6 +51,10 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 20px;
+}
+
+.main-content {
+  flex: 1;
 }
 
 .brand-name {
@@ -63,10 +74,10 @@ header {
   gap: 20px;
 }
 
-.nav-list li a {
+.nav-list .list a {
   font-size: 16px;
   font-weight: 600;
-  color: #333;
+  color: #fff;
 }
 
 .drawer-button {
@@ -85,16 +96,20 @@ footer {
 
 /* About Page */
 .content {
-  padding: 40px 0;
+  padding: 40px 75px;
+  align-items: center;
 }
 
 .section-title {
+  text-align: center;
   font-size: 28px;
   margin-bottom: 20px;
   color: #3498db;
+  text-decoration: underline;
 }
 
 p {
+  text-align: justify;
   font-size: 16px;
   line-height: 1.6;
   color: #555;
@@ -205,7 +220,16 @@ form button {
   background: #2980b9;
 }
 
+/* Login Page & Register Page */
+
 /* Login Page */
+.container h1 {
+  text-align: center;
+  text-decoration: underline;
+  color: #3498db;
+  font-size: 30px;
+}
+
 form {
   max-width: 400px;
   margin: 0 auto;
@@ -324,6 +348,11 @@ header {
 footer {
   background: #333;
   color: #fff;
+}
+
+footer p {
+  color: #fff;
+  text-decoration: underline;
   text-align: center;
 }
 
