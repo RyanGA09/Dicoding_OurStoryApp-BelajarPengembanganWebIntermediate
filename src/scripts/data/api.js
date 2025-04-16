@@ -2,6 +2,7 @@ import CONFIG from "../config";
 
 const ENDPOINTS = {
   STORIES: `${CONFIG.BASE_URL}/stories`,
+  NOTIFICATIONS: `${CONFIG.BASE_URL}/notifications/subscribe`,
 };
 
 // GET semua story
@@ -40,7 +41,17 @@ export async function postStory(photo, description) {
     body: formData,
   });
 
-  return response.json();
+  const result = await response.json();
+
+  // Jika sukses, kirim push notification via Service Worker
+  if (!result.error) {
+    const registration = await navigator.serviceWorker.ready;
+    registration.showNotification("Story berhasil dibuat", {
+      body: `Anda telah membuat story baru dengan deskripsi: ${description}`,
+    });
+  }
+
+  return result;
 }
 
 export async function registerUser(name, email, password) {
@@ -57,6 +68,32 @@ export async function loginUser(email, password) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
+  });
+  return response.json();
+}
+
+// Subscribe Push Notification
+export async function subscribeNotification(subscription) {
+  const response = await fetch(ENDPOINTS.NOTIFICATIONS, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(subscription),
+  });
+  return response.json();
+}
+
+// Unsubscribe Push Notification
+export async function unsubscribeNotification(endpoint) {
+  const response = await fetch(ENDPOINTS.NOTIFICATIONS, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ endpoint }),
   });
   return response.json();
 }
