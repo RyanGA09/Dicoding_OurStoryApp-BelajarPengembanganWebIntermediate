@@ -6,10 +6,8 @@ export default class HomePage {
   async render() {
     return `
       <section class="container">
-        <div class="home-header">
-          <h1>Cerita Terbaru</h1>
-        </div>
-        <div id="story-list"></div>
+        <h1>Cerita Terbaru</h1>
+        <div id="story-list" class="story-list></div>
       </section>
     `;
   }

@@ -6,7 +6,7 @@ const ASSETS_TO_CACHE = [
   "./scripts/pages/app.js",
   "./scripts/routes/routes.js",
   "./scripts/routes/url-parser.js",
-  "./styles/style.css",
+  "./styles/styles.css",
 ];
 
 // Install event: caching assets saat service worker di-install

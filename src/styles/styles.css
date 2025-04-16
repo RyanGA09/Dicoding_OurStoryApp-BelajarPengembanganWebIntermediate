@@ -116,20 +116,25 @@ p {
 }
 
 /* Add Story Page */
-textarea {
+.storyform textarea {
   width: 100%;
   height: 200px;
   padding: 10px;
-  border-radius: 8px;
+  border-radius: 50px;
   border: 1px solid #ddd;
   resize: none;
   margin-bottom: 20px;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  -ms-border-radius: 50px;
+  -o-border-radius: 50px;
 }
 
-input[type="file"] {
+.storyform input[type="file"] {
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #ddd;
+  width: 100%;
 }
 
 form {
@@ -140,6 +145,7 @@ form {
 form button {
   margin-top: 20px;
   width: 100%;
+  font-size: medium;
 }
 
 /* Detail Story Page */
@@ -152,14 +158,36 @@ form button {
 
 .story-detail img {
   width: 100%;
-  border-radius: 8px;
+  max-width: 600px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.story-detail h3 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #333;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.story-detail .date {
+  font-size: 18px;
+  color: #888;
+  text-align: center;
   margin-bottom: 20px;
 }
 
-.date {
-  color: #888;
-  font-size: 14px;
-  margin-bottom: 10px;
+.story-detail p {
+  font-size: 16px;
+  color: #555;
+  text-align: justify;
+  line-height: 1.6;
 }
 
 /* Home Page */
@@ -168,6 +196,10 @@ form button {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+}
+
+.home-header h1 {
+  text-align: center;
 }
 
 #logout-button {
@@ -183,8 +215,8 @@ form button {
 
 .story-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
   margin-top: 20px;
 }
 
@@ -195,6 +227,10 @@ form button {
   overflow: hidden;
   padding: 16px;
   transition: transform 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .story-item:hover {
@@ -203,17 +239,38 @@ form button {
 
 .story-item img {
   width: 100%;
+  max-width: 500px;
+  height: 200px;
+  object-fit: cover;
   border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.story-item h3 {
+  font-size: 18px;
+  margin: 8px 0;
+}
+
+.story-item p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.story-item .date {
+  color: #888;
+  font-size: 13px;
+  margin-bottom: 8px;
 }
 
 .btn-detail {
-  display: inline-block;
-  padding: 10px 20px;
+  padding: 8px 16px;
   background: #3498db;
   color: #fff;
   border-radius: 8px;
   text-decoration: none;
-  margin-top: 12px;
+  margin-top: auto;
+  font-size: 14px;
 }
 
 .btn-detail:hover {
@@ -268,7 +325,7 @@ form {
 input[type="text"],
 input[type="email"],
 input[type="password"] {
-  width: 100%;
+  width: 50vh;
   padding: 10px;
   margin: 10px 0;
   border-radius: 8px;
@@ -276,9 +333,21 @@ input[type="password"] {
 }
 
 form button {
-  width: 100%;
+  width: 53vh;
   padding: 12px;
   margin-top: 20px;
+  font-size: medium;
+  border-radius: 50px;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  -ms-border-radius: 50px;
+  -o-border-radius: 50px;
+}
+
+@media screen and (max-width: 992px) {
+  .story-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 /* Responsive Design */
@@ -306,7 +375,7 @@ form button {
   }
 
   .story-list {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 
   .story-item {

@@ -5,7 +5,7 @@ export default class AddStoryPage {
     return `
       <section class="container">
         <h1>Tambah Cerita</h1>
-        <form id="storyForm">
+        <form class="storyform" id="storyForm">
           <textarea id="description" placeholder="Tulis ceritamu..." required></textarea>
           <input type="file" id="photo" accept="image/*" required />
           <button type="submit">Kirim</button>
@@ -15,6 +15,13 @@ export default class AddStoryPage {
   }
 
   async afterRender() {
+    // ✅ Tambah pengecekan token di sini
+    const token = localStorage.getItem("token");
+    if (!token) {
+      window.location.hash = "#/login";
+      return;
+    }
+
     const form = document.querySelector("#storyForm");
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
