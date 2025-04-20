@@ -36,11 +36,15 @@ class App {
   }
 
   async renderPage() {
-    const url = getActiveRoute();
-    const page = routes[url];
+    const url = getActiveRoute(); // Mengambil URL aktif
+    const page = routes[url]; // Mencocokkan dengan route yang ada
 
-    this.#content.innerHTML = await page.render();
-    await page.afterRender();
+    if (page) {
+      this.#content.innerHTML = await page.render();
+      await page.afterRender();
+    } else {
+      this.#content.innerHTML = "<p>Halaman tidak ditemukan.</p>";
+    }
   }
 }
 

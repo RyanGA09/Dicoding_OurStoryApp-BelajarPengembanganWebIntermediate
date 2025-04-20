@@ -7,13 +7,24 @@ const ENDPOINTS = {
 
 // GET semua story
 export async function getAllStories() {
-  const response = await fetch(ENDPOINTS.STORIES, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-  const responseJson = await response.json();
-  return responseJson.listStory;
+  try {
+    const response = await fetch(ENDPOINTS.STORIES, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch stories");
+    }
+
+    const responseJson = await response.json();
+    console.log("API Response:", responseJson); // Log respons API
+
+    return responseJson.listStory;
+  } catch (error) {
+    console.error("Error fetching stories:", error);
+  }
 }
 
 // GET story by ID
@@ -28,31 +39,26 @@ export async function getStoryById(id) {
 }
 
 // POST story baru
-export async function postStory(photo, description) {
+export const postStory = async (photo, description) => {
+  const token = localStorage.getItem("token");
   const formData = new FormData();
   formData.append("photo", photo);
   formData.append("description", description);
 
-  const response = await fetch(ENDPOINTS.STORIES, {
+  const response = await fetch("https://story-api.dicoding.dev/v1/stories", {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${token}`,
     },
     body: formData,
   });
 
-  const result = await response.json();
-
-  // Jika sukses, kirim push notification via Service Worker
-  if (!result.error) {
-    const registration = await navigator.serviceWorker.ready;
-    registration.showNotification("Story berhasil dibuat", {
-      body: `Anda telah membuat story baru dengan deskripsi: ${description}`,
-    });
+  if (!response.ok) {
+    throw new Error("Failed to submit story");
   }
 
-  return result;
-}
+  return response.json(); // Mengembalikan hasil response JSON
+};
 
 // Register user
 export async function registerUser(name, email, password) {

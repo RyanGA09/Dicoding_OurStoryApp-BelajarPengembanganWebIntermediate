@@ -43,16 +43,34 @@ self.addEventListener("activate", (event) => {
 
 // Fetch event: menangkap request dan menerapkan cache-first strategy
 self.addEventListener("fetch", (event) => {
-  // Hanya tangani GET request saja
+  // Jangan tangani request POST dalam cache
+  if (event.request.method === "POST") {
+    return fetch(event.request); // Langsung kirimkan request POST tanpa caching
+  }
+
+  // Hanya tangani GET request saja untuk caching
   if (event.request.method !== "GET") {
     return;
   }
 
-  // Kalau halaman login, bypass cache
-  if (event.request.url.includes("/login")) {
+  // Bypass cache untuk halaman login dan subscribe
+  if (
+    event.request.url.includes("/login") ||
+    event.request.url.includes("/notifications/subscribe")
+  ) {
     return fetch(event.request);
   }
 
+  // Bypass cache untuk endpoint cerita (selalu ambil fresh)
+  if (event.request.url.includes("/v1/stories")) {
+    console.log(
+      "[Service Worker] Fetching fresh stories from network:",
+      event.request.url
+    );
+    return fetch(event.request);
+  }
+
+  // Cache-first strategy untuk request GET lainnya
   event.respondWith(
     caches
       .match(event.request)
@@ -70,18 +88,11 @@ self.addEventListener("fetch", (event) => {
           event.request.url
         );
         return fetch(event.request).then((networkResponse) => {
-          // Hanya cache GET request yang berhasil (status 200)
-          if (
-            event.request.method === "GET" &&
-            networkResponse.status === 200
-          ) {
-            return caches.open(CACHE_NAME).then((cache) => {
-              cache.put(event.request, networkResponse.clone());
-              return networkResponse;
-            });
-          } else {
+          // Simpan hasil response untuk request GET ke cache
+          return caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, networkResponse.clone());
             return networkResponse;
-          }
+          });
         });
       })
       .catch((error) => {
