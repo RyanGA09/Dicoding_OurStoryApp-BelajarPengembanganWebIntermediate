@@ -1,12 +1,12 @@
 const CACHE_NAME = "my-app-cache-v1";
 const ASSETS_TO_CACHE = [
-  "./",
-  "./index.html",
-  "./public/favicon.png",
-  "./scripts/pages/app.js",
-  "./scripts/routes/routes.js",
-  "./scripts/routes/url-parser.js",
-  "./styles/styles.css",
+  "/",
+  "/index.html",
+  "/public/favicon.png",
+  "/scripts/pages/app.js",
+  "/scripts/routes/routes.js",
+  "/scripts/routes/url-parser.js",
+  "/styles/styles.css",
 ];
 
 // Install event: caching assets saat service worker di-install
@@ -43,9 +43,14 @@ self.addEventListener("activate", (event) => {
 
 // Fetch event: menangkap request dan menerapkan cache-first strategy
 self.addEventListener("fetch", (event) => {
-  // Mengecek jika permintaan adalah untuk halaman login
+  // Hanya tangani GET request saja
+  if (event.request.method !== "GET") {
+    return;
+  }
+
+  // Kalau halaman login, bypass cache
   if (event.request.url.includes("/login")) {
-    return fetch(event.request); // Lakukan fetch langsung tanpa cache
+    return fetch(event.request);
   }
 
   event.respondWith(
@@ -65,10 +70,18 @@ self.addEventListener("fetch", (event) => {
           event.request.url
         );
         return fetch(event.request).then((networkResponse) => {
-          return caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, networkResponse.clone());
+          // Hanya cache GET request yang berhasil (status 200)
+          if (
+            event.request.method === "GET" &&
+            networkResponse.status === 200
+          ) {
+            return caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, networkResponse.clone());
+              return networkResponse;
+            });
+          } else {
             return networkResponse;
-          });
+          }
         });
       })
       .catch((error) => {

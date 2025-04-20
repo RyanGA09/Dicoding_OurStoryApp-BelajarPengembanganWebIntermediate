@@ -7,7 +7,7 @@ export default class HomePage {
     return `
       <section class="container">
         <h1>Cerita Terbaru</h1>
-        <div id="story-list" class="story-list></div>
+        <div id="story-list" class="story-list"></div>
       </section>
     `;
   }

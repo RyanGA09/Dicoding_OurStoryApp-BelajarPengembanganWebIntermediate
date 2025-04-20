@@ -61,6 +61,10 @@ export default class LoginPage {
     });
 
     const subscriptionJson = subscription.toJSON();
+
+    // Hapus expirationTime sebelum kirim ke API
+    delete subscriptionJson.expirationTime;
+
     await subscribeNotification(subscriptionJson);
   }
 

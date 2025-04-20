@@ -54,6 +54,7 @@ export async function postStory(photo, description) {
   return result;
 }
 
+// Register user
 export async function registerUser(name, email, password) {
   const response = await fetch(`${CONFIG.BASE_URL}/register`, {
     method: "POST",
@@ -63,6 +64,7 @@ export async function registerUser(name, email, password) {
   return response.json();
 }
 
+// Login user
 export async function loginUser(email, password) {
   const response = await fetch(`${CONFIG.BASE_URL}/login`, {
     method: "POST",
@@ -72,8 +74,28 @@ export async function loginUser(email, password) {
   return response.json();
 }
 
+// Convert VAPID public key ke Uint8Array
+export function urlBase64ToUint8Array(base64String) {
+  const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+  const base64 = (base64String + padding)
+    .replace(/\-/g, "+")
+    .replace(/_/g, "/");
+
+  const rawData = window.atob(base64);
+  const outputArray = new Uint8Array(rawData.length);
+
+  for (let i = 0; i < rawData.length; ++i) {
+    outputArray[i] = rawData.charCodeAt(i);
+  }
+  return outputArray;
+}
+
 // Subscribe Push Notification
 export async function subscribeNotification(subscription) {
+  if (!subscription || !subscription.endpoint || !subscription.keys) {
+    throw new Error("Subscription data tidak valid.");
+  }
+
   const response = await fetch(ENDPOINTS.NOTIFICATIONS, {
     method: "POST",
     headers: {
@@ -82,6 +104,12 @@ export async function subscribeNotification(subscription) {
     },
     body: JSON.stringify(subscription),
   });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Gagal subscribe notification: ${errorText}`);
+  }
+
   return response.json();
 }
 
