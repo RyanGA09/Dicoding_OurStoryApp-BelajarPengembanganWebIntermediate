@@ -117,24 +117,24 @@ p {
 
 /* Add Story Page */
 .storyform textarea {
-  width: 100%;
+  width: 92%;
   height: 200px;
   padding: 10px;
-  border-radius: 50px;
+  border-radius: 30px;
   border: 1px solid #ddd;
   resize: none;
   margin-bottom: 20px;
-  -webkit-border-radius: 50px;
-  -moz-border-radius: 50px;
-  -ms-border-radius: 50px;
-  -o-border-radius: 50px;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
 }
 
 .storyform input[type="file"] {
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #ddd;
-  width: 100%;
+  width: 92%;
 }
 
 form {
