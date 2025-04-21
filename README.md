@@ -77,13 +77,19 @@ OurStoryApp is a **Single Page Application (SPA)** web app developed to fulfill 
    cd Dicoding_OurStoryApp-BelajarPengembanganWebIntermediate
    ```
 
-3. **Install Dependencies**
+3. **Open in VS Code**
+
+   ```bash
+   code .
+   ```
+
+4. **Install Dependencies**
 
    ```bash
    npm install
    ```
 
-4. **Enter Map API Key (if applicable)**
+5. **Enter Map API Key (if applicable)**
 
    - Create a STUDENT.txt file at the root of the project
    - Fill with:
@@ -94,7 +100,7 @@ OurStoryApp is a **Single Page Application (SPA)** web app developed to fulfill 
 
      **📌 Note: No API key is required for Dicoding Story API. A token will be obtained via the login process.**
 
-5. **Run in Browser**
+6. **Run in Browser**
 
    ```bash
    npm run dev
@@ -175,7 +181,3 @@ The app integrates with the [Dicoding Story API](https://story-api.dicoding.dev/
 [MIT LICENSE](LICENSE)
 
 &copy; 2025 Ryan Gading Abdullah. All rights reserved.
-
-```
-
-```
