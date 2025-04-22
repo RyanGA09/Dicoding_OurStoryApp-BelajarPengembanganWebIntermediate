@@ -11,6 +11,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     navigationDrawer: document.querySelector("#navigation-drawer"),
   });
 
+  // Fungsi untuk cek apakah user sudah login
+  const isLoggedIn = () => {
+    return !!localStorage.getItem("token");
+  };
+
+  // Event listener untuk brand link
+  const brandLink = document.querySelector(".brand-name");
+  brandLink.addEventListener("click", (event) => {
+    if (!isLoggedIn()) {
+      event.preventDefault();
+      window.location.hash = "#/login";
+    }
+  });
+
   // Sembunyikan navbar dan tombol logout pada halaman login atau register
   const currentRoute = window.location.hash;
   if (currentRoute === "#/login" || currentRoute === "#/register") {

@@ -179,5 +179,3 @@ The app integrates with the [Dicoding Story API](https://story-api.dicoding.dev/
 ## LICENSE
 
 [MIT LICENSE](LICENSE)
-
-&copy; 2025 Ryan Gading Abdullah. All rights reserved.
