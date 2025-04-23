@@ -153,11 +153,12 @@ The app integrates with the [Dicoding Story API](https://story-api.dicoding.dev/
 
 📚 [Full documentation of Dicoding Story API](https://story-api.dicoding.dev/v1)
 
-<!-- ## 📷 Screenshots
+#### 📷 Screenshots
 
-![Home Page Screenshot](./screenshots/home.png)
-![Story Detail Screenshot](./screenshots/story-detail.png)
-![Add Story Screenshot](./screenshots/add-story.png) -->
+![Login Page Screenshot](/public/images/loginpage.png)
+![Home Page Screenshot](/public/images/homepage.png)
+![Story Detail Screenshot](/public/images/detailpage.png)
+![Add Story Screenshot](/public/images/addpage.png)
 
 #### 🛠️ Technology & Tools
 

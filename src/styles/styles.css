@@ -151,13 +151,14 @@ form button {
 /* Detail Story Page */
 .story-detail {
   padding: 20px;
+  margin: 20px 0;
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .story-detail img {
-  width: 100%;
+  width: 300px;
   max-width: 600px;
   height: auto;
   object-fit: cover;
