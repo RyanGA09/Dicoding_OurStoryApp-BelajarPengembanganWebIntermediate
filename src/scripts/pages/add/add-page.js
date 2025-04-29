@@ -1,13 +1,18 @@
-import { postStory } from "../../data/api";
+import AddStoryPresenter from "./add-presenter.js";
 
 export default class AddStoryPage {
+  #presenter;
+
   async render() {
     return `
       <section class="container">
         <h1>Tambah Cerita</h1>
-        <form class="storyform" id="storyForm">
+        <form id="storyForm" class="storyform">
           <textarea id="description" placeholder="Tulis ceritamu..." required></textarea>
-          <input type="file" id="photo" accept="image/*" required />
+          <input type="file" id="photo" accept="image/*" capture="environment" required />
+          <div id="map" style="height: 300px; margin-top: 20px;"></div>
+          <input type="hidden" id="latitude" />
+          <input type="hidden" id="longitude" />
           <button type="submit">Kirim</button>
         </form>
       </section>
@@ -15,32 +20,7 @@ export default class AddStoryPage {
   }
 
   async afterRender() {
-    // ✅ Tambah pengecekan token di sini
-    const token = localStorage.getItem("token");
-    if (!token) {
-      window.location.hash = "#/login";
-      return;
-    }
-
-    const form = document.querySelector("#storyForm");
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const photo = document.querySelector("#photo").files[0];
-      const description = document.querySelector("#description").value;
-
-      if (!photo || !description) {
-        alert("Harap lengkapi form!");
-        return;
-      }
-
-      try {
-        await postStory(photo, description);
-        alert("Cerita berhasil ditambahkan!");
-        window.location.hash = "/";
-      } catch (error) {
-        alert("Gagal menambahkan cerita!");
-        console.error(error);
-      }
-    });
+    this.#presenter = new AddStoryPresenter(this);
+    await this.#presenter.init();
   }
 }

@@ -1,10 +1,10 @@
-import { routes } from "../routes/routes";
 import { getActiveRoute } from "../routes/url-parser";
+import { routes } from "../routes/routes";
 
-class App {
-  #content = null;
-  #drawerButton = null;
-  #navigationDrawer = null;
+export default class App {
+  #content;
+  #drawerButton;
+  #navigationDrawer;
 
   constructor({ navigationDrawer, drawerButton, content }) {
     this.#content = content;
@@ -26,26 +26,22 @@ class App {
       ) {
         this.#navigationDrawer.classList.remove("open");
       }
-
-      this.#navigationDrawer.querySelectorAll("a").forEach((link) => {
-        if (link.contains(event.target)) {
-          this.#navigationDrawer.classList.remove("open");
-        }
-      });
     });
   }
 
   async renderPage() {
-    const url = getActiveRoute(); // Mengambil URL aktif
-    const page = routes[url]; // Mencocokkan dengan route yang ada
+    const url = getActiveRoute();
+    const page = routes[url];
 
-    if (page) {
+    if (!document.startViewTransition) {
       this.#content.innerHTML = await page.render();
       await page.afterRender();
-    } else {
-      this.#content.innerHTML = "<p>Halaman tidak ditemukan.</p>";
+      return;
     }
+
+    document.startViewTransition(async () => {
+      this.#content.innerHTML = await page.render();
+      await page.afterRender();
+    });
   }
 }
-
-export default App;

@@ -1,8 +1,8 @@
-import { getAllStories } from "../../data/api";
-import CONFIG from "../../config";
-import { showFormattedDate } from "../../utils/date-formatter";
+import HomePresenter from "./home-presenter.js";
 
 export default class HomePage {
+  #presenter;
+
   async render() {
     return `
       <section class="container">
@@ -13,46 +13,30 @@ export default class HomePage {
   }
 
   async afterRender() {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      window.location.hash = "#/login";
-      return;
-    }
+    this.#presenter = new HomePresenter(this);
+    await this.#presenter.showStories();
+  }
 
-    try {
-      const stories = await getAllStories(); // Mengambil semua cerita dari API
-      const container = document.querySelector("#story-list");
-
-      if (stories && stories.length > 0) {
-        container.innerHTML = stories
-          .map(
-            (story) => `
-              <div class="story-item">
-                <img src="${story.photoUrl}" alt="${story.name}">
-                <h3>${story.name}</h3>
-                <p class="date">${showFormattedDate(story.createdAt)}</p>
-                <p>${story.description.slice(0, 100)}...</p>
-                <a href="#/detail/${
-                  story.id
-                }" class="btn-detail">Lihat Detail</a>
-              </div>
-            `
-          )
-          .join("");
-      } else {
-        container.innerHTML = `<p>Belum ada cerita yang diposting.</p>`;
-      }
-
-      // Menambahkan event listener untuk tombol logout
-      const logoutButton = document.querySelector("#logout-button");
-      logoutButton.addEventListener("click", () => {
-        localStorage.removeItem("token");
-        window.location.hash = "#/login";
-      });
-    } catch (error) {
-      console.error("Error fetching stories:", error);
-      const container = document.querySelector("#story-list");
-      container.innerHTML = `<p>Gagal memuat cerita, coba lagi nanti.</p>`;
+  showStories(stories) {
+    const container = document.getElementById("story-list");
+    if (stories && stories.length > 0) {
+      container.innerHTML = stories
+        .map(
+          (story) => `
+        <div class="story-item">
+          <img src="${story.photoUrl}" alt="${story.name}" />
+          <h3>${story.name}</h3>
+          <p class="date">${new Date(story.createdAt).toLocaleDateString(
+            "id-ID"
+          )}</p>
+          <p>${story.description.slice(0, 100)}...</p>
+          <a href="#/detail/${story.id}" class="btn-detail">Lihat Detail</a>
+        </div>
+      `
+        )
+        .join("");
+    } else {
+      container.innerHTML = `<p>Belum ada cerita yang diposting.</p>`;
     }
   }
 }

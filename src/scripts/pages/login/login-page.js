@@ -1,6 +1,8 @@
-import { loginUser, subscribeNotification } from "../../data/api";
+import LoginPresenter from "./login-presenter.js";
 
 export default class LoginPage {
+  #presenter;
+
   async render() {
     return `
       <section class="container">
@@ -16,70 +18,7 @@ export default class LoginPage {
   }
 
   async afterRender() {
-    const form = document.getElementById("login-form");
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      const result = await loginUser(email, password);
-
-      if (!result.error) {
-        localStorage.setItem("token", result.loginResult.token);
-        await this.#setupPushNotification();
-
-        // Pengalihan setelah login berhasil
-        window.location.hash = "#/";
-      } else {
-        alert("Login gagal: " + result.message);
-      }
-    });
-  }
-
-  async #setupPushNotification() {
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker
-          .register("/service-worker.js", { scope: "/" })
-          .then((registration) => {
-            console.log(
-              "Service Worker registered with scope:",
-              registration.scope
-            );
-          })
-          .catch((error) => {
-            console.error("Service Worker registration failed:", error);
-          });
-      });
-    }
-
-    const registration = await navigator.serviceWorker.ready;
-    const subscription = await registration.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: this.#urlBase64ToUint8Array(
-        "BCCs2eonMI-6H2ctvFaWg-UYdDv387Vno_bzUzALpB442r2lCnsHmtrx8biyPi_E-1fSGABK_Qs_GlvPoJJqxbk"
-      ),
-    });
-
-    const subscriptionJson = subscription.toJSON();
-
-    // Hapus expirationTime sebelum kirim ke API
-    delete subscriptionJson.expirationTime;
-
-    await subscribeNotification(subscriptionJson);
-  }
-
-  #urlBase64ToUint8Array(base64String) {
-    const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
-    const base64 = (base64String + padding)
-      .replace(/-/g, "+")
-      .replace(/_/g, "/");
-
-    const rawData = atob(base64);
-    const outputArray = new Uint8Array(rawData.length);
-
-    for (let i = 0; i < rawData.length; ++i) {
-      outputArray[i] = rawData.charCodeAt(i);
-    }
-    return outputArray;
+    this.#presenter = new LoginPresenter(this);
+    await this.#presenter.init();
   }
 }

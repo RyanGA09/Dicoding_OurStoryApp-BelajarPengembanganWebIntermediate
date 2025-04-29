@@ -1,6 +1,8 @@
-import { registerUser } from "../../data/api";
+import RegisterPresenter from "./register-presenter.js";
 
 export default class RegisterPage {
+  #presenter;
+
   async render() {
     return `
       <section class="container">
@@ -17,20 +19,7 @@ export default class RegisterPage {
   }
 
   async afterRender() {
-    const form = document.getElementById("register-form");
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const name = document.getElementById("name").value;
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      const result = await registerUser(name, email, password);
-
-      if (!result.error) {
-        alert("Register berhasil! Silakan login.");
-        window.location.hash = "#/login";
-      } else {
-        alert("Register gagal: " + result.message);
-      }
-    });
+    this.#presenter = new RegisterPresenter(this);
+    await this.#presenter.init();
   }
 }
