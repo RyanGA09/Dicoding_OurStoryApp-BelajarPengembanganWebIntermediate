@@ -1,5 +1,6 @@
 import HomePresenter from "./home-presenter.js";
 import Map from "../../utils/map";
+import { showFormattedDate } from "../../utils/date-formatter"; // Pastikan ini diimpor jika diperlukan
 
 export default class HomePage {
   #presenter = null;
@@ -8,31 +9,37 @@ export default class HomePage {
   async render() {
     return `
       <section class="container">
-        <h1 class="section-title">Cerita Terbaru</h1>
-        <div id="story-list" class="story-list"></div>
-
         <!-- Peta dipisahkan sebagai elemen khusus -->
         <div class="map-fixed-footer">
           <div class="map-header">Peta Lokasi Cerita</div>
           <div id="map"></div>
         </div>
+
+        <h1 class="section-title">Cerita Terbaru</h1>
+        <div id="story-list" class="story-list"></div>
       </section>
     `;
   }
 
   async afterRender() {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      window.location.hash = "#/login";
+      return;
+    }
+
     this.#presenter = new HomePresenter(this);
     await this.initialMap();
     await this.#presenter.showStories();
+
+    // Menambahkan event listener untuk tombol logout
+    const logoutButton = document.querySelector("#logout-button");
+    logoutButton.addEventListener("click", () => {
+      localStorage.removeItem("token");
+      window.location.hash = "#/login";
+    });
   }
 
-  // async #setupMap() {
-  //   this.#map = L.map("map").setView([-6.2, 106.8], 5);
-  //   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  //     attribution:
-  //       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-  //   }).addTo(this.#map);
-  // }
   async initialMap() {
     this.#map = await Map.build("#map", {
       zoom: 10,
@@ -43,24 +50,28 @@ export default class HomePage {
   showStories(stories) {
     const container = document.getElementById("story-list");
 
-    if (stories && stories.length > 0) {
+    if (this.#map && stories && stories.length > 0) {
       container.innerHTML = stories
         .map((story) => {
           if (story.lat && story.lon) {
-            L.marker([story.lat, story.lon])
-              .addTo(this.#map)
-              .bindPopup(
-                `<b>${story.name}</b><br>${story.description.slice(0, 50)}...`
-              );
+            // Gunakan metode addMarker untuk menambahkan marker ke peta
+            this.#map.addMarker(
+              [story.lat, story.lon],
+              {},
+              {
+                content: `<b>${story.name}</b><br>${story.description.slice(
+                  0,
+                  50
+                )}...`,
+              }
+            );
           }
 
           return `
           <div class="story-item">
             <img src="${story.photoUrl}" alt="${story.name}" />
             <h3>${story.name}</h3>
-            <p class="date">${new Date(story.createdAt).toLocaleDateString(
-              "id-ID"
-            )}</p>
+            <p class="date">${showFormattedDate(story.createdAt)}</p>
             <p>${story.description.slice(0, 100)}...</p>
             ${
               story.lat && story.lon
