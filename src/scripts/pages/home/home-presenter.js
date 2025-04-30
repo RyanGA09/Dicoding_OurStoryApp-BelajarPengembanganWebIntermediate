@@ -1,18 +1,61 @@
-import { getAllStories } from "../../data/api";
+// import { getAllStories } from "../../data/api";
+
+// export default class HomePresenter {
+//   #view;
+
+//   constructor(view) {
+//     this.#view = view;
+//   }
+
+//   async showStories() {
+//     try {
+//       const stories = await getAllStories();
+//       this.#view.showStories(stories);
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   }
+// }
 
 export default class HomePresenter {
   #view;
+  #model;
 
-  constructor(view) {
+  constructor({ view, model }) {
     this.#view = view;
+    this.#model = model;
   }
 
-  async showStories() {
+  async showReportsListMap() {
+    this.#view.showMapLoading();
     try {
-      const stories = await getAllStories();
-      this.#view.showStories(stories);
+      await this.#view.initialMap();
     } catch (error) {
-      console.error(error);
+      console.error("showReportsListMap: error:", error);
+    } finally {
+      this.#view.hideMapLoading();
+    }
+  }
+
+  async initialGalleryAndMap() {
+    this.#view.showLoading();
+    try {
+      await this.showReportsListMap();
+
+      const response = await this.#model.getAllReports();
+
+      if (!response.ok) {
+        console.error("initialGalleryAndMap: response:", response);
+        this.#view.populateReportsListError(response.message);
+        return;
+      }
+
+      this.#view.populateReportsList(response.message, response.data);
+    } catch (error) {
+      console.error("initialGalleryAndMap: error:", error);
+      this.#view.populateReportsListError(error.message);
+    } finally {
+      this.#view.hideLoading();
     }
   }
 }
