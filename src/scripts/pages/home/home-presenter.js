@@ -1,18 +1,32 @@
-import { getAllStories } from "../../data/api";
-
+// src/scripts/pages/home/home-presenter.js
 export default class HomePresenter {
   #view;
+  #model;
 
-  constructor(view) {
+  constructor({ view, model }) {
     this.#view = view;
+    this.#model = model;
   }
 
-  async showStories() {
+  async loadStoriesAndMap() {
+    this.#view.showLoading();
+    this.#view.showMapLoading();
     try {
-      const stories = await getAllStories();
-      this.#view.showStories(stories);
+      await this.#view.initialMap();
+      const response = await this.#model.getAllStories({ location: 1 });
+
+      if (!response.ok) {
+        this.#view.populateStoryListError(response.message);
+        return;
+      }
+
+      this.#view.populateStoryList(response.message, response.listStory);
     } catch (error) {
-      console.error(error);
+      console.error("loadStoriesAndMap: error:", error);
+      this.#view.populateStoryListError(error.message);
+    } finally {
+      this.#view.hideMapLoading();
+      this.#view.hideLoading();
     }
   }
 }

@@ -1,6 +1,8 @@
-import HomePresenter from "./home-presenter.js";
+// src/scripts/pages/home/home-page.js
+import { generateLoaderAbsoluteTemplate } from "../../templates";
+import HomePresenter from "./home-presenter";
 import Map from "../../utils/map";
-import { showFormattedDate } from "../../utils/date-formatter"; // Pastikan ini diimpor jika diperlukan
+import * as StoryAPI from "../../data/api";
 
 export default class HomePage {
   #presenter = null;
@@ -8,86 +10,85 @@ export default class HomePage {
 
   async render() {
     return `
-      <section class="container">
-        <!-- Peta dipisahkan sebagai elemen khusus -->
-        <div class="map-fixed-footer">
-          <div class="map-header">Peta Lokasi Cerita</div>
-          <div id="map"></div>
+      <section>
+        <div class="story-list__map__container">
+          <div id="map" class="story-list__map"></div>
+          <div id="map-loading-container"></div>
         </div>
-
-        <h1 class="section-title">Cerita Terbaru</h1>
-        <div id="story-list" class="story-list"></div>
+      </section>
+      <section class="container">
+        <h1 class="section-title">Cerita dari Pengguna</h1>
+        <div class="story-list__container">
+          <div id="story-list"></div>
+          <div id="story-list-loading-container"></div>
+        </div>
       </section>
     `;
   }
 
   async afterRender() {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      window.location.hash = "#/login";
-      return;
-    }
-
-    this.#presenter = new HomePresenter(this);
-    await this.initialMap();
-    await this.#presenter.showStories();
-
-    // Menambahkan event listener untuk tombol logout
-    const logoutButton = document.querySelector("#logout-button");
-    logoutButton.addEventListener("click", () => {
-      localStorage.removeItem("token");
-      window.location.hash = "#/login";
-    });
+    this.#presenter = new HomePresenter({ view: this, model: StoryAPI });
+    await this.#presenter.loadStoriesAndMap();
   }
 
   async initialMap() {
-    this.#map = await Map.build("#map", {
-      zoom: 10,
-      locate: true,
-    });
+    this.#map = await Map.build("#map", { zoom: 5, locate: true });
   }
 
-  showStories(stories) {
-    const container = document.getElementById("story-list");
+  showMapLoading() {
+    document.getElementById("map-loading-container").innerHTML =
+      generateLoaderAbsoluteTemplate();
+  }
 
-    if (this.#map && stories && stories.length > 0) {
-      container.innerHTML = stories
-        .map((story) => {
-          if (story.lat && story.lon) {
-            // Gunakan metode addMarker untuk menambahkan marker ke peta
-            this.#map.addMarker(
-              [story.lat, story.lon],
-              {},
-              {
-                content: `<b>${story.name}</b><br>${story.description.slice(
-                  0,
-                  50
-                )}...`,
-              }
-            );
-          }
+  hideMapLoading() {
+    document.getElementById("map-loading-container").innerHTML = "";
+  }
 
-          return `
-          <div class="story-item">
-            <img src="${story.photoUrl}" alt="${story.name}" />
-            <h3>${story.name}</h3>
-            <p class="date">${showFormattedDate(story.createdAt)}</p>
-            <p>${story.description.slice(0, 100)}...</p>
-            ${
-              story.lat && story.lon
-                ? `
-              <a href="https://maps.google.com?q=${story.lat},${story.lon}" target="_blank" class="map-link">
-                Lihat Lokasi di Google Maps
-              </a>`
-                : ""
-            }
-            <a href="#/detail/${story.id}" class="btn-detail">Lihat Detail</a>
-          </div>
-        `;
-        })
-        .join("");
-    } else {
-      container.innerHTML = `<p>Belum ada cerita yang diposting.</p>`;
+  showLoading() {
+    document.getElementById("story-list-loading-container").innerHTML =
+      generateLoaderAbsoluteTemplate();
+  }
+
+  hideLoading() {
+    document.getElementById("story-list-loading-container").innerHTML = "";
+  }
+
+  populateStoryList(message, stories) {
+    if (stories.length === 0) {
+      document.getElementById("story-list").innerHTML =
+        "<p>Tidak ada cerita ditemukan.</p>";
+      return;
     }
+
+    const html = stories
+      .map((story) => {
+        if (this.#map && story.lat && story.lon) {
+          const coord = [story.lat, story.lon];
+          const markerOptions = { alt: story.name };
+          const popupOptions = { content: story.description };
+          this.#map.addMarker(coord, markerOptions, popupOptions);
+        }
+        return `
+        <div class="story-card">
+          <img src="${story.photoUrl}" alt="Story Image"/>
+          <div class="story-info">
+            <h3>${story.name}</h3>
+            <p>${story.description}</p>
+            <small>${new Date(story.createdAt).toLocaleString()}</small>
+          </div>
+        </div>
+      `;
+      })
+      .join("");
+
+    document.getElementById(
+      "story-list"
+    ).innerHTML = `<div class="story-list">${html}</div>`;
+  }
+
+  populateStoryListError(message) {
+    document.getElementById(
+      "story-list"
+    ).innerHTML = `<p>Gagal memuat cerita: ${message}</p>`;
   }
 }

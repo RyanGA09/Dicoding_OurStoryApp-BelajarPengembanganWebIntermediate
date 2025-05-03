@@ -1,4 +1,4 @@
-import { loginUser, subscribeNotification } from "../../data/api";
+import { loginUser, subscribeToStory } from "../../../data/api";
 
 export default class LoginPresenter {
   #view;
@@ -38,7 +38,7 @@ export default class LoginPresenter {
 
       const subscriptionJson = subscription.toJSON();
       delete subscriptionJson.expirationTime;
-      await subscribeNotification(subscriptionJson);
+      await subscribeToStory(subscriptionJson);
     }
   }
 

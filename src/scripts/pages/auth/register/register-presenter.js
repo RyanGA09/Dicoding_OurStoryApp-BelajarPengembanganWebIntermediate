@@ -1,4 +1,4 @@
-import { registerUser } from "../../data/api";
+import { registerUser } from "../../../data/api";
 
 export default class RegisterPresenter {
   #view;

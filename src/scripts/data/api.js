@@ -1,133 +1,101 @@
-import CONFIG from "../config";
+// src/scripts/data/api.js
+import { getAccessToken } from "../utils/auth";
+import { BASE_URL } from "../config";
 
 const ENDPOINTS = {
-  STORIES: `${CONFIG.BASE_URL}/stories`,
-  NOTIFICATIONS: `${CONFIG.BASE_URL}/notifications/subscribe`,
+  REGISTER: `${BASE_URL}/register`,
+  LOGIN: `${BASE_URL}/login`,
+  ADD_STORY: `${BASE_URL}/stories`,
+  ADD_GUEST_STORY: `${BASE_URL}/stories/guest`,
+  GET_ALL_STORIES: `${BASE_URL}/stories`,
+  GET_STORY_BY_ID: (id) => `${BASE_URL}/stories/${id}`,
+  SUBSCRIBE: `${BASE_URL}/notifications/subscribe`,
+  UNSUBSCRIBE: `${BASE_URL}/notifications/subscribe`,
 };
 
-// GET semua story
-export async function getAllStories() {
-  try {
-    const response = await fetch(ENDPOINTS.STORIES, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch stories");
-    }
-
-    const responseJson = await response.json();
-    console.log("API Response:", responseJson); // Log respons API
-
-    return responseJson.listStory;
-  } catch (error) {
-    console.error("Error fetching stories:", error);
-  }
-}
-
-// GET story by ID
-export async function getStoryById(id) {
-  const response = await fetch(`${ENDPOINTS.STORIES}/${id}`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-  const responseJson = await response.json();
-  return responseJson.story;
-}
-
-// POST story baru
-export const postStory = async (photo, description) => {
-  const token = localStorage.getItem("token");
-  const formData = new FormData();
-  formData.append("photo", photo);
-  formData.append("description", description);
-
-  const response = await fetch("https://story-api.dicoding.dev/v1/stories", {
+export async function registerUser({ name, email, password }) {
+  const data = JSON.stringify({ name, email, password });
+  const res = await fetch(ENDPOINTS.REGISTER, {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    headers: { "Content-Type": "application/json" },
+    body: data,
+  });
+  const json = await res.json();
+  return { ...json, ok: res.ok };
+}
+
+export async function loginUser({ email, password }) {
+  const data = JSON.stringify({ email, password });
+  const res = await fetch(ENDPOINTS.LOGIN, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: data,
+  });
+  const json = await res.json();
+  return { ...json, ok: res.ok };
+}
+
+export async function addNewStory({ description, photo, lat, lon }) {
+  const token = getAccessToken();
+  const formData = new FormData();
+  formData.append("description", description);
+  formData.append("photo", photo);
+  if (lat) formData.append("lat", lat);
+  if (lon) formData.append("lon", lon);
+
+  const res = await fetch(ENDPOINTS.ADD_STORY, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
     body: formData,
   });
+  const json = await res.json();
+  return { ...json, ok: res.ok };
+}
 
-  if (!response.ok) {
-    throw new Error("Failed to submit story");
-  }
-
-  return response.json(); // Mengembalikan hasil response JSON
-};
-
-// Register user
-export async function registerUser(name, email, password) {
-  const response = await fetch(`${CONFIG.BASE_URL}/register`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, email, password }),
+export async function getAllStories({ page = 1, size = 10, location = 0 }) {
+  const token = getAccessToken();
+  const url = `${ENDPOINTS.GET_ALL_STORIES}?page=${page}&size=${size}&location=${location}`;
+  const res = await fetch(url, {
+    method: "GET",
+    headers: { Authorization: `Bearer ${token}` },
   });
-  return response.json();
+  const json = await res.json();
+  return { ...json, ok: res.ok };
 }
 
-// Login user
-export async function loginUser(email, password) {
-  const response = await fetch(`${CONFIG.BASE_URL}/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
+export async function getStoryById(id) {
+  const token = getAccessToken();
+  const res = await fetch(ENDPOINTS.GET_STORY_BY_ID(id), {
+    headers: { Authorization: `Bearer ${token}` },
   });
-  return response.json();
+  const json = await res.json();
+  return { ...json, ok: res.ok };
 }
 
-// Convert VAPID public key ke Uint8Array
-export function urlBase64ToUint8Array(base64String) {
-  const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
-  const base64 = (base64String + padding)
-    .replace(/\-/g, "+")
-    .replace(/_/g, "/");
-
-  const rawData = window.atob(base64);
-  const outputArray = new Uint8Array(rawData.length);
-
-  for (let i = 0; i < rawData.length; ++i) {
-    outputArray[i] = rawData.charCodeAt(i);
-  }
-  return outputArray;
-}
-
-// Subscribe Push Notification
-export async function subscribeNotification(subscription) {
-  if (!subscription || !subscription.endpoint || !subscription.keys) {
-    throw new Error("Subscription data tidak valid.");
-  }
-
-  const response = await fetch(ENDPOINTS.NOTIFICATIONS, {
+export async function subscribeToStory({ endpoint, keys }) {
+  const token = getAccessToken();
+  const res = await fetch(ENDPOINTS.SUBSCRIBE, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(subscription),
+    body: JSON.stringify({ endpoint, keys }),
   });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Gagal subscribe notification: ${errorText}`);
-  }
-
-  return response.json();
+  const json = await res.json();
+  return { ...json, ok: res.ok };
 }
 
-// Unsubscribe Push Notification
-export async function unsubscribeNotification(endpoint) {
-  const response = await fetch(ENDPOINTS.NOTIFICATIONS, {
+export async function unsubscribeFromStory({ endpoint }) {
+  const token = getAccessToken();
+  const res = await fetch(ENDPOINTS.UNSUBSCRIBE, {
     method: "DELETE",
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ endpoint }),
   });
-  return response.json();
+  const json = await res.json();
+  return { ...json, ok: res.ok };
 }
