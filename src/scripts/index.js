@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const app = new App({
     content: document.getElementById("main-content"),
     drawerButton: document.getElementById("drawer-button"),
-    drawerNavigation: document.getElementById("navigation-drawer"),
+    navigationDrawer: document.getElementById("navigation-drawer"),
     skipLinkButton: document.getElementById("skip-link"),
   });
   await app.renderPage();

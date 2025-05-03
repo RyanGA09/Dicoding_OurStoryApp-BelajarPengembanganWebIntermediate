@@ -10,10 +10,10 @@ import {
 } from "../utils/auth";
 
 export const routes = {
-  "/login": () => checkUnauthenticatedRouteOnly(new LoginPage()),
-  "/register": () => checkUnauthenticatedRouteOnly(new RegisterPage()),
+  "/login": checkUnauthenticatedRouteOnly(new LoginPage()),
+  "/register": checkUnauthenticatedRouteOnly(new RegisterPage()),
 
-  "/": () => checkAuthenticatedRoute(new HomePage()),
-  "/new": () => checkAuthenticatedRoute(new NewPage()),
-  "/stories/:id": () => checkAuthenticatedRoute(new StoryDetailPage()),
+  "/": checkAuthenticatedRoute(new HomePage()),
+  "/new": checkAuthenticatedRoute(new NewPage()),
+  "/stories/:id": checkAuthenticatedRoute(new StoryDetailPage()),
 };
