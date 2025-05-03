@@ -22,7 +22,12 @@ export default class NewPresenter {
   async postNewStory({ description, photo, latitude, longitude }) {
     this.#view.showSubmitLoadingButton();
     try {
-      const data = { description, photo, lat: latitude, lon: longitude };
+      const data = {
+        description: description,
+        photo: photo,
+        lat: latitude,
+        lon: longitude,
+      };
       const response = await this.#model.addNewStory(data);
 
       if (!response.ok) {

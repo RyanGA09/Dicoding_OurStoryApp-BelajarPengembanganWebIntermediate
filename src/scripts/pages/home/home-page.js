@@ -1,5 +1,10 @@
 // src/scripts/pages/home/home-page.js
-import { generateLoaderAbsoluteTemplate } from "../../templates";
+import {
+  generateLoaderAbsoluteTemplate,
+  generateStoryItemTemplate,
+  generateStoriesListEmptyTemplate,
+  generateStoriesListErrorTemplate,
+} from "../../templates";
 import HomePresenter from "./home-presenter";
 import Map from "../../utils/map";
 import * as StoryAPI from "../../data/api";
@@ -11,16 +16,16 @@ export default class HomePage {
   async render() {
     return `
       <section>
-        <div class="story-list__map__container">
-          <div id="map" class="story-list__map"></div>
+        <div class="storys-list__map__container">
+          <div id="map" class="storys-list__map"></div>
           <div id="map-loading-container"></div>
         </div>
       </section>
       <section class="container">
         <h1 class="section-title">Cerita dari Pengguna</h1>
-        <div class="story-list__container">
-          <div id="story-list"></div>
-          <div id="story-list-loading-container"></div>
+        <div class="storys-list__container">
+          <div id="storys-list"></div>
+          <div id="storys-list-loading-container"></div>
         </div>
       </section>
     `;
@@ -53,31 +58,36 @@ export default class HomePage {
     document.getElementById("story-list-loading-container").innerHTML = "";
   }
 
+  populateStoriesListEmpty() {
+    document.getElementById("storys-list").innerHTML =
+      generateStoriesListEmptyTemplate();
+  }
+
+  populateStoriesListError(message) {
+    document.getElementById("storys-list").innerHTML =
+      generateStoriesListErrorTemplate(message);
+  }
+
   populateStoryList(message, stories) {
-    if (stories.length === 0) {
-      document.getElementById("story-list").innerHTML =
-        "<p>Tidak ada cerita ditemukan.</p>";
+    if (reports.length <= 0) {
+      this.populateStoriesListEmpty();
       return;
     }
 
     const html = stories
-      .map((story) => {
-        if (this.#map && story.lat && story.lon) {
-          const coord = [story.lat, story.lon];
+      .reduce((accumulator, story) => {
+        if (this.#map) {
+          const coordinate = [story.lat, story.lon];
           const markerOptions = { alt: story.name };
           const popupOptions = { content: story.description };
-          this.#map.addMarker(coord, markerOptions, popupOptions);
+          this.#map.addMarker(coordinate, markerOptions, popupOptions);
         }
-        return `
-        <div class="story-card">
-          <img src="${story.photoUrl}" alt="Story Image"/>
-          <div class="story-info">
-            <h3>${story.name}</h3>
-            <p>${story.description}</p>
-            <small>${new Date(story.createdAt).toLocaleString()}</small>
-          </div>
-        </div>
-      `;
+        return accumulator.concat(
+          generateStoryItemTemplate({
+            ...story,
+            storyDescription: story.story.description,
+          })
+        );
       })
       .join("");
 

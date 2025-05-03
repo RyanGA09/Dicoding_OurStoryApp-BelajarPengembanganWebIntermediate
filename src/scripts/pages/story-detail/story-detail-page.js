@@ -1,5 +1,9 @@
 // src/scripts/pages/story-detail/story-detail-page.js
-import { generateLoaderAbsoluteTemplate } from "../../templates";
+import {
+  generateLoaderAbsoluteTemplate,
+  generateStoryDetailErrorTemplate,
+  generateStoryDetailTemplate,
+} from "../../templates";
 import StoryDetailPresenter from "./story-detail-presenter";
 import { parseActivePathname } from "../../routes/url-parser";
 import Map from "../../utils/map";
@@ -27,6 +31,8 @@ export default class StoryDetailPage {
       view: this,
       apiModel: StoryAPI,
     });
+
+    // this.#setupForm();
 
     await this.#presenter.loadStoryDetail();
   }
@@ -72,6 +78,37 @@ export default class StoryDetailPage {
 
   hideMapLoading() {
     document.getElementById("map-loading-container").innerHTML = "";
+  }
+
+  async populateStoryDetailAndInitialMap(message, story) {
+    document.getElementById("story-detail").innerHTML =
+      generateStoryDetailTemplate({
+        description: story.description,
+        photoUrl: story.photoUrl,
+        createdAt: story.createdA,
+        location: story.location,
+      });
+
+    // Carousel images
+    createCarousel(document.getElementById("images"));
+
+    // Map
+    await this.#presenter.showStoryDetailMap();
+    if (this.#map) {
+      const storyCoordinate = [
+        story.location.latitude,
+        story.location.longitude,
+      ];
+      const markerOptions = { alt: story.title };
+      const popupOptions = { content: story.title };
+
+      this.#map.changeCamera(storyCoordinate);
+      this.#map.addMarker(storyCoordinate, markerOptions, popupOptions);
+    }
+
+    // Actions buttons
+    this.#presenter.showSaveButton();
+    this.addNotifyMeEventListener();
   }
 
   populateStoryDetailError(message) {
