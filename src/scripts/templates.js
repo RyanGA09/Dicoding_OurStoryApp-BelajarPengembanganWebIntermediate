@@ -12,6 +12,8 @@ export function generateLoaderAbsoluteTemplate() {
 export function generateMainNavigationListTemplate() {
   return `
     <li><a class="story-list-button" href="#/">Daftar Cerita Pengguna</a></li>
+    <li><a class="story-list-button" href="#/bookmark">Cerita Tersimpan</a></li>
+    <li><a class="story-list-button" href="#/about">About</a></li>
   `;
 }
 
@@ -27,7 +29,6 @@ export function generateAuthenticatedNavigationListTemplate() {
   return `
     <li id="push-notification-tools" class="push-notification-tools"></li>
     <li><a class="btn new-story-button" href="#/new">Buat Cerita <i class="fas fa-plus"></i></a></li>
-    <li><a class="btn about-story-button btn-outline" href="#/about">About</a></li>
     <li><a id="logout-button" class="logout-button" href="#/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
   `;
 }

@@ -50,12 +50,12 @@ export default class HomePage {
   }
 
   showLoading() {
-    document.getElementById("story-list-loading-container").innerHTML =
+    document.getElementById("storys-list-loading-container").innerHTML =
       generateLoaderAbsoluteTemplate();
   }
 
   hideLoading() {
-    document.getElementById("story-list-loading-container").innerHTML = "";
+    document.getElementById("storys-list-loading-container").innerHTML = "";
   }
 
   populateStoriesListEmpty() {
@@ -69,7 +69,7 @@ export default class HomePage {
   }
 
   populateStoryList(message, stories) {
-    if (reports.length <= 0) {
+    if (stories.length <= 0) {
       this.populateStoriesListEmpty();
       return;
     }
@@ -85,20 +85,20 @@ export default class HomePage {
         return accumulator.concat(
           generateStoryItemTemplate({
             ...story,
-            storyDescription: story.story.description,
+            description: story.story.description,
           })
         );
       })
       .join("");
 
     document.getElementById(
-      "story-list"
-    ).innerHTML = `<div class="story-list">${html}</div>`;
+      "storys-list"
+    ).innerHTML = `<div class="storys-list">${html}</div>`;
   }
 
   populateStoryListError(message) {
     document.getElementById(
-      "story-list"
+      "storys-list"
     ).innerHTML = `<p>Gagal memuat cerita: ${message}</p>`;
   }
 }

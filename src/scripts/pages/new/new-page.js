@@ -99,21 +99,17 @@ export default class NewPage {
   }
 
   #setupForm() {
-    this.#form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const description = this.#form.elements.namedItem("description").value;
-      // const photo = this.#takenDocumentations[0]?.blob || null;
-      const photo = this.#takenDocumentations.map((picture) => picture.blob);
-      const latitude = this.#form.elements.namedItem("latitude").value;
-      const longitude = this.#form.elements.namedItem("longitude").value;
+    this.#form = document.getElementById("new-form");
+    this.#form.addEventListener("submit", async (event) => {
+      event.preventDefault();
 
-      if (!photo) return alert("Mohon sertakan gambar.");
-      await this.#presenter.postNewStory({
-        description,
-        photo,
-        latitude,
-        longitude,
-      });
+      const data = {
+        description: this.#form.elements.namedItem("description").value,
+        photo: this.#takenDocumentations.map((picture) => picture.blob),
+        latitude: this.#form.elements.namedItem("latitude").value,
+        longitude: this.#form.elements.namedItem("longitude").value,
+      };
+      await this.#presenter.postNewReport(data);
     });
 
     document
@@ -126,7 +122,7 @@ export default class NewPage {
       .getElementById("photo-input")
       .addEventListener("change", async (e) => {
         const file = e.target.files[0];
-        if (file) await this.#addPhoto(file);
+        if (file) await this.#addTakenPicture(file);
       });
 
     document
@@ -145,25 +141,39 @@ export default class NewPage {
   }
 
   async initialMap() {
-    this.#map = await Map.build("#map", { zoom: 15, locate: true });
-    const center = this.#map.getCenter();
-    this.#updateLatLngInput(center.latitude, center.longitude);
-    const marker = this.#map.addMarker([center.latitude, center.longitude], {
-      draggable: "true",
+    this.#map = await Map.build("#map", {
+      zoom: 15,
+      locate: true,
     });
-    marker.addEventListener("move", (e) => {
-      const coord = e.target.getLatLng();
-      this.#updateLatLngInput(coord.lat, coord.lng);
+
+    // Preparing marker for select coordinate
+    const centerCoordinate = this.#map.getCenter();
+
+    this.#updateLatLngInput(
+      centerCoordinate.latitude,
+      centerCoordinate.longitude
+    );
+
+    const draggableMarker = this.#map.addMarker(
+      [centerCoordinate.latitude, centerCoordinate.longitude],
+      { draggable: "true" }
+    );
+    draggableMarker.addEventListener("move", (event) => {
+      const coordinate = event.target.getLatLng();
+      this.#updateLatLngInput(coordinate.lat, coordinate.lng);
     });
-    this.#map.addMapEventListener("click", (e) => {
-      marker.setLatLng(e.latlng);
-      e.sourceTarget.flyTo(e.latlng);
+
+    this.#map.addMapEventListener("click", (event) => {
+      draggableMarker.setLatLng(event.latlng);
+
+      // Keep center with user view
+      event.sourceTarget.flyTo(event.latlng);
     });
   }
 
-  #updateLatLngInput(lat, lng) {
-    this.#form.elements.namedItem("latitude").value = lat;
-    this.#form.elements.namedItem("longitude").value = lng;
+  #updateLatLngInput(latitude, longitude) {
+    this.#form.elements.namedItem("latitude").value = latitude;
+    this.#form.elements.namedItem("longitude").value = longitude;
   }
 
   #setupCamera() {
@@ -176,35 +186,27 @@ export default class NewPage {
     }
     this.#camera.addCheeseButtonListener("#take-photo-button", async () => {
       const image = await this.#camera.takePicture();
-      await this.#addPhoto(image);
+      await this.#addTakenPicture(image);
       await this.#populateTakenPictures();
     });
   }
 
-  async #addPhoto(image) {
-    const blob =
-      image instanceof String
-        ? await convertBase64ToBlob(image, "image/png")
-        : image;
-    this.#takenDocumentations = [{ id: `${Date.now()}`, blob }];
-    // await this.#showPreview();
+  async #addTakenPicture(image) {
+    let blob = image;
+
+    if (image instanceof String) {
+      blob = await convertBase64ToBlob(image, "image/png");
+    }
+
+    const newDocumentation = {
+      id: `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
+      blob: blob,
+    };
     this.#takenDocumentations = [
       ...this.#takenDocumentations,
       newDocumentation,
     ];
   }
-
-  // async #showPreview() {
-  //   const preview = document.getElementById("photo-preview");
-  //   preview.innerHTML = this.#takenPhotos
-  //     .map(
-  //       (p, i) =>
-  //         `<li><img src="${URL.createObjectURL(p.blob)}" alt="Foto ${
-  //           i + 1
-  //         }" /></li>`
-  //     )
-  //     .join("");
-  // }
 
   async #populateTakenPictures() {
     const html = this.#takenDocumentations.reduce(
