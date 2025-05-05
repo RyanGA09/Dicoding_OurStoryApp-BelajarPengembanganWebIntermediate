@@ -60,7 +60,7 @@ export default class NewPage {
                     </div>
                   </div>
                 </div>
-              <ul id="photo-preview" class="new-form__documentations__outputs></ul>
+              <ul id="photo-preview" class="new-form__documentations__outputs"></ul>
             </div>
 
             <div class="form-control">
@@ -99,7 +99,7 @@ export default class NewPage {
   }
 
   #setupForm() {
-    this.#form = document.getElementById("new-form");
+    this.#form = document.getElementById("new-story-form");
     this.#form.addEventListener("submit", async (event) => {
       event.preventDefault();
 
@@ -126,7 +126,7 @@ export default class NewPage {
       });
 
     document
-      .getElementById("toggle-camera-button")
+      .getElementById("open-documentations-camera-button")
       .addEventListener("click", async () => {
         const cameraContainer = document.getElementById("camera-container");
         this.#isCameraOpen = !this.#isCameraOpen;

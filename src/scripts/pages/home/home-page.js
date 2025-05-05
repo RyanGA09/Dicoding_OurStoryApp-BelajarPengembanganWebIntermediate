@@ -74,22 +74,26 @@ export default class HomePage {
       return;
     }
 
-    const html = stories
-      .reduce((accumulator, story) => {
-        if (this.#map) {
-          const coordinate = [story.lat, story.lon];
-          const markerOptions = { alt: story.name };
-          const popupOptions = { content: story.description };
-          this.#map.addMarker(coordinate, markerOptions, popupOptions);
-        }
-        return accumulator.concat(
-          generateStoryItemTemplate({
-            ...story,
-            description: story.story.description,
-          })
-        );
-      })
-      .join("");
+    const html = stories.reduce((accumulator, story) => {
+      if (!story.description) {
+        console.warn("Data story tidak lengkap:", story);
+        return accumulator;
+      }
+
+      if (this.#map) {
+        const coordinate = [story.lat, story.lon];
+        const markerOptions = { alt: story.name };
+        const popupOptions = { content: story.description };
+        this.#map.addMarker(coordinate, markerOptions, popupOptions);
+      }
+
+      return accumulator.concat(
+        generateStoryItemTemplate({
+          ...story,
+          description: story.description,
+        })
+      );
+    }, "");
 
     document.getElementById(
       "storys-list"

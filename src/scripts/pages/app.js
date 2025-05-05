@@ -72,21 +72,6 @@ export default class App {
     });
   }
 
-  // async renderPage() {
-  //   const url = getActiveRoute();
-  //   const page = routes[url];
-
-  //   if (!document.startViewTransition) {
-  //     this.#content.innerHTML = await page.render();
-  //     await page.afterRender();
-  //     return;
-  //   }
-
-  //   document.startViewTransition(async () => {
-  //     this.#content.innerHTML = await page.render();
-  //     await page.afterRender();
-  //   });
-  // }
   async renderPage() {
     const url = getActiveRoute();
     const route = routes[url];

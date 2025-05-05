@@ -4,6 +4,7 @@ import {
   generateStoryDetailErrorTemplate,
   generateStoryDetailTemplate,
 } from "../../templates";
+import { createCarousel } from "../../utils";
 import StoryDetailPresenter from "./story-detail-presenter";
 import { parseActivePathname } from "../../routes/url-parser";
 import Map from "../../utils/map";
@@ -15,15 +16,15 @@ export default class StoryDetailPage {
 
   async render() {
     return `
-      <section>
-        <div class="story-detail__container">
-          <div id="story-detail" class="story-detail"></div>
-          <div id="story-detail-loading-container"></div>
-        </div>
-        <div id="map" class="story-detail__map"></div>
-        <div id="map-loading-container"></div>
-      </section>
-    `;
+    <section>
+      <div class="story-detail__container">
+        <div id="story-detail" class="story-detail"></div>
+        <div id="map-loading-container"></div> <!-- Tambahkan ini -->
+        <div id="map" style="height: 400px;"></div> <!-- Tambahkan ini -->
+        <div id="story-detail-loading-container"></div>
+      </div>
+    </section>
+  `;
   }
 
   async afterRender() {
@@ -34,7 +35,7 @@ export default class StoryDetailPage {
 
     // this.#setupForm();
 
-    await this.#presenter.loadStoryDetail();
+    await this.#presenter.showStoryDetail();
   }
 
   async initialMap() {
@@ -72,8 +73,11 @@ export default class StoryDetailPage {
   }
 
   showMapLoading() {
-    document.getElementById("map-loading-container").innerHTML =
-      generateLoaderAbsoluteTemplate();
+    const el = document.getElementById("map-loading-container");
+    if (el) {
+      el.innerHTML = generateLoaderAbsoluteTemplate();
+    }
+    console.log(document.getElementById("map-loading-container")); // Harusnya bukan null
   }
 
   hideMapLoading() {
@@ -85,7 +89,7 @@ export default class StoryDetailPage {
       generateStoryDetailTemplate({
         description: story.description,
         photoUrl: story.photoUrl,
-        createdAt: story.createdA,
+        createdAt: story.createdAt,
         location: story.location,
       });
 
@@ -94,7 +98,12 @@ export default class StoryDetailPage {
 
     // Map
     await this.#presenter.showStoryDetailMap();
-    if (this.#map) {
+    if (
+      this.#map &&
+      story.location &&
+      typeof story.location.latitude === "number" &&
+      typeof story.location.longitude === "number"
+    ) {
       const storyCoordinate = [
         story.location.latitude,
         story.location.longitude,
@@ -104,6 +113,11 @@ export default class StoryDetailPage {
 
       this.#map.changeCamera(storyCoordinate);
       this.#map.addMarker(storyCoordinate, markerOptions, popupOptions);
+    } else {
+      console.warn(
+        "Koordinat tidak valid atau tidak ditemukan:",
+        story.location
+      );
     }
 
     // Actions buttons
@@ -112,8 +126,7 @@ export default class StoryDetailPage {
   }
 
   populateStoryDetailError(message) {
-    document.getElementById(
-      "story-detail"
-    ).innerHTML = `<p>Gagal memuat detail cerita: ${message}</p>`;
+    document.getElementById("report-detail").innerHTML =
+      generateStoryDetailErrorTemplate(message);
   }
 }
