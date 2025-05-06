@@ -12,6 +12,7 @@
     "vite": "^6.2.0"
   },
   "dependencies": {
+    "latlng": "^1.0.0",
     "leaflet": "^1.9.4",
     "tiny-slider": "^2.9.4"
   }

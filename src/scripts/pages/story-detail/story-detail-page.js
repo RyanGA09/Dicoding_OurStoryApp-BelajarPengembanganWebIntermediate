@@ -19,8 +19,6 @@ export default class StoryDetailPage {
     <section>
       <div class="story-detail__container">
         <div id="story-detail" class="story-detail"></div>
-        <div id="map-loading-container"></div> <!-- Tambahkan ini -->
-        <div id="map" style="height: 400px;"></div> <!-- Tambahkan ini -->
         <div id="story-detail-loading-container"></div>
       </div>
     </section>
@@ -33,19 +31,13 @@ export default class StoryDetailPage {
       apiModel: StoryAPI,
     });
 
-    // this.#setupForm();
-
-    await this.#presenter.showStoryDetail();
-  }
-
-  async initialMap() {
-    this.#map = await Map.build("#map", { zoom: 12 });
+    this.#presenter.showStoryDetail();
   }
 
   populateStoryDetail(message, story) {
     document.getElementById("story-detail").innerHTML = `
       <div class="story-card-detail">
-        <img src="${story.photoUrl}" alt="Story Image"/>
+        <img src="${story.photoStory}" alt="Story Image"/>
         <div class="story-info">
           <h3>${story.name}</h3>
           <p>${story.description}</p>
@@ -73,11 +65,8 @@ export default class StoryDetailPage {
   }
 
   showMapLoading() {
-    const el = document.getElementById("map-loading-container");
-    if (el) {
-      el.innerHTML = generateLoaderAbsoluteTemplate();
-    }
-    console.log(document.getElementById("map-loading-container")); // Harusnya bukan null
+    document.getElementById("map-loading-container").innerHTML =
+      generateLoaderAbsoluteTemplate();
   }
 
   hideMapLoading() {
@@ -88,7 +77,7 @@ export default class StoryDetailPage {
     document.getElementById("story-detail").innerHTML =
       generateStoryDetailTemplate({
         description: story.description,
-        photoUrl: story.photoUrl,
+        photoStory: story.photoStory,
         createdAt: story.createdAt,
         location: story.location,
       });
@@ -98,12 +87,7 @@ export default class StoryDetailPage {
 
     // Map
     await this.#presenter.showStoryDetailMap();
-    if (
-      this.#map &&
-      story.location &&
-      typeof story.location.latitude === "number" &&
-      typeof story.location.longitude === "number"
-    ) {
+    if (this.#map) {
       const storyCoordinate = [
         story.location.latitude,
         story.location.longitude,
@@ -125,8 +109,12 @@ export default class StoryDetailPage {
     this.addNotifyMeEventListener();
   }
 
+  async initialMap() {
+    this.#map = await Map.build("#map", { zoom: 15 });
+  }
+
   populateStoryDetailError(message) {
-    document.getElementById("report-detail").innerHTML =
+    document.getElementById("story-detail").innerHTML =
       generateStoryDetailErrorTemplate(message);
   }
 }

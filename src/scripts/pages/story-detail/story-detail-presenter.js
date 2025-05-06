@@ -38,7 +38,7 @@ export default class StoryDetailPresenter {
 
       this.#view.populateStoryDetailAndInitialMap(response.message, story);
     } catch (error) {
-      console.error("showStoryDetail: error:", error);
+      console.error("showStoryDetailAndMap: error:", error);
       this.#view.populateStoryDetailError(error.message);
     } finally {
       this.#view.hideStoryDetailLoading();

@@ -184,7 +184,7 @@ export default class NewPage {
         canvas: document.getElementById("camera-canvas"),
       });
     }
-    this.#camera.addCheeseButtonListener("#take-photo-button", async () => {
+    this.#camera.addCheeseButtonListener("#camera-take-button", async () => {
       const image = await this.#camera.takePicture();
       await this.#addTakenPicture(image);
       await this.#populateTakenPictures();
@@ -272,11 +272,12 @@ export default class NewPage {
   }
 
   showMapLoading() {
-    document.getElementById("map").innerHTML = generateLoaderAbsoluteTemplate();
+    document.getElementById("map-loading-container").innerHTML =
+      generateLoaderAbsoluteTemplate();
   }
 
   hideMapLoading() {
-    document.getElementById("map").innerHTML = "";
+    document.getElementById("map-loading-container").innerHTML = "";
   }
 
   showSubmitLoadingButton() {
