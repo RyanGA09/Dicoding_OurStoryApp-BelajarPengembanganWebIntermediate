@@ -158,10 +158,6 @@ export default class Map {
     });
   }
 
-  /**
-   * Reference of using this static method:
-   * https://stackoverflow.com/questions/43431550/how-can-i-invoke-asynchronous-code-within-a-constructor
-   * */
   static async build(selector, options = {}) {
     if ("center" in options && options.center) {
       return new Map(selector, options);
@@ -169,7 +165,6 @@ export default class Map {
 
     const jakartaCoordinate = [-6.2, 106.816666];
 
-    // Using Geolocation API
     if ("locate" in options && options.locate) {
       try {
         const position = await Map.getCurrentPosition();
@@ -227,7 +222,7 @@ export default class Map {
 
   createIcon(options = {}) {
     return icon({
-      ...Icon.Default.prototype.options,
+      ...L.Icon.Default.prototype.options, // Perbaiki penggunaan L.Icon.Default
       iconRetinaUrl: markerIcon2x,
       iconUrl: markerIcon,
       shadowUrl: markerShadow,

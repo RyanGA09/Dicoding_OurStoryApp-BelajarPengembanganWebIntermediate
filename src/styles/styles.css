@@ -87,40 +87,14 @@ textarea {
   min-height: 44px;
   min-width: 44px;
   width: 100%;
-  padding: 12px 10px;
-  border-radius: 4px;
-  border: 1px solid #d4d4d4;
-
-  font-size: 1rem;
-  font-family: "Inter", sans-serif;
-
-  resize: vertical;
-}
-
-input[type="radio"],
-input[type="checkbox"] {
-  min-height: auto;
-  min-width: auto;
-  width: auto;
-  display: inline;
-
-  transition: 150ms ease-in-out;
-}
-
-textarea {
-  min-height: 150px;
-}
-
-select {
-  display: inline-block;
-  border-radius: 4px;
-  padding-block: 8px;
-  padding-inline: 10px 20px;
-
-  font-size: 1rem;
-  line-height: 1rem;
-
-  box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
+  max-width: 100%;
+  height: 180px;
+  overflow: hidden;
+  margin-top: 32px;
+  background: #f1f1f1;
+  border-top: 1px solid #ccc;
+  padding: 12px 16px;
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 .btn {
