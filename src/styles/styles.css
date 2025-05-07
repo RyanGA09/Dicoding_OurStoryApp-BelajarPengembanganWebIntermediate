@@ -6,10 +6,10 @@
 }
 
 :root {
-  --primary-color: #d97706;
+  --primary-color: #065ad9;
   --primary-text-color: #ffffff;
-  --primary-hover-color: #b66200;
-  --primary-shadow-color: #d9770699;
+  --primary-hover-color: #0064b6;
+  --primary-shadow-color: #063bd999;
 
   --secondary-color: #6c757d;
   --secondary-text-color: #ffffff;
@@ -40,7 +40,7 @@
 }
 
 body {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 .skip-link {
@@ -92,13 +92,13 @@ textarea {
   border: 1px solid #d4d4d4;
 
   font-size: 1rem;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
 
   resize: vertical;
 }
 
-input[type="radio"],
-input[type="checkbox"] {
+input[type='radio'],
+input[type='checkbox'] {
   min-height: auto;
   min-width: auto;
   width: auto;
@@ -221,7 +221,7 @@ form .form-buttons {
 }
 
 .loader::after {
-  content: "";
+  content: '';
   display: inline-block;
   box-sizing: border-box;
   width: 50px;
@@ -296,7 +296,10 @@ header {
 
   transform: translateY(-100%);
   opacity: 0;
-  transition: opacity 150ms, inset-block-start 0ms 150ms, transform 0ms 150ms;
+  transition:
+    opacity 150ms,
+    inset-block-start 0ms 150ms,
+    transform 0ms 150ms;
 
   z-index: 9999;
 }
@@ -521,7 +524,7 @@ header {
 .story-detail__header {
   padding-block: 80px;
   min-height: 600px;
-  background-image: url("../public/images/orange-background.png");
+  background-image: url('../public/images/orange-background.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top;
@@ -777,7 +780,7 @@ header {
 .new-story__header {
   padding-block: 70px;
   background-color: #d9770626;
-  background-image: url("../public/images/orange-background.png");
+  background-image: url('../public/images/orange-background.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top;

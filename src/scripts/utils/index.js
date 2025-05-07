@@ -1,16 +1,3 @@
-// export function showFormattedDate(date, locale = 'en-US', options = {}) {
-//   return new Date(date).toLocaleDateString(locale, {
-//     year: 'numeric',
-//     month: 'long',
-//     day: 'numeric',
-//     ...options,
-//   });
-// }
-
-// export function sleep(time = 1000) {
-//   return new Promise((resolve) => setTimeout(resolve, time));
-// }
-
 export function sleep(time = 1000) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
@@ -25,7 +12,7 @@ export function showFormattedDate(date, locale = "en-US", options = {}) {
 }
 
 export async function createCarousel(containerElement, options = {}) {
-  // const { tns } = await import("tiny-slider");
+  const { tns } = await import("tiny-slider");
 
   return tns({
     container: containerElement,
@@ -43,6 +30,9 @@ export async function createCarousel(containerElement, options = {}) {
   });
 }
 
+/**
+ * Ref: https://stackoverflow.com/questions/18650168/convert-blob-to-base64
+ */
 export function convertBlobToBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -52,6 +42,9 @@ export function convertBlobToBase64(file) {
   });
 }
 
+/**
+ * Ref: https://stackoverflow.com/questions/16245767/creating-a-blob-from-a-base64-string-in-javascript
+ */
 export function convertBase64ToBlob(
   base64Data,
   contentType = "",

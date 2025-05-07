@@ -1,27 +1,6 @@
-// import { getStoryById } from "../../data/api";
-// import { parseActivePathname } from "../../routes/url-parser";
-
-// export default class DetailPresenter {
-//   #view;
-
-//   constructor(view) {
-//     this.#view = view;
-//   }
-
-//   async showStory() {
-//     const { id } = parseActivePathname();
-//     try {
-//       const story = await getStoryById(id);
-//       this.#view.showStory(story);
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   }
-// }
-
 import { storyMapper } from "../../data/api-mapper";
 
-export default class storyDetailPresenter {
+export default class StoryDetailPresenter {
   #storyId;
   #view;
   #apiModel;
@@ -32,79 +11,42 @@ export default class storyDetailPresenter {
     this.#apiModel = apiModel;
   }
 
-  async showstoryDetailMap() {
+  async showStoryDetailMap() {
     this.#view.showMapLoading();
     try {
       await this.#view.initialMap();
     } catch (error) {
-      console.error("showstoryDetailMap: error:", error);
+      console.error("showStoryDetailMap: error:", error);
     } finally {
       this.#view.hideMapLoading();
     }
   }
 
-  async showstoryDetail() {
-    this.#view.showstoryDetailLoading();
+  async showStoryDetail() {
+    this.#view.showStoryDetailLoading();
     try {
-      const response = await this.#apiModel.getstoryById(this.#storyId);
+      const response = await this.#apiModel.getStoryById(this.#storyId);
 
       if (!response.ok) {
-        console.error("showstoryDetailAndMap: response:", response);
-        this.#view.populatestoryDetailError(response.message);
-        return;
-      }
-      const story = await storyMapper(response.data);
-      console.log(story); // for debugging purpose, remove after checking it
-
-      this.#view.populatestoryDetailAndInitialMap(response.message, story);
-    } catch (error) {
-      console.error("showstoryDetailAndMap: error:", error);
-      this.#view.populatestoryDetailError(error.message);
-    } finally {
-      this.#view.hidestoryDetailLoading();
-    }
-  }
-
-  async getCommentsList() {
-    this.#view.showCommentsLoading();
-    try {
-      const response = await this.#apiModel.getAllCommentsBystoryId(
-        this.#storyId
-      );
-      this.#view.populatestoryDetailComments(response.message, response.data);
-    } catch (error) {
-      console.error("getCommentsList: error:", error);
-      this.#view.populateCommentsListError(error.message);
-    } finally {
-      this.#view.hideCommentsLoading();
-    }
-  }
-
-  async postNewComment({ body }) {
-    this.#view.showSubmitLoadingButton();
-    try {
-      const response = await this.#apiModel.storeNewCommentBystoryId(
-        this.#storyId,
-        { body }
-      );
-
-      if (!response.ok) {
-        console.error("postNewComment: response:", response);
-        this.#view.postNewCommentFailed(response.message);
+        console.error("showStoryDetail: response:", response);
+        this.#view.populateStoryDetailError(response.message);
         return;
       }
 
-      this.#view.postNewCommentSuccessfully(response.message, response.data);
+      const story = await storyMapper(response.story);
+      console.log(story); // untuk debugging sementara
+
+      this.#view.populateStoryDetailAndInitialMap(response.message, story);
     } catch (error) {
-      console.error("postNewComment: error:", error);
-      this.#view.postNewCommentFailed(error.message);
+      console.error("showStoryDetailAndMap: error:", error);
+      this.#view.populateStoryDetailError(error.message);
     } finally {
-      this.#view.hideSubmitLoadingButton();
+      this.#view.hideStoryDetailLoading();
     }
   }
 
   showSaveButton() {
-    if (this.#isstorySaved()) {
+    if (this.#isStorySaved()) {
       this.#view.renderRemoveButton();
       return;
     }
@@ -112,7 +54,7 @@ export default class storyDetailPresenter {
     this.#view.renderSaveButton();
   }
 
-  #isstorySaved() {
+  #isStorySaved() {
     return false;
   }
 }

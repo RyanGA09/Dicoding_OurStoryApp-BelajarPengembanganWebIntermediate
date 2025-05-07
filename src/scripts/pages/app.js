@@ -1,52 +1,5 @@
-// import { getActiveRoute } from "../routes/url-parser";
-// import { routes } from "../routes/routes";
-
-// export default class App {
-//   #content;
-//   #drawerButton;
-//   #navigationDrawer;
-
-//   constructor({ navigationDrawer, drawerButton, content }) {
-//     this.#content = content;
-//     this.#drawerButton = drawerButton;
-//     this.#navigationDrawer = navigationDrawer;
-
-//     this.#setupDrawer();
-//   }
-
-//   #setupDrawer() {
-//     this.#drawerButton.addEventListener("click", () => {
-//       this.#navigationDrawer.classList.toggle("open");
-//     });
-
-//     document.body.addEventListener("click", (event) => {
-//       if (
-//         !this.#navigationDrawer.contains(event.target) &&
-//         !this.#drawerButton.contains(event.target)
-//       ) {
-//         this.#navigationDrawer.classList.remove("open");
-//       }
-//     });
-//   }
-
-//   async renderPage() {
-//     const url = getActiveRoute();
-//     const page = routes[url];
-
-//     if (!document.startViewTransition) {
-//       this.#content.innerHTML = await page.render();
-//       await page.afterRender();
-//       return;
-//     }
-
-//     document.startViewTransition(async () => {
-//       this.#content.innerHTML = await page.render();
-//       await page.afterRender();
-//     });
-//   }
-// }
-
 import { getActiveRoute } from "../routes/url-parser";
+import { routes } from "../routes/routes";
 import {
   generateAuthenticatedNavigationListTemplate,
   generateMainNavigationListTemplate,
@@ -54,18 +7,17 @@ import {
 } from "../templates";
 import { setupSkipToContent, transitionHelper } from "../utils";
 import { getAccessToken, getLogout } from "../utils/auth";
-import { routes } from "../routes/routes";
 
 export default class App {
   #content;
   #drawerButton;
-  #drawerNavigation;
+  #navigationDrawer;
   #skipLinkButton;
 
-  constructor({ content, drawerNavigation, drawerButton, skipLinkButton }) {
+  constructor({ navigationDrawer, drawerButton, content, skipLinkButton }) {
     this.#content = content;
     this.#drawerButton = drawerButton;
-    this.#drawerNavigation = drawerNavigation;
+    this.#navigationDrawer = navigationDrawer;
     this.#skipLinkButton = skipLinkButton;
 
     this.#init();
@@ -78,32 +30,24 @@ export default class App {
 
   #setupDrawer() {
     this.#drawerButton.addEventListener("click", () => {
-      this.#drawerNavigation.classList.toggle("open");
+      this.#navigationDrawer.classList.toggle("open");
     });
 
     document.body.addEventListener("click", (event) => {
-      const isTargetInsideDrawer = this.#drawerNavigation.contains(
-        event.target
-      );
-      const isTargetInsideButton = this.#drawerButton.contains(event.target);
-
-      if (!(isTargetInsideDrawer || isTargetInsideButton)) {
-        this.#drawerNavigation.classList.remove("open");
+      if (
+        !this.#navigationDrawer.contains(event.target) &&
+        !this.#drawerButton.contains(event.target)
+      ) {
+        this.#navigationDrawer.classList.remove("open");
       }
-
-      this.#drawerNavigation.querySelectorAll("a").forEach((link) => {
-        if (link.contains(event.target)) {
-          this.#drawerNavigation.classList.remove("open");
-        }
-      });
     });
   }
 
   #setupNavigationList() {
     const isLogin = !!getAccessToken();
     const navListMain =
-      this.#drawerNavigation.children.namedItem("navlist-main");
-    const navList = this.#drawerNavigation.children.namedItem("navlist");
+      this.#navigationDrawer.children.namedItem("navlist-main");
+    const navList = this.#navigationDrawer.children.namedItem("navlist");
 
     // User not log in
     if (!isLogin) {
