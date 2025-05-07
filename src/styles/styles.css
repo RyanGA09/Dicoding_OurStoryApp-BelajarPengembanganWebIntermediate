@@ -6,17 +6,10 @@
 }
 
 :root {
-<<<<<<< HEAD
   --primary-color: #065ad9;
   --primary-text-color: #ffffff;
   --primary-hover-color: #0064b6;
   --primary-shadow-color: #063bd999;
-=======
-  --primary-color: #d97706;
-  --primary-text-color: #ffffff;
-  --primary-hover-color: #b66200;
-  --primary-shadow-color: #d9770699;
->>>>>>> 1f994dba64a00c9cc8c8a81a9f0a74b0f4447aac
 
   --secondary-color: #6c757d;
   --secondary-text-color: #ffffff;
@@ -47,11 +40,7 @@
 }
 
 body {
-<<<<<<< HEAD
   font-family: 'Inter', sans-serif;
-=======
-  font-family: "Inter", sans-serif;
->>>>>>> 1f994dba64a00c9cc8c8a81a9f0a74b0f4447aac
 }
 
 .skip-link {
@@ -103,22 +92,13 @@ textarea {
   border: 1px solid #d4d4d4;
 
   font-size: 1rem;
-<<<<<<< HEAD
   font-family: 'Inter', sans-serif;
-=======
-  font-family: "Inter", sans-serif;
->>>>>>> 1f994dba64a00c9cc8c8a81a9f0a74b0f4447aac
 
   resize: vertical;
 }
 
-<<<<<<< HEAD
 input[type='radio'],
 input[type='checkbox'] {
-=======
-input[type="radio"],
-input[type="checkbox"] {
->>>>>>> 1f994dba64a00c9cc8c8a81a9f0a74b0f4447aac
   min-height: auto;
   min-width: auto;
   width: auto;
@@ -241,11 +221,7 @@ form .form-buttons {
 }
 
 .loader::after {
-<<<<<<< HEAD
   content: '';
-=======
-  content: "";
->>>>>>> 1f994dba64a00c9cc8c8a81a9f0a74b0f4447aac
   display: inline-block;
   box-sizing: border-box;
   width: 50px;
@@ -320,14 +296,10 @@ header {
 
   transform: translateY(-100%);
   opacity: 0;
-<<<<<<< HEAD
   transition:
     opacity 150ms,
     inset-block-start 0ms 150ms,
     transform 0ms 150ms;
-=======
-  transition: opacity 150ms, inset-block-start 0ms 150ms, transform 0ms 150ms;
->>>>>>> 1f994dba64a00c9cc8c8a81a9f0a74b0f4447aac
 
   z-index: 9999;
 }
@@ -552,11 +524,7 @@ header {
 .story-detail__header {
   padding-block: 80px;
   min-height: 600px;
-<<<<<<< HEAD
   background-image: url('../public/images/orange-background.png');
-=======
-  background-image: url("../public/images/orange-background.png");
->>>>>>> 1f994dba64a00c9cc8c8a81a9f0a74b0f4447aac
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top;
@@ -812,11 +780,7 @@ header {
 .new-story__header {
   padding-block: 70px;
   background-color: #d9770626;
-<<<<<<< HEAD
   background-image: url('../public/images/orange-background.png');
-=======
-  background-image: url("../public/images/orange-background.png");
->>>>>>> 1f994dba64a00c9cc8c8a81a9f0a74b0f4447aac
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top;
