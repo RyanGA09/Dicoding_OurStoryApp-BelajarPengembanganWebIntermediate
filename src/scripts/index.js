@@ -57,7 +57,11 @@
 // CSS imports
 import "../styles/styles.css";
 import "../styles/responsives.css";
+<<<<<<< HEAD
 import "tiny-slider/dist/tiny-slider.css";
+=======
+// import "tiny-slider/dist/tiny-slider.css";
+>>>>>>> 1f994dba64a00c9cc8c8a81a9f0a74b0f4447aac
 import "leaflet/dist/leaflet.css";
 
 // Components
@@ -68,7 +72,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   const app = new App({
     content: document.getElementById("main-content"),
     drawerButton: document.getElementById("drawer-button"),
+<<<<<<< HEAD
     navigationDrawer: document.getElementById("navigation-drawer"),
+=======
+    drawerNavigation: document.getElementById("navigation-drawer"),
+>>>>>>> 1f994dba64a00c9cc8c8a81a9f0a74b0f4447aac
     skipLinkButton: document.getElementById("skip-link"),
   });
   await app.renderPage();

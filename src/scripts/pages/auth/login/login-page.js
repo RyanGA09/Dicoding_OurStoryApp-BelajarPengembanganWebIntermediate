@@ -1,6 +1,38 @@
+<<<<<<< HEAD
 import LoginPresenter from "./login-presenter";
 import * as OurStoryAPI from "../../../data/api";
 import * as AuthModel from "../../../utils/auth";
+=======
+// import LoginPresenter from "./login-presenter.js";
+
+// export default class LoginPage {
+//   #presenter;
+
+//   async render() {
+//     return `
+//       <section class="container">
+//         <h1>Login</h1>
+//         <form id="login-form">
+//           <input type="email" id="email" placeholder="Email" required />
+//           <input type="password" id="password" placeholder="Password" required />
+//           <button type="submit">Login</button>
+//           <p>Belum punya akun? <a href="#/register">Register</a></p>
+//         </form>
+//       </section>
+//     `;
+//   }
+
+//   async afterRender() {
+//     this.#presenter = new LoginPresenter(this);
+//     await this.#presenter.init();
+//   }
+// }
+
+import LoginPresenter from "./login-presenter";
+// import * as OurStoryAPI from "../../data/api";
+import * as OurStoryAPI from "@/scripts/data/api";
+import * as AuthModel from "@/scripts/utils/auth";
+>>>>>>> 1f994dba64a00c9cc8c8a81a9f0a74b0f4447aac
 
 export default class LoginPage {
   #presenter = null;
@@ -58,7 +90,11 @@ export default class LoginPage {
           email: document.getElementById("email-input").value,
           password: document.getElementById("password-input").value,
         };
+<<<<<<< HEAD
         await this.#presenter.loginUser(data);
+=======
+        await this.#presenter.getLogin(data);
+>>>>>>> 1f994dba64a00c9cc8c8a81a9f0a74b0f4447aac
       });
   }
 

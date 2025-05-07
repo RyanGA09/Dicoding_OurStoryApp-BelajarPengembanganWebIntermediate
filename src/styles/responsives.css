@@ -24,14 +24,22 @@
 
 @media screen and (width > 600px) {
   ::view-transition-old(root) {
+<<<<<<< HEAD
     animation:
       fade-out 90ms cubic-bezier(0.4, 0, 1, 1) both,
+=======
+    animation: fade-out 90ms cubic-bezier(0.4, 0, 1, 1) both,
+>>>>>>> 1f994dba64a00c9cc8c8a81a9f0a74b0f4447aac
       slide-to-left 300ms cubic-bezier(0.4, 0, 0.2, 1) both;
   }
 
   ::view-transition-new(root) {
+<<<<<<< HEAD
     animation:
       fade-in 210ms cubic-bezier(0, 0, 0.2, 1) 90ms both,
+=======
+    animation: fade-in 210ms cubic-bezier(0, 0, 0.2, 1) 90ms both,
+>>>>>>> 1f994dba64a00c9cc8c8a81a9f0a74b0f4447aac
       slide-from-right 300ms cubic-bezier(0.4, 0, 0.2, 1) both;
   }
 

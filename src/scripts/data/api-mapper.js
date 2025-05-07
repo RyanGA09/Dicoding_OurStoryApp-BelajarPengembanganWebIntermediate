@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import Map from '../utils/map';
 
 export async function storyMapper(story) {
@@ -8,10 +9,23 @@ export async function storyMapper(story) {
       placeName: await Map.getPlaceNameByCoordinate(
         story.location.latitude,
         story.location.longitude
+=======
+import Map from "@/scripts/utils/map";
+
+export async function reportMapper(report) {
+  return {
+    ...report,
+    location: {
+      ...report.location,
+      placeName: await Map.getPlaceNameByCoordinate(
+        report.location.latitude,
+        report.location.longitude
+>>>>>>> 1f994dba64a00c9cc8c8a81a9f0a74b0f4447aac
       ),
     },
   };
 }
+<<<<<<< HEAD
 
 // import Map from "../utils/map";
 
@@ -38,3 +52,5 @@ export async function storyMapper(story) {
 //     },
 //   };
 // }
+=======
+>>>>>>> 1f994dba64a00c9cc8c8a81a9f0a74b0f4447aac
