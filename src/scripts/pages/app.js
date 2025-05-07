@@ -1,10 +1,10 @@
-import routes from '../routes/routes';
-import { getActiveRoute } from '../routes/url-parser';
+import { getActiveRoute } from "../routes/url-parser";
+import { routes } from "../routes/routes";
 
-class App {
-  #content = null;
-  #drawerButton = null;
-  #navigationDrawer = null;
+export default class App {
+  #content;
+  #drawerButton;
+  #navigationDrawer;
 
   constructor({ navigationDrawer, drawerButton, content }) {
     this.#content = content;
@@ -15,23 +15,17 @@ class App {
   }
 
   #setupDrawer() {
-    this.#drawerButton.addEventListener('click', () => {
-      this.#navigationDrawer.classList.toggle('open');
+    this.#drawerButton.addEventListener("click", () => {
+      this.#navigationDrawer.classList.toggle("open");
     });
 
-    document.body.addEventListener('click', (event) => {
+    document.body.addEventListener("click", (event) => {
       if (
         !this.#navigationDrawer.contains(event.target) &&
         !this.#drawerButton.contains(event.target)
       ) {
-        this.#navigationDrawer.classList.remove('open');
+        this.#navigationDrawer.classList.remove("open");
       }
-
-      this.#navigationDrawer.querySelectorAll('a').forEach((link) => {
-        if (link.contains(event.target)) {
-          this.#navigationDrawer.classList.remove('open');
-        }
-      });
     });
   }
 
@@ -39,9 +33,15 @@ class App {
     const url = getActiveRoute();
     const page = routes[url];
 
-    this.#content.innerHTML = await page.render();
-    await page.afterRender();
+    if (!document.startViewTransition) {
+      this.#content.innerHTML = await page.render();
+      await page.afterRender();
+      return;
+    }
+
+    document.startViewTransition(async () => {
+      this.#content.innerHTML = await page.render();
+      await page.afterRender();
+    });
   }
 }
-
-export default App;

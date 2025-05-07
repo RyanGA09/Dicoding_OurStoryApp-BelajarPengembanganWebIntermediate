@@ -1,5 +1,5 @@
 {
-  "name": "starter-project-with-vite",
+  "name": "ourstory-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,5 +10,8 @@
   },
   "devDependencies": {
     "vite": "^6.2.0"
+  },
+  "dependencies": {
+    "leaflet": "^1.9.4"
   }
 }
