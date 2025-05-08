@@ -91,13 +91,22 @@ export function generateStoryDetailErrorTemplate(message) {
   `;
 }
 
+export function generateSaveStoryButtonTemplate() {
+  return `
+    <button id="story-detail-save" class="btn btn-transparent">
+      Simpan Cerita <i class="far fa-bookmark"></i>
+    </button>
+  `;
+}
+
 export function generateStoryDetailTemplate({
   name,
   description,
   photoUrl,
   createdAt,
-  lat,
-  lon,
+  // lat,
+  // lon,
+  location,
 }) {
   const createdAtFormatted = showFormattedDate(createdAt, "id-ID");
 
@@ -111,7 +120,7 @@ export function generateStoryDetailTemplate({
             <i class="fas fa-calendar-alt"></i> ${createdAtFormatted}
           </div>
           <div id="location-coordinates" class="story-detail__location__coordinates">
-            <i class="fas fa-map-marker-alt"></i> ${lat}, ${lon}
+            <i class="fas fa-map-marker-alt"></i> ${location.latitude}, ${location.longitude}
           </div>
         </div>
       </div>

@@ -43,6 +43,7 @@ export default class HomePage {
       this.populateStoriesListEmpty();
       return;
     }
+    console.log(stories);
 
     const html = stories.reduce((accumulator, story) => {
       if (!story.description) {
@@ -51,10 +52,16 @@ export default class HomePage {
       }
 
       if (this.#map) {
-        const coordinate = [story.location.latitude, story.location.longitude];
-        const markerOptions = { alt: story.name };
-        const popupOptions = { content: story.name };
-        this.#map.addMarker(coordinate, markerOptions, popupOptions);
+        // console.warn(story);
+        if (story.location.latitude && story.location.longitude) {
+          const coordinate = [
+            story.location.latitude,
+            story.location.longitude,
+          ];
+          const markerOptions = { alt: story.name };
+          const popupOptions = { content: story.name };
+          this.#map.addMarker(coordinate, markerOptions, popupOptions);
+        }
       }
 
       return accumulator.concat(

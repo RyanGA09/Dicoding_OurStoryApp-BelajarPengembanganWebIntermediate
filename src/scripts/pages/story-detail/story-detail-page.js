@@ -3,6 +3,7 @@ import {
   generateLoaderAbsoluteTemplate,
   generateStoryDetailErrorTemplate,
   generateStoryDetailTemplate,
+  generateSaveStoryButtonTemplate,
 } from "../../templates";
 import { createCarousel } from "../../utils";
 import StoryDetailPresenter from "./story-detail-presenter";
@@ -37,7 +38,7 @@ export default class StoryDetailPage {
   // populateStoryDetail(message, story) {
   //   document.getElementById("story-detail").innerHTML = `
   //     <div class="story-card-detail">
-  //       <img src="${story.photoStory}" alt="Story Image"/>
+  //       <img src="${story.photoUrl}" alt="Story Image"/>
   //       <div class="story-info">
   //         <h3>${story.name}</h3>
   //         <p>${story.description}</p>
@@ -54,6 +55,25 @@ export default class StoryDetailPage {
   //     this.#map.addMarker(coordinate, markerOptions, popupOptions);
   //   }
   // }
+
+  renderSaveButton() {
+    document.getElementById("save-actions-container").innerHTML =
+      generateSaveStoryButtonTemplate();
+
+    document
+      .getElementById("story-detail-save")
+      .addEventListener("click", async () => {
+        alert("Fitur simpan Cerita akan segera hadir!");
+      });
+  }
+
+  addNotifyMeEventListener() {
+    document
+      .getElementById("story-detail-notify-me")
+      .addEventListener("click", () => {
+        alert("Fitur notifikasi cerita akan segera hadir!");
+      });
+  }
 
   showStoryDetailLoading() {
     document.getElementById("story-detail-loading-container").innerHTML =
@@ -78,7 +98,7 @@ export default class StoryDetailPage {
       generateStoryDetailTemplate({
         name: story.name,
         description: story.description,
-        photoStory: story.photoStory,
+        photoUrl: story.photoUrl,
         createdAt: story.createdAt,
         location: story.location,
       });
@@ -89,15 +109,13 @@ export default class StoryDetailPage {
     // Map
     await this.#presenter.showStoryDetailMap();
     if (this.#map) {
-      const storyCoordinate = [
-        story.location.latitude,
-        story.location.longitude,
-      ];
-      const markerOptions = { alt: story.title };
-      const popupOptions = { content: story.title };
-
-      this.#map.changeCamera(storyCoordinate);
-      this.#map.addMarker(storyCoordinate, markerOptions, popupOptions);
+      // console.warn(story);
+      if (story.location.latitude && story.location.longitude) {
+        const coordinate = [story.location.latitude, story.location.longitude];
+        const markerOptions = { alt: story.description };
+        const popupOptions = { content: story.description };
+        this.#map.addMarker(coordinate, markerOptions, popupOptions);
+      }
     } else {
       console.warn(
         "Koordinat tidak valid atau tidak ditemukan:",
