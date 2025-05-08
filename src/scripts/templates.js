@@ -104,8 +104,6 @@ export function generateStoryDetailTemplate({
   description,
   photoUrl,
   createdAt,
-  // lat,
-  // lon,
   location,
 }) {
   const createdAtFormatted = showFormattedDate(createdAt, "id-ID");

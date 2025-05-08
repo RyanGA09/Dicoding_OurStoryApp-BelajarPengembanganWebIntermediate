@@ -42,8 +42,6 @@ export async function addNewStory({ description, photo, latitude, longitude }) {
   formData.set("photo", photo);
   formData.set("latitude", latitude);
   formData.set("longitude", longitude);
-  // if (latitude) formData.append("latitude", latitude);
-  // if (longitude) formData.append("longitude", longitude);
 
   const fetchResponse = await fetch(ENDPOINTS.ADD_STORY, {
     method: "POST",
