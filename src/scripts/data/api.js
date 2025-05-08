@@ -15,66 +15,68 @@ const ENDPOINTS = {
 
 export async function registerUser({ name, email, password }) {
   const data = JSON.stringify({ name, email, password });
-  const res = await fetch(ENDPOINTS.REGISTER, {
+  const fetchResponse = await fetch(ENDPOINTS.REGISTER, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: data,
   });
-  const json = await res.json();
-  return { ...json, ok: res.ok };
+  const json = await fetchResponse.json();
+  return { ...json, ok: fetchResponse.ok };
 }
 
 export async function loginUser({ email, password }) {
   const data = JSON.stringify({ email, password });
-  const res = await fetch(ENDPOINTS.LOGIN, {
+  const fetchResponse = await fetch(ENDPOINTS.LOGIN, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: data,
   });
-  const json = await res.json();
-  return { ...json, ok: res.ok };
+  const json = await fetchResponse.json();
+  return { ...json, ok: fetchResponse.ok };
 }
 
-export async function addNewStory({ description, photo, lat, lon }) {
+export async function addNewStory({ description, photo, latitude, longitude }) {
   const token = getAccessToken();
   const formData = new FormData();
-  formData.append("description", description);
-  formData.append("photo", photo);
-  if (lat) formData.append("lat", lat);
-  if (lon) formData.append("lon", lon);
+  formData.set("description", description);
+  formData.set("photo", photo);
+  formData.set("latitude", latitude);
+  formData.set("longitude", longitude);
+  // if (latitude) formData.append("latitude", latitude);
+  // if (longitude) formData.append("longitude", longitude);
 
-  const res = await fetch(ENDPOINTS.ADD_STORY, {
+  const fetchResponse = await fetch(ENDPOINTS.ADD_STORY, {
     method: "POST",
     headers: { Authorization: `Bearer ${token}` },
     body: formData,
   });
-  const json = await res.json();
-  return { ...json, ok: res.ok };
+  const json = await fetchResponse.json();
+  return { ...json, ok: fetchResponse.ok };
 }
 
-export async function getAllStories({ page = 1, size = 10, location = 0 }) {
+export async function getAllStories() {
   const token = getAccessToken();
-  const url = `${ENDPOINTS.GET_ALL_STORIES}?page=${page}&size=${size}&location=${location}`;
-  const res = await fetch(url, {
+  // const url = `${ENDPOINTS.GET_ALL_STORIES}?page=${page}&size=${size}&location=${location}`;
+  const fetchResponse = await fetch(ENDPOINTS.GET_ALL_STORIES, {
     method: "GET",
     headers: { Authorization: `Bearer ${token}` },
   });
-  const json = await res.json();
-  return { ...json, ok: res.ok };
+  const json = await fetchResponse.json();
+  return { ...json, ok: fetchResponse.ok };
 }
 
 export async function getStoryById(id) {
   const token = getAccessToken();
-  const res = await fetch(ENDPOINTS.GET_STORY_BY_ID(id), {
+  const fetchResponse = await fetch(ENDPOINTS.GET_STORY_BY_ID(id), {
     headers: { Authorization: `Bearer ${token}` },
   });
-  const json = await res.json();
-  return { ...json, ok: res.ok };
+  const json = await fetchResponse.json();
+  return { ...json, ok: fetchResponse.ok };
 }
 
 export async function subscribeToStory({ endpoint, keys }) {
   const token = getAccessToken();
-  const res = await fetch(ENDPOINTS.SUBSCRIBE, {
+  const fetchResponse = await fetch(ENDPOINTS.SUBSCRIBE, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -82,13 +84,13 @@ export async function subscribeToStory({ endpoint, keys }) {
     },
     body: JSON.stringify({ endpoint, keys }),
   });
-  const json = await res.json();
-  return { ...json, ok: res.ok };
+  const json = await fetchResponse.json();
+  return { ...json, ok: fetchResponse.ok };
 }
 
 export async function unsubscribeFromStory({ endpoint }) {
   const token = getAccessToken();
-  const res = await fetch(ENDPOINTS.UNSUBSCRIBE, {
+  const fetchResponse = await fetch(ENDPOINTS.UNSUBSCRIBE, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -96,6 +98,6 @@ export async function unsubscribeFromStory({ endpoint }) {
     },
     body: JSON.stringify({ endpoint }),
   });
-  const json = await res.json();
-  return { ...json, ok: res.ok };
+  const json = await fetchResponse.json();
+  return { ...json, ok: fetchResponse.ok };
 }

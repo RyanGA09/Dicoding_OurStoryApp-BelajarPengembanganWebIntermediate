@@ -33,7 +33,7 @@ export default class HomePage {
 
   async afterRender() {
     this.#presenter = new HomePresenter({ view: this, model: StoryAPI });
-    await this.#presenter.loadStoriesAndMap();
+    await this.#presenter.initialGalleryAndMap();
   }
 
   async initialMap() {
@@ -81,7 +81,7 @@ export default class HomePage {
       }
 
       if (this.#map) {
-        const coordinate = [story.lat, story.lon];
+        const coordinate = [story.location.latitude, story.location.longitude];
         const markerOptions = { alt: story.name };
         const popupOptions = { content: story.description };
         this.#map.addMarker(coordinate, markerOptions, popupOptions);
