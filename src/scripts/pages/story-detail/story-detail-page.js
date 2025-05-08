@@ -34,26 +34,26 @@ export default class StoryDetailPage {
     this.#presenter.showStoryDetail();
   }
 
-  populateStoryDetail(message, story) {
-    document.getElementById("story-detail").innerHTML = `
-      <div class="story-card-detail">
-        <img src="${story.photoStory}" alt="Story Image"/>
-        <div class="story-info">
-          <h3>${story.name}</h3>
-          <p>${story.description}</p>
-          <small>${new Date(story.createdAt).toLocaleString()}</small>
-        </div>
-      </div>
-    `;
+  // populateStoryDetail(message, story) {
+  //   document.getElementById("story-detail").innerHTML = `
+  //     <div class="story-card-detail">
+  //       <img src="${story.photoStory}" alt="Story Image"/>
+  //       <div class="story-info">
+  //         <h3>${story.name}</h3>
+  //         <p>${story.description}</p>
+  //         <small>${new Date(story.createdAt).toLocaleString()}</small>
+  //       </div>
+  //     </div>
+  //   `;
 
-    if (this.#map && story.lat && story.lon) {
-      const coordinate = [story.lat, story.lon];
-      const markerOptions = { alt: story.name };
-      const popupOptions = { content: story.description };
-      this.#map.changeCamera(coordinate);
-      this.#map.addMarker(coordinate, markerOptions, popupOptions);
-    }
-  }
+  //   if (this.#map && story.lat && story.lon) {
+  //     const coordinate = [story.lat, story.lon];
+  //     const markerOptions = { alt: story.name };
+  //     const popupOptions = { content: story.description };
+  //     this.#map.changeCamera(coordinate);
+  //     this.#map.addMarker(coordinate, markerOptions, popupOptions);
+  //   }
+  // }
 
   showStoryDetailLoading() {
     document.getElementById("story-detail-loading-container").innerHTML =
@@ -76,6 +76,7 @@ export default class StoryDetailPage {
   async populateStoryDetailAndInitialMap(message, story) {
     document.getElementById("story-detail").innerHTML =
       generateStoryDetailTemplate({
+        name: story.name,
         description: story.description,
         photoStory: story.photoStory,
         createdAt: story.createdAt,
