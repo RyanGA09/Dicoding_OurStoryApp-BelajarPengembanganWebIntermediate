@@ -60,7 +60,7 @@ export default class NewPage {
                     </div>
                   </div>
                 </div>
-              <ul id="photo-preview" class="new-form__documentations__outputs"></ul>
+              <ul id="documentations-taken-list" class="new-form__documentations__outputs"></ul>
             </div>
 
             <div class="form-control">
