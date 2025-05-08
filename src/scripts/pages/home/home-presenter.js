@@ -54,8 +54,12 @@ export default class HomePresenter {
         return;
       }
 
+      console.log("Response dari getAllStories:", response);
+
       // Mapping data untuk mendapatkan properti seperti lokasi
-      const mappedStories = await Promise.all(response.data.map(storyMapper));
+      const mappedStories = await Promise.all(
+        response.listStory.map(storyMapper)
+      );
 
       this.#view.populateStoryList(response.message, mappedStories);
     } catch (error) {
