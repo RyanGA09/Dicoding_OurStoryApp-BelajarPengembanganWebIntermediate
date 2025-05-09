@@ -34,12 +34,20 @@ export default class App {
     });
 
     document.body.addEventListener("click", (event) => {
-      if (
-        !this.#navigationDrawer.contains(event.target) &&
-        !this.#drawerButton.contains(event.target)
-      ) {
+      const isTargetInsideDrawer = this.#navigationDrawer.contains(
+        event.target
+      );
+      const isTargetInsideButton = this.#drawerButton.contains(event.target);
+
+      if (!(isTargetInsideDrawer || isTargetInsideButton)) {
         this.#navigationDrawer.classList.remove("open");
       }
+
+      this.#navigationDrawer.querySelectorAll("a").forEach((link) => {
+        if (link.contains(event.target)) {
+          this.#navigationDrawer.classList.remove("open");
+        }
+      });
     });
   }
 

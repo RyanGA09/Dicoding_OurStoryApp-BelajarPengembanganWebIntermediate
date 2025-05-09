@@ -15,6 +15,18 @@
   --secondary-text-color: #ffffff;
 }
 
+/* Animasi masuk */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes full-slide-from-right {
   from {
     transform: translateX(100%);
@@ -40,7 +52,7 @@
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 .skip-link {
@@ -92,13 +104,13 @@ textarea {
   border: 1px solid #d4d4d4;
 
   font-size: 1rem;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 
   resize: vertical;
 }
 
-input[type='radio'],
-input[type='checkbox'] {
+input[type="radio"],
+input[type="checkbox"] {
   min-height: auto;
   min-width: auto;
   width: auto;
@@ -221,7 +233,7 @@ form .form-buttons {
 }
 
 .loader::after {
-  content: '';
+  content: "";
   display: inline-block;
   box-sizing: border-box;
   width: 50px;
@@ -273,7 +285,7 @@ header {
   font-size: 1.125rem;
   font-weight: bold;
   text-decoration: none;
-  color: #141e16;
+  color: var(--primary-color);
 }
 
 .brand-name__link__image {
@@ -296,10 +308,7 @@ header {
 
   transform: translateY(-100%);
   opacity: 0;
-  transition:
-    opacity 150ms,
-    inset-block-start 0ms 150ms,
-    transform 0ms 150ms;
+  transition: opacity 150ms, inset-block-start 0ms 150ms, transform 0ms 150ms;
 
   z-index: 9999;
 }
@@ -524,7 +533,7 @@ header {
 .story-detail__header {
   padding-block: 80px;
   min-height: 600px;
-  background-image: url('../public/images/orange-background.png');
+  background-image: url("../public/images/orange-background.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top;
@@ -780,7 +789,7 @@ header {
 .new-story__header {
   padding-block: 70px;
   background-color: #d9770626;
-  background-image: url('../public/images/orange-background.png');
+  background-image: url("../public/images/orange-background.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top;
@@ -916,6 +925,34 @@ header {
   gap: 10px;
 }
 /* END OF NEW story FORM */
+
+/* About Page */
+
+.about-page__content {
+  padding: 40px 32px;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  animation: fade-in 0.6s ease-in-out;
+}
+
+.about-page__content .section-title {
+  font-size: 2.25rem;
+  color: var(--primary-color);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.about-page__content p {
+  font-size: 1.125rem;
+  line-height: 1.75;
+  color: #333;
+  text-align: justify;
+}
+
+/* END OF About Page */
 
 /* FOOTER */
 footer {
