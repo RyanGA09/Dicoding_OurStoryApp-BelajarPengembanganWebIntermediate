@@ -38,10 +38,16 @@ export async function loginUser({ email, password }) {
 export async function addNewStory({ description, photo, lat, lon }) {
   const token = getAccessToken();
   const formData = new FormData();
-  formData.set("description", description);
-  formData.set("photo", photo); // atau pakai append jika banyak foto
-  formData.set("lat", lat); // ubah dari 'latitude'
-  formData.set("lon", lon); // ubah dari 'longitude'
+
+  formData.append("description", description);
+
+  // Pastikan foto yang diterima adalah file (untuk banyak foto gunakan 'append')
+  photo.forEach((pictureBlob) => {
+    formData.append("photo", pictureBlob, "image.jpg"); // Ganti 'image.jpg' jika perlu menyesuaikan nama file
+  });
+
+  if (lat) formData.append("lat", lat);
+  if (lon) formData.append("lon", lon);
 
   const fetchResponse = await fetch(ENDPOINTS.ADD_STORY, {
     method: "POST",
