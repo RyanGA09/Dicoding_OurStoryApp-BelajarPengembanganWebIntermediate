@@ -35,13 +35,13 @@ export async function loginUser({ email, password }) {
   return { ...json, ok: fetchResponse.ok };
 }
 
-export async function addNewStory({ description, photo, latitude, longitude }) {
+export async function addNewStory({ description, photo, lat, lon }) {
   const token = getAccessToken();
   const formData = new FormData();
   formData.set("description", description);
-  formData.set("photo", photo);
-  formData.set("latitude", latitude);
-  formData.set("longitude", longitude);
+  formData.set("photo", photo); // atau pakai append jika banyak foto
+  formData.set("lat", lat); // ubah dari 'latitude'
+  formData.set("lon", lon); // ubah dari 'longitude'
 
   const fetchResponse = await fetch(ENDPOINTS.ADD_STORY, {
     method: "POST",

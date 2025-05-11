@@ -19,14 +19,14 @@ export default class NewPresenter {
     }
   }
 
-  async postNewStory({ description, photo, latitude, longitude }) {
+  async postNewStory({ description, photo, lat, lon }) {
     this.#view.showSubmitLoadingButton();
     try {
       const data = {
         description: description,
         photo: photo,
-        lat: latitude,
-        lon: longitude,
+        lat: lat,
+        lon: lon,
       };
       const response = await this.#model.addNewStory(data);
 
