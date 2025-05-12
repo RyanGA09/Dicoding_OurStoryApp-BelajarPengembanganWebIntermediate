@@ -106,10 +106,10 @@ export default class NewPage {
       const data = {
         description: this.#form.elements.namedItem("description").value,
         photo: this.#takenDocumentations.map((picture) => picture.blob),
-        latitude: this.#form.elements.namedItem("latitude").value,
-        longitude: this.#form.elements.namedItem("longitude").value,
+        lat: Number(this.#form.elements.namedItem("latitude").value),
+        lon: Number(this.#form.elements.namedItem("longitude").value),
       };
-      await this.#presenter.postNewReport(data);
+      await this.#presenter.postNewStory(data);
     });
 
     document
@@ -122,7 +122,10 @@ export default class NewPage {
       .getElementById("photo-input")
       .addEventListener("change", async (e) => {
         const file = e.target.files[0];
-        if (file) await this.#addTakenPicture(file);
+        if (file) {
+          await this.#addTakenPicture(file);
+          await this.#populateTakenPictures(); // <--- Tambahkan baris ini
+        }
       });
 
     document

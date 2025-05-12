@@ -35,13 +35,19 @@ export async function loginUser({ email, password }) {
   return { ...json, ok: fetchResponse.ok };
 }
 
-export async function addNewStory({ description, photo, latitude, longitude }) {
+export async function addNewStory({ description, photo, lat, lon }) {
   const token = getAccessToken();
   const formData = new FormData();
-  formData.set("description", description);
-  formData.set("photo", photo);
-  formData.set("latitude", latitude);
-  formData.set("longitude", longitude);
+
+  formData.append("description", description);
+
+  // Pastikan foto yang diterima adalah file (untuk banyak foto gunakan 'append')
+  photo.forEach((pictureBlob) => {
+    formData.append("photo", pictureBlob, "image.jpg"); // Ganti 'image.jpg' jika perlu menyesuaikan nama file
+  });
+
+  if (lat) formData.append("lat", lat);
+  if (lon) formData.append("lon", lon);
 
   const fetchResponse = await fetch(ENDPOINTS.ADD_STORY, {
     method: "POST",
