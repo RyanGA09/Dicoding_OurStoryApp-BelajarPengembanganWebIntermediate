@@ -1,2 +1,5 @@
 APP_URL=http://localhost:5173
+
+DEPLOYMENT_URL=
+
 MAP_SERVICE_API_KEY=QhP30VXdqcjA35filTRr

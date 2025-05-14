@@ -78,30 +78,134 @@ export async function getStoryById(id) {
   return { ...json, ok: fetchResponse.ok };
 }
 
-export async function subscribeToStory({ endpoint, keys }) {
-  const token = getAccessToken();
+// export async function subscribeToStory({ endpoint, keys }) {
+//   const token = getAccessToken();
+//   const fetchResponse = await fetch(ENDPOINTS.SUBSCRIBE, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: `Bearer ${token}`,
+//     },
+//     body: JSON.stringify({ endpoint, keys }),
+//   });
+//   const json = await fetchResponse.json();
+//   return { ...json, ok: fetchResponse.ok };
+// }
+
+// export async function unsubscribeFromStory({ endpoint }) {
+//   const token = getAccessToken();
+//   const fetchResponse = await fetch(ENDPOINTS.UNSUBSCRIBE, {
+//     method: "DELETE",
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: `Bearer ${token}`,
+//     },
+//     body: JSON.stringify({ endpoint }),
+//   });
+//   const json = await fetchResponse.json();
+//   return { ...json, ok: fetchResponse.ok };
+// }
+
+export async function subscribePushNotification({
+  endpoint,
+  keys: { p256dh, auth },
+}) {
+  const accessToken = getAccessToken();
+  const data = JSON.stringify({
+    endpoint,
+    keys: { p256dh, auth },
+  });
+
   const fetchResponse = await fetch(ENDPOINTS.SUBSCRIBE, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${accessToken}`,
     },
-    body: JSON.stringify({ endpoint, keys }),
+    body: data,
   });
   const json = await fetchResponse.json();
-  return { ...json, ok: fetchResponse.ok };
+
+  return {
+    ...json,
+    ok: fetchResponse.ok,
+  };
 }
 
-export async function unsubscribeFromStory({ endpoint }) {
-  const token = getAccessToken();
+export async function unsubscribePushNotification({ endpoint }) {
+  const accessToken = getAccessToken();
+  const data = JSON.stringify({
+    endpoint,
+  });
+
   const fetchResponse = await fetch(ENDPOINTS.UNSUBSCRIBE, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${accessToken}`,
     },
-    body: JSON.stringify({ endpoint }),
+    body: data,
   });
   const json = await fetchResponse.json();
-  return { ...json, ok: fetchResponse.ok };
+
+  return {
+    ...json,
+    ok: fetchResponse.ok,
+  };
+}
+
+export async function sendStoryToMeViaNotification(storyId) {
+  const accessToken = getAccessToken();
+
+  const fetchResponse = await fetch(ENDPOINTS.SEND_STORY_TO_ME(storyId), {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  const json = await fetchResponse.json();
+
+  return {
+    ...json,
+    ok: fetchResponse.ok,
+  };
+}
+
+export async function sendStoryToUserViaNotification(storyId, { userId }) {
+  const accessToken = getAccessToken();
+  const data = JSON.stringify({
+    userId,
+  });
+
+  const fetchResponse = await fetch(ENDPOINTS.SEND_STORY_TO_USER(storyId), {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: data,
+  });
+  const json = await fetchResponse.json();
+
+  return {
+    ...json,
+    ok: fetchResponse.ok,
+  };
+}
+
+export async function sendStoryToAllUserViaNotification(storyId) {
+  const accessToken = getAccessToken();
+
+  const fetchResponse = await fetch(ENDPOINTS.SEND_STORY_TO_ALL_USER(storyId), {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  const json = await fetchResponse.json();
+
+  return {
+    ...json,
+    ok: fetchResponse.ok,
+  };
 }
