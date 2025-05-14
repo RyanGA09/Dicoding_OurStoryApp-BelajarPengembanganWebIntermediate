@@ -7,6 +7,11 @@ import {
 } from "../templates";
 import { setupSkipToContent, transitionHelper } from "../utils";
 import { getAccessToken, getLogout } from "../utils/auth";
+import {
+  isCurrentPushSubscriptionAvailable,
+  subscribe,
+  unsubscribe,
+} from "../utils/notification-helper";
 
 export default class App {
   #content;

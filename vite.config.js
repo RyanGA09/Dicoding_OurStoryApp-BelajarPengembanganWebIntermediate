@@ -8,6 +8,7 @@ export default defineConfig({
   build: {
     outDir: resolve(__dirname, "dist"),
     emptyOutDir: true,
+    filename: "[name].bundle.js",
   },
   resolve: {
     alias: {

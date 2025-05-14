@@ -43,9 +43,36 @@ export default class StoryDetailPage {
       .getElementById("story-detail-save")
       .addEventListener("click", async () => {
         alert("Fitur simpan Cerita akan segera hadir!");
-        // await this.#presenter.saveReport();
+        // await this.#presenter.saveStory();
         // await this.#presenter.showSaveButton();
       });
+  }
+
+  saveToBookmarkSuccessfully(message) {
+    console.log(message);
+  }
+  saveToBookmarkFailed(message) {
+    alert(message);
+  }
+
+  renderRemoveButton() {
+    document.getElementById("save-actions-container").innerHTML =
+      generateRemoveStoryButtonTemplate();
+
+    document
+      .getElementById("story-detail-remove")
+      .addEventListener("click", async () => {
+        await this.#presenter.removeStory();
+        await this.#presenter.showSaveButton();
+      });
+  }
+
+  removeFromBookmarkFailed(message) {
+    alert(message);
+  }
+
+  removeFromBookmarkSuccessfully(message) {
+    console.log(message);
   }
 
   addNotifyMeEventListener() {
