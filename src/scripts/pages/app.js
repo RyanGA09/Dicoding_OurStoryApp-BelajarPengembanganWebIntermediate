@@ -85,6 +85,35 @@ export default class App {
     });
   }
 
+  async #setupPushNotification() {
+    const pushNotificationTools = document.getElementById(
+      "push-notification-tools"
+    );
+    const isSubscribed = await isCurrentPushSubscriptionAvailable();
+
+    if (isSubscribed) {
+      pushNotificationTools.innerHTML = generateUnsubscribeButtonTemplate();
+      document
+        .getElementById("unsubscribe-button")
+        .addEventListener("click", () => {
+          unsubscribe().finally(() => {
+            this.#setupPushNotification();
+          });
+        });
+
+      return;
+    }
+
+    pushNotificationTools.innerHTML = generateSubscribeButtonTemplate();
+    document
+      .getElementById("subscribe-button")
+      .addEventListener("click", () => {
+        subscribe().finally(() => {
+          this.#setupPushNotification();
+        });
+      });
+  }
+
   async renderPage() {
     const url = getActiveRoute();
     const route = routes[url];
