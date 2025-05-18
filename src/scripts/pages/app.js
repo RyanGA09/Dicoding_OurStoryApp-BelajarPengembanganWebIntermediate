@@ -1,5 +1,5 @@
 import { getActiveRoute } from "../routes/url-parser";
-import { routes } from "../routes/routes";
+import { routes, notFoundRoute } from "../routes/routes";
 import {
   generateAuthenticatedNavigationListTemplate,
   generateMainNavigationListTemplate,
@@ -118,8 +118,11 @@ export default class App {
     const url = getActiveRoute();
     const route = routes[url];
 
-    // Get page instance
-    const page = route();
+    // // Get page instance
+    // const page = route();
+
+    // Jika route tidak ditemukan, gunakan NotFoundPage
+    const page = route ? route() : notFoundRoute();
 
     const transition = transitionHelper({
       updateDOM: async () => {

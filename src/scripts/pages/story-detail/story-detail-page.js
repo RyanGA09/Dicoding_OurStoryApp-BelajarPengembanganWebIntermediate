@@ -43,8 +43,8 @@ export default class StoryDetailPage {
       .getElementById("story-detail-save")
       .addEventListener("click", async () => {
         alert("Fitur simpan Cerita akan segera hadir!");
-        // await this.#presenter.saveStory();
-        // await this.#presenter.showSaveButton();
+        await this.#presenter.saveStory();
+        await this.#presenter.showSaveButton();
       });
   }
 
@@ -79,8 +79,8 @@ export default class StoryDetailPage {
     document
       .getElementById("story-detail-notify-me")
       .addEventListener("click", () => {
-        alert("Fitur notifikasi cerita akan segera hadir!");
-        // this.#presenter.notifyMe();
+        // alert("Fitur notifikasi cerita akan segera hadir!");
+        this.#presenter.notifyMe();
       });
   }
 
