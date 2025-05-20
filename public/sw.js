@@ -25,8 +25,8 @@ const fileToCaches = [
   //   "/src/images/icons/icon-192.png",
 ];
 
-import App from "./pages/app";
-import { registerSW } from "./utils";
+import App from "../src/scripts/pages/app";
+import { registerSW } from "../src/scripts/utils";
 
 const drawerNavigation = document.querySelector("#navlist");
 const drawerButton = document.querySelector("#drawerbutton");
@@ -49,9 +49,16 @@ window.addEventListener("hashchange", async () => {
 });
 
 export async function registerSW() {
-  if (!("serviceWorker" in navigator)) {
-    console.warn("Service worker not supported");
-    return;
+  // if (!("serviceWorker" in navigator)) {
+  //   console.warn("Service worker not supported");
+  //   return;
+  // }
+
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker
+      .register("/sw.js")
+      .then((reg) => console.log("SW registered", reg))
+      .catch((err) => console.error("SW failed", err));
   }
 
   try {
