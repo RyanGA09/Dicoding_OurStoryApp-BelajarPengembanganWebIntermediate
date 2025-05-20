@@ -1,3 +1,77 @@
+importScripts(
+  "https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox-sw.js"
+);
+
+// Set configuration for workbox
+workbox.setConfig({
+  debug: false,
+});
+
+// PRECACHING
+const { precacheAndRoute } = workbox.precaching;
+
+const fileToCaches = [
+  "/",
+  "/index.html",
+  "/app.webmanifest",
+  "/src/styles/style.css",
+  //   "/src/images/favicon.png",
+  //   "/src/images/calm-hero.png",
+  //   "/src/images/calm-logo.png",
+  //   "/src/images/icons/icon-48.png",
+  //   "/src/images/icons/icon-72.png",
+  //   "/src/images/icons/icon-96.png",
+  //   "/src/images/icons/icon-144.png",
+  //   "/src/images/icons/icon-192.png",
+];
+
+import App from "./pages/app";
+import { registerSW } from "./utils";
+
+const drawerNavigation = document.querySelector("#navlist");
+const drawerButton = document.querySelector("#drawerbutton");
+const content = document.querySelector("#maincontent");
+
+const app = new App({
+  content,
+  drawerButton,
+  drawerNavigation,
+});
+
+document.addEventListener("DOMContentLoaded", async () => {
+  await app.renderPage();
+
+  await registerSW();
+});
+
+window.addEventListener("hashchange", async () => {
+  await app.renderPage();
+});
+
+export async function registerSW() {
+  if (!("serviceWorker" in navigator)) {
+    console.warn("Service worker not supported");
+    return;
+  }
+
+  try {
+    // Caching strategies from scratch
+    const registration = await navigator.serviceWorker.register("/sw.js");
+
+    // Caching strategies with workbox
+    // const registration = await navigator.serviceWorker.register('/sw-workbox.js');
+
+    registration.onupdatefound = () => {
+      // Jika event handler ini dijalankan, itu artinya ada
+      // pembaruan service worker yang sedang dipasang.
+      const installingWorker = registration.installing;
+      console.log("A new service worker is being installed:", installingWorker);
+    };
+  } catch (error) {
+    console.log("Failed to register service worker", error);
+  }
+}
+
 // import { precacheAndRoute } from "workbox-precaching";
 // import { registerRoute } from "workbox-routing";
 // import { CacheableResponsePlugin } from "workbox-cacheable-response";
