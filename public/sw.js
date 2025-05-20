@@ -10,27 +10,36 @@ workbox.setConfig({
 // PRECACHING
 const { precacheAndRoute } = workbox.precaching;
 
-const fileToCaches = [
-  "/",
-  "/index.html",
-  "/app.webmanifest",
-  "/src/styles/style.css",
-  //   "/src/images/favicon.png",
-  //   "/src/images/calm-hero.png",
-  //   "/src/images/calm-logo.png",
-  //   "/src/images/icons/icon-48.png",
-  //   "/src/images/icons/icon-72.png",
-  //   "/src/images/icons/icon-96.png",
-  //   "/src/images/icons/icon-144.png",
-  //   "/src/images/icons/icon-192.png",
-];
+precacheAndRoute([
+  { url: "/", revision: null },
+  { url: "/index.html", revision: null },
+  { url: "/app.webmanifest", revision: null },
+  { url: "/src/styles/style.css", revision: null },
+  // Tambahkan gambar/icon jika diperlukan
+  // { url: "/src/images/icon.png", revision: null },
+]);
 
-import App from "../src/scripts/pages/app";
-import { registerSW } from "../src/scripts/utils";
+// const fileToCaches = [
+//   "/",
+//   "/index.html",
+//   "/app.webmanifest",
+//   "/src/styles/style.css",
+//   //   "/src/images/favicon.png",
+//   //   "/src/images/calm-hero.png",
+//   //   "/src/images/calm-logo.png",
+//   //   "/src/images/icons/icon-48.png",
+//   //   "/src/images/icons/icon-72.png",
+//   //   "/src/images/icons/icon-96.png",
+//   //   "/src/images/icons/icon-144.png",
+//   //   "/src/images/icons/icon-192.png",
+// ];
 
-const drawerNavigation = document.querySelector("#navlist");
-const drawerButton = document.querySelector("#drawerbutton");
-const content = document.querySelector("#maincontent");
+// import App from "../src/scripts/pages/app";
+// import { registerSW } from "../src/scripts/utils";
+
+// const drawerNavigation = document.querySelector("#navlist");
+// const drawerButton = document.querySelector("#drawerbutton");
+// const content = document.querySelector("#maincontent");
 
 const app = new App({
   content,
