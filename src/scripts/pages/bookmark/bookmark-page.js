@@ -1,8 +1,8 @@
 import {
   generateLoaderAbsoluteTemplate,
   generateStoryItemTemplate,
-  generateStorysListEmptyTemplate,
-  generateStorysListErrorTemplate,
+  generateStoriesListEmptyTemplate,
+  generateStoriesListErrorTemplate,
 } from "../../templates";
 import BookmarkPresenter from "./bookmark-presenter";
 import Database from "../../data/database";
@@ -40,9 +40,9 @@ export default class BookmarkPage {
     await this.#presenter.initialGalleryAndMap();
   }
 
-  populateBookmarkedstorys(message, storys) {
+  populateBookmarkedStories(message, storys) {
     if (storys.length <= 0) {
-      this.populateBookmarkedStorysListEmpty();
+      this.populateBookmarkedStoriesListEmpty();
       return;
     }
 
@@ -68,17 +68,17 @@ export default class BookmarkPage {
     `;
   }
 
-  populateBookmarkedStorysListEmpty() {
+  populateBookmarkedStoriesListEmpty() {
     document.getElementById("storys-list").innerHTML =
-      generateStorysListEmptyTemplate();
+      generateStoriesListEmptyTemplate();
   }
 
-  populateBookmarkedStorysError(message) {
+  populateBookmarkedStoriesError(message) {
     document.getElementById("storys-list").innerHTML =
-      generateStorysListErrorTemplate(message);
+      generateStoriesListErrorTemplate(message);
   }
 
-  showStorysListLoading() {
+  showStoriesListLoading() {
     document.getElementById("storys-list-loading-container").innerHTML =
       generateLoaderAbsoluteTemplate();
   }
