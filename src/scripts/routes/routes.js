@@ -21,7 +21,6 @@ export const routes = {
   "/about": () => checkAuthenticatedRoute(new AboutPage()),
   "/stories/:id": () => checkAuthenticatedRoute(new StoryDetailPage()),
   "/bookmark": () => checkAuthenticatedRoute(new BookmarkPage()),
-  // "/not-found": () => checkAuthenticatedRoute(new NotFoundPage()),
 };
 
 // Route fallback untuk path yang tidak ditemukan

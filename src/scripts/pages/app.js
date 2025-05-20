@@ -1,3 +1,4 @@
+// src/scripts/pages/app.js
 import { getActiveRoute } from "../routes/url-parser";
 import { routes, notFoundRoute } from "../routes/routes";
 import {

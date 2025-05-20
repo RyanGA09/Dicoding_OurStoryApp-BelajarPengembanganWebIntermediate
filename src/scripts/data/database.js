@@ -1,3 +1,4 @@
+// src/scripts/data/database.js
 import { openDB } from "idb";
 
 const DATABASE_NAME = "ourstory";

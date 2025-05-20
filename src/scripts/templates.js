@@ -1,4 +1,4 @@
-// src/scripts/template.js
+// src/scripts/utils/templates.js
 import { showFormattedDate } from "./utils";
 
 export function generateLoaderTemplate() {
@@ -90,14 +90,6 @@ export function generateStoryDetailErrorTemplate(message) {
     </div>
   `;
 }
-
-// export function generateSaveStoryButtonTemplate() {
-//   return `
-//     <button id="story-detail-save" class="btn btn-transparent">
-//       Simpan Cerita <i class="far fa-bookmark"></i>
-//     </button>
-//   `;
-// }
 
 export function generateStoryDetailTemplate({
   name,

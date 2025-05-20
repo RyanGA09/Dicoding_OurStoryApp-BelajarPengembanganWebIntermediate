@@ -1,3 +1,4 @@
+// src/scripts/pages/bookmark/bookmark-page.js
 import {
   generateLoaderAbsoluteTemplate,
   generateStoryItemTemplate,
@@ -83,7 +84,7 @@ export default class BookmarkPage {
       generateLoaderAbsoluteTemplate();
   }
 
-  hideStorysListLoading() {
+  hideStoriesListLoading() {
     document.getElementById("storys-list-loading-container").innerHTML = "";
   }
 

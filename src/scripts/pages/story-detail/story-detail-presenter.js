@@ -1,3 +1,4 @@
+// src/scripts/pages/story-detail/story-detail-presenter.js
 import { storyMapper } from "../../data/api-mapper";
 
 export default class StoryDetailPresenter {
@@ -62,28 +63,29 @@ export default class StoryDetailPresenter {
     }
   }
 
-  async notifyStoryOwner(commentId) {
-    try {
-      const response =
-        await this.#apiModel.sendCommentToStoryOwnerViaNotification(
-          this.#storyId,
-          commentId
-        );
-      if (!response.ok) {
-        console.error("notifyStoryOwner: response:", response);
-        return;
-      }
-      console.log("notifyStoryOwner:", response.message);
-    } catch (error) {
-      console.error("notifyStoryOwner: error:", error);
-    }
-  }
+  // async notifyStoryOwner(commentId) {
+  //   try {
+  //     const response =
+  //       await this.#apiModel.sendCommentToStoryOwnerViaNotification(
+  //         this.#storyId,
+  //         commentId
+  //       );
+  //     if (!response.ok) {
+  //       console.error("notifyStoryOwner: response:", response);
+  //       return;
+  //     }
+  //     console.log("notifyStoryOwner:", response.message);
+  //   } catch (error) {
+  //     console.error("notifyStoryOwner: error:", error);
+  //   }
+  // }
 
   async saveStory() {
     try {
-      const story = await this.#apiModel.getStoryById(this.#storyId);
+      const response = await this.#apiModel.getStoryById(this.#storyId);
 
-      const mapped = await storyMapper(story.data); // ← ✅ Tambahkan ini
+      // const mapped = await storyMapper(story.story); // ← ✅ Tambahkan ini
+      const mapped = await storyMapper(response.story); // ← sesuai struktur yang benar
       await this.#dbModel.putStory(mapped); // ← Simpan hasil mapping
 
       this.#view.saveToBookmarkSuccessfully("Success to save to bookmark");
@@ -105,8 +107,8 @@ export default class StoryDetailPresenter {
     }
   }
 
-  showSaveButton() {
-    if (this.#isStorySaved()) {
+  async showSaveButton() {
+    if (await this.#isStorySaved()) {
       this.#view.renderRemoveButton();
       return;
     }
@@ -114,7 +116,7 @@ export default class StoryDetailPresenter {
     this.#view.renderSaveButton();
   }
 
-  #isStorySaved() {
-    return false;
+  async #isStorySaved() {
+    return !!(await this.#dbModel.getStoryById(this.#storyId));
   }
 }

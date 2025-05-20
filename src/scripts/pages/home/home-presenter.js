@@ -40,7 +40,7 @@ export default class HomePresenter {
       const mappedStories = await Promise.all(
         response.listStory.map(storyMapper)
       );
-      console.log(mappedStories);
+      // console.log(mappedStories);
 
       this.#view.populateStoryList(response.message, mappedStories);
     } catch (error) {

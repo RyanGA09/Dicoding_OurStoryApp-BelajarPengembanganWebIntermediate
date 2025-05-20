@@ -1,3 +1,4 @@
+// src/scripts/pages/bookmark/bookmark-presenter.js
 import { storyMapper } from "../../data/api-mapper";
 
 export default class BookmarkPresenter {
@@ -26,19 +27,19 @@ export default class BookmarkPresenter {
     try {
       await this.showStoriesListMap();
 
-      const listOfStorys = await this.#model.getAllStories();
-      console.log("Raw from DB:", listOfStorys);
+      const listOfStories = await this.#model.getAllStories();
+      console.log("Raw from DB:", listOfStories);
 
-      const storys = await Promise.all(listOfStorys.map(storyMapper));
-      console.log("Mapped storys:", storys);
+      const stories = await Promise.all(listOfStories.map(storyMapper));
+      console.log("Mapped stories:", stories);
 
       const message = "Berhasil mendapatkan daftar cerita tersimpan.";
-      this.#view.populateBookmarkedStories(message, storys);
+      this.#view.populateBookmarkedStories(message, stories);
     } catch (error) {
       console.error("initialGalleryAndMap: error:", error);
       this.#view.populateBookmarkedStoriesError(error.message);
     } finally {
-      this.#view.hideStorysListLoading();
+      this.#view.hideStoriesListLoading();
     }
   }
 }

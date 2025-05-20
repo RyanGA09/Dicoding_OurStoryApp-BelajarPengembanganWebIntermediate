@@ -1,3 +1,4 @@
+// src/scripts/utils/index.js
 // CSS imports
 import "../styles/styles.css";
 import "../styles/responsives.css";

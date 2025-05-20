@@ -1,3 +1,4 @@
+// src/scripts/pages/auth/register/register-presenter.js
 export default class RegisterPresenter {
   #view;
   #model;

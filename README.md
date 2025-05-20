@@ -19,39 +19,59 @@ OurStoryApp is a **Single Page Application (SPA)** web app developed to fulfill 
 ├── 📁 public
 │   ├── 📁 images
 │   │   └── 📄 logo.png
+│   ├── 📄 app.webmanifest
 │   ├── 📄 favicon.png
-│   └── 📄 service-worker.js
+│   └── 📄 sw.js
 ├── 📁 src
 │   ├── 📁 scripts
 │   │   ├── 📁 data
-│   │   │   └── 📄 api.js
+│   │   │   ├── 📄 api-mapper.js
+│   │   │   ├── 📄 api.js
+│   │   │   └── 📄 database.js
 │   │   ├── 📁 pages
 │   │   │   ├── 📁 about
-│   │   │   │   └── 📄 about-page.js
-│   │   │   ├── 📁 add
-│   │   │   │   └── 📄 add-page.js
-│   │   │   ├── 📁 details
-│   │   │   │   └── 📄 detail-page.js
+│   │   │   │   ├── 📄 about-page.js
+│   │   │   │   └── 📄 about-presenter.js
+│   │   │   ├── 📁 auth
+│   │   │   │   ├── 📁 login
+│   │   │   │   │   ├── 📄 login-page.js
+│   │   │   │   │   └── 📄 login-presenter.js
+│   │   │   │   ├── 📁 register
+│   │   │   │   │   ├── 📄 register-page.js
+│   │   │   │   │   └── 📄 register-presenter.js
+│   │   │   ├── 📁 bookmark
+│   │   │   │   ├── 📄 bookmark-page.js
+│   │   │   │   └── 📄 bookmark-presenter.js
 │   │   │   ├── 📁 home
-│   │   │   │   └── 📄 home-page.js
-│   │   │   ├── 📁 login
-│   │   │   │   └── 📄 login-page.js
-│   │   │   ├── 📁 register
-│   │   │   │   └── 📄 register-page.js
+│   │   │   │   ├── 📄 home-page.js
+│   │   │   │   └── 📄 home-presenter.js
+│   │   │   ├── 📁 new
+│   │   │   │   ├── 📄 new-page.js
+│   │   │   │   └── 📄 new-presenter.js
+│   │   │   ├── 📁 not-found
+│   │   │   │   ├── 📄 not-found-page.js
+│   │   │   │   └── 📄 not-found-presenter.js
+│   │   │   ├── 📁 story-detail
+│   │   │   │   ├── 📄 story-detail-page.js
+│   │   │   │   └── 📄 story-detail-presenter.js
 │   │   │   └── 📄 app.js
 │   │   ├── 📁 routes
 │   │   │   ├── 📄 routes.js
 │   │   │   └── 📄 url-parser.js
 │   │   ├── 📁 utils
-│   │   │   ├── 📄 date-formatter.js
+│   │   │   ├── 📄 auth.js
+│   │   │   ├── 📄 camera.js
 │   │   │   ├── 📄 index.js
-│   │   │   └── 📄 loader.js
+│   │   │   ├── 📄 loader.js
+│   │   │   ├── 📄 map.js
+│   │   │   └── 📄 notification-helper.js
 │   │   ├── 📄 config.js
-│   │   └── 📄 index.js
+│   │   ├── 📄 index.js
+│   │   └── 📄 template.js
 │   ├── 📁 styles
+│   │   ├── 📄 responsives.css
 │   │   └── 📄 styles.css
 │   └── 📄 index.html
-├── 📁 screenshots
 ├── 📄 .gitignore
 ├── 📄 LICENSE
 ├── 📄 package-lock.json
