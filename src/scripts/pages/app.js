@@ -136,6 +136,10 @@ export default class App {
     transition.updateCallbackDone.then(() => {
       scrollTo({ top: 0, behavior: "instant" });
       this.#setupNavigationList();
+
+      if (isServiceWorkerAvailable()) {
+        this.#setupPushNotification();
+      }
     });
   }
 }

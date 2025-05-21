@@ -3,14 +3,22 @@ import { getAccessToken } from "../utils/auth";
 import { BASE_URL } from "../config";
 
 const ENDPOINTS = {
+  //auth
   REGISTER: `${BASE_URL}/register`,
   LOGIN: `${BASE_URL}/login`,
+
+  //story
   ADD_STORY: `${BASE_URL}/stories`,
   ADD_GUEST_STORY: `${BASE_URL}/stories/guest`,
   GET_ALL_STORIES: `${BASE_URL}/stories`,
   GET_STORY_BY_ID: (id) => `${BASE_URL}/stories/${id}`,
+
   SUBSCRIBE: `${BASE_URL}/notifications/subscribe`,
   UNSUBSCRIBE: `${BASE_URL}/notifications/subscribe`,
+  SEND_STORY_TO_ME: (storyId) => `${BASE_URL}/stories/${storyId}/notify-me`,
+  SEND_STORY_TO_USER: (storyId) => `${BASE_URL}/stories/${storyId}/notify`,
+  SEND_STORY_TO_ALL_USER: (storyId) =>
+    `${BASE_URL}/stories/${storyId}/notify-all`,
 };
 
 export async function registerUser({ name, email, password }) {
