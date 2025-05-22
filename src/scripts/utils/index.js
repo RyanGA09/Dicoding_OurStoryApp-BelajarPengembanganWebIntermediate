@@ -143,6 +143,11 @@ export function isServiceWorkerAvailable() {
 // }
 
 export async function registerServiceWorker() {
+  if (!isServiceWorkerAvailable()) {
+    console.log("Service Worker API unsupported");
+    return;
+  }
+
   if ("serviceWorker" in navigator) {
     try {
       const registration = await navigator.serviceWorker.register("/sw.js");

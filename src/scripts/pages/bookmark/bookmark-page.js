@@ -58,7 +58,7 @@ export default class BookmarkPage {
       return accumulator.concat(
         generateStoryItemTemplate({
           ...story,
-          // placeNameLocation: story.location.placeName,
+          placeNameLocation: story.location.placeName,
           description: story.description,
         })
       );

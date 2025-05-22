@@ -10,7 +10,7 @@ import { createCarousel } from "../../utils";
 import StoryDetailPresenter from "./story-detail-presenter";
 import { parseActivePathname } from "../../routes/url-parser";
 import Map from "../../utils/map";
-import * as StoryAPI from "../../data/api";
+import * as OurStoryAPI from "../../data/api";
 import Database from "../../data/database";
 
 export default class StoryDetailPage {
@@ -31,7 +31,7 @@ export default class StoryDetailPage {
   async afterRender() {
     this.#presenter = new StoryDetailPresenter(parseActivePathname().id, {
       view: this,
-      apiModel: StoryAPI,
+      apiModel: OurStoryAPI,
       dbModel: Database,
     });
 

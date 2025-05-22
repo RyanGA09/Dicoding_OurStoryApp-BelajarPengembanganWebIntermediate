@@ -1,7 +1,7 @@
 // src/scripts/pages/new/new-page.js
 import NewPresenter from "./new-presenter";
 import { convertBase64ToBlob } from "../../utils";
-import * as StoryAPI from "../../data/api";
+import * as OurStoryAPI from "../../data/api";
 import { generateLoaderAbsoluteTemplate } from "../../templates";
 import Camera from "../../utils/camera";
 import Map from "../../utils/map";
@@ -34,12 +34,12 @@ export default class NewPage {
             </div>
 
             <div class="form-control">
-              <label for="photo-input" class="new-form__documentations__title">Foto Cerita</label>
+              <label for="photoUrl-input" class="new-form__documentations__title">Foto Cerita</label>
               <div id="documentations-more-info">Anda dapat menyertakan foto sebagai dokumentasi.</div>
 
               <div>
-                <button id="upload-photo-button" type="button" class="btn btn-outline">Upload dari Galeri</button>
-                <input id="photo-input" name="documentations" type="file" accept="image/*" multiple
+                <button id="upload-photoUrl-button" type="button" class="btn btn-outline">Upload dari Galeri</button>
+                <input id="photoUrl-input" name="documentations" type="file" accept="image/*" multiple
                     hidden="hidden" aria-multiline="true"
                     aria-describedby="documentations-more-info" />
                 <button id="open-documentations-camera-button" type="button" class="btn btn-outline">Buka Kamera</button>
@@ -91,7 +91,7 @@ export default class NewPage {
   }
 
   async afterRender() {
-    this.#presenter = new NewPresenter({ view: this, model: StoryAPI });
+    this.#presenter = new NewPresenter({ view: this, model: OurStoryAPI });
     this.#takenDocumentations = [];
     this.#form = document.getElementById("new-story-form");
     this.#setupForm();
@@ -105,7 +105,7 @@ export default class NewPage {
 
       const data = {
         description: this.#form.elements.namedItem("description").value,
-        photo: this.#takenDocumentations.map((picture) => picture.blob),
+        photoUrl: this.#takenDocumentations.map((picture) => picture.blob),
         lat: Number(this.#form.elements.namedItem("latitude").value),
         lon: Number(this.#form.elements.namedItem("longitude").value),
       };
@@ -113,13 +113,13 @@ export default class NewPage {
     });
 
     document
-      .getElementById("upload-photo-button")
+      .getElementById("upload-photoUrl-button")
       .addEventListener("click", () => {
-        this.#form.elements.namedItem("photo-input").click();
+        this.#form.elements.namedItem("photoUrl-input").click();
       });
 
     document
-      .getElementById("photo-input")
+      .getElementById("photoUrl-input")
       .addEventListener("change", async (e) => {
         const file = e.target.files[0];
         if (file) {

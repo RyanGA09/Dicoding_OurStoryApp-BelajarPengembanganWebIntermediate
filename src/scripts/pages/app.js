@@ -4,9 +4,15 @@ import { routes, notFoundRoute } from "../routes/routes";
 import {
   generateAuthenticatedNavigationListTemplate,
   generateMainNavigationListTemplate,
+  generateSubscribeButtonTemplate,
   generateUnauthenticatedNavigationListTemplate,
+  generateUnsubscribeButtonTemplate,
 } from "../templates";
-import { setupSkipToContent, transitionHelper } from "../utils";
+import {
+  isServiceWorkerAvailable,
+  setupSkipToContent,
+  transitionHelper,
+} from "../utils";
 import { getAccessToken, getLogout } from "../utils/auth";
 import {
   isCurrentPushSubscriptionAvailable,
