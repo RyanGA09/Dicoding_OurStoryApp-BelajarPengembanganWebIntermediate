@@ -19,12 +19,12 @@ export default class NewPresenter {
     }
   }
 
-  async postNewStory({ description, photoUrl, lat, lon }) {
+  async postNewStory({ description, photo, lat, lon }) {
     this.#view.showSubmitLoadingButton();
     try {
       const data = {
         description: description,
-        photoUrl: photoUrl,
+        photo: photo,
         lat: lat,
         lon: lon,
       };
@@ -37,7 +37,7 @@ export default class NewPresenter {
       }
 
       // No need to wait response
-      this.#notifyToAllUser(response.data.id);
+      // this.#notifyToAllUser(response.data.id);
 
       this.#view.storeSuccessfully(response.message, response.data);
     } catch (error) {
