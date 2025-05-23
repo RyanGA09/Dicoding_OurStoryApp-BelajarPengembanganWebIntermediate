@@ -78,7 +78,9 @@ OurStoryApp is a **Single Page Application (SPA)** web app developed to fulfill 
 ├── 📄 package.json
 ├── 📄 README.md
 ├── 📄 STUDENT.txt
-└── 📄 vite.config.js
+└── 📄 webpack.common.js
+└── 📄 webpack.dev.js
+└── 📄 webpack.prod.js
 ```
 
 ---
