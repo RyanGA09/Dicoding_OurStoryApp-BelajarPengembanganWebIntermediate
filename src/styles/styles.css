@@ -534,7 +534,7 @@ header {
 .story-detail__header {
   padding-block: 80px;
   min-height: 600px;
-  background-image: url("../public/images/orange-background.png");
+  /* background-image: url("../../images/orange-background.png"); */
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top;
@@ -790,7 +790,7 @@ header {
 .new-story__header {
   padding-block: 70px;
   background-color: #d9770626;
-  background-image: url("../public/images/orange-background.png");
+  /* background-image: url("../public/images/orange-background.png"); */
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top;
