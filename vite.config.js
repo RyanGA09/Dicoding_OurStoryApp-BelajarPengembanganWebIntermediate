@@ -4,10 +4,24 @@ import { resolve } from "path";
 // https://vitejs.dev/config/
 export default defineConfig({
   root: resolve(__dirname, "src"),
-  // publicDir: resolve(__dirname, "public"),
   build: {
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, "src/index.html"),
+        // sw: resolve(__dirname, "public/sw.js"), // <- ini untuk service worker
+      },
+      output: {
+        entryFileNames: (chunkInfo) => {
+          if (chunkInfo.name === "sw") {
+            return "sw.bundle.js";
+          }
+          return "[name].bundle.js";
+        },
+      },
+    },
     outDir: resolve(__dirname, "dist"),
     emptyOutDir: true,
+    // filename: "[name].bundle.js",
   },
   resolve: {
     alias: {
@@ -24,57 +38,3 @@ export default defineConfig({
     },
   },
 });
-
-// // vite.config.js
-// import { defineConfig } from "vite";
-// import { VitePWA } from "vite-plugin-pwa";
-// import path from "path";
-
-// export default defineConfig({
-//   plugins: [
-//     VitePWA({
-//       registerType: "autoUpdate",
-//       manifest: {
-//         name: "OurStoryApp",
-//         short_name: "OurStory",
-//         description: "Bagikan cerita dari manapun dengan lokasi dan foto",
-//         theme_color: "#ffffff",
-//         background_color: "#ffffff",
-//         display: "standalone",
-//         start_url: "/",
-//         icons: [
-//           {
-//             src: "icons/icon-192x192.png",
-//             sizes: "192x192",
-//             type: "image/png",
-//           },
-//           {
-//             src: "icons/icon-512x512.png",
-//             sizes: "512x512",
-//             type: "image/png",
-//           },
-//         ],
-//       },
-//       workbox: {
-//         runtimeCaching: [
-//           {
-//             urlPattern: /^https:\/\/story-api\.dicoding\.dev\//,
-//             handler: "NetworkFirst",
-//             options: {
-//               cacheName: "ourstory-api-cache",
-//             },
-//           },
-//         ],
-//       },
-//       devOptions: {
-//         enabled: true,
-//         type: "module",
-//       },
-//     }),
-//   ],
-//   resolve: {
-//     alias: {
-//       "@": path.resolve(__dirname, "./src"),
-//     },
-//   },
-// });

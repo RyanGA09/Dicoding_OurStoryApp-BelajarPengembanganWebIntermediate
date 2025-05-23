@@ -1,7 +1,7 @@
 // src/scripts/pages/new/new-page.js
 import NewPresenter from "./new-presenter";
 import { convertBase64ToBlob } from "../../utils";
-import * as StoryAPI from "../../data/api";
+import * as OurStoryAPI from "../../data/api";
 import { generateLoaderAbsoluteTemplate } from "../../templates";
 import Camera from "../../utils/camera";
 import Map from "../../utils/map";
@@ -91,7 +91,7 @@ export default class NewPage {
   }
 
   async afterRender() {
-    this.#presenter = new NewPresenter({ view: this, model: StoryAPI });
+    this.#presenter = new NewPresenter({ view: this, model: OurStoryAPI });
     this.#takenDocumentations = [];
     this.#form = document.getElementById("new-story-form");
     this.#setupForm();

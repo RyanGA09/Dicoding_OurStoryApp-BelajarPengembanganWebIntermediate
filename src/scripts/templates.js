@@ -1,4 +1,4 @@
-// src/scripts/template.js
+// src/scripts/utils/templates.js
 import { showFormattedDate } from "./utils";
 
 export function generateLoaderTemplate() {
@@ -35,7 +35,7 @@ export function generateAuthenticatedNavigationListTemplate() {
 
 export function generateStoriesListEmptyTemplate() {
   return `
-    <div class="story-list__empty">
+    <div id="storys-list-empty" class="storys-list__empty">
       <h2>Tidak ada cerita yang tersedia</h2>
       <p>Saat ini, belum ada cerita yang dapat ditampilkan.</p>
     </div>
@@ -60,11 +60,13 @@ export function generateStoryItemTemplate({
   name,
   description,
   photoUrl,
+  location,
   createdAt,
 }) {
   return `
     <div tabindex="0" class="story-item" data-storyid="${id}">
       <img class="story-item__image" src="${photoUrl}" alt="Foto Cerita" />
+      
       <div class="story-item__body">
         <h2 class="story-item__title">${name}</h2>
         <p class="story-item__description">${description}</p>
@@ -73,6 +75,9 @@ export function generateStoryItemTemplate({
             createdAt,
             "id-ID"
           )}
+        </div>
+        <div class="story-item__location">
+          <i class="fas fa-map"></i> ${location.placeName}
         </div>
         <a class="btn story-item__read-more" href="#/stories/${id}">
           Selengkapnya <i class="fas fa-arrow-right"></i>
@@ -91,11 +96,15 @@ export function generateStoryDetailErrorTemplate(message) {
   `;
 }
 
-export function generateSaveStoryButtonTemplate() {
+export function generateStoryDetailImageTemplate(imageUrl = null, alt = "") {
+  if (!imageUrl) {
+    return `
+      <img class="story-detail__image" src="images/placeholder-image.jpg" alt="Placeholder Image">
+    `;
+  }
+
   return `
-    <button id="story-detail-save" class="btn btn-transparent">
-      Simpan Cerita <i class="far fa-bookmark"></i>
-    </button>
+    <img class="story-detail__image" src="${imageUrl}" alt="${alt}">
   `;
 }
 
@@ -103,10 +112,11 @@ export function generateStoryDetailTemplate({
   name,
   description,
   photoUrl,
-  createdAt,
   location,
+  createdAt,
 }) {
   const createdAtFormatted = showFormattedDate(createdAt, "id-ID");
+  const imagesHtml = generateStoryDetailImageTemplate(photoUrl, name);
 
   return `
     <div class="story-detail__header">
@@ -115,8 +125,11 @@ export function generateStoryDetailTemplate({
       <div class="story-detail__more-info">
         <div class="story-detail__more-info__inline">
           <div id="createdat" class="story-detail__createdat" data-value="${createdAtFormatted}">
-            <i class="fas fa-calendar-alt"></i> ${createdAtFormatted}
+            <i class="fas fa-calendar-alt"></i>
           </div>
+          <div id="location-place-name" class="story-detail__location__place-name" data-value="${location.placeName}"><i class="fas fa-map"></i></div>
+        </div>
+        <div class="story-detail__more-info__inline">
           <div id="location-coordinates" class="story-detail__location__coordinates">
             <i class="fas fa-map-marker-alt"></i> ${location.latitude}, ${location.longitude}
           </div>
@@ -125,10 +138,8 @@ export function generateStoryDetailTemplate({
     </div>
 
     <div class="container">
-      <div class="story-detail__image__container">
-        <div id="images" class="story-detail__image">
-          <img src="${photoUrl}" alt="Cerita dari ${name}" />
-        </div>
+      <div class="story-detail__images__container">
+        <div id="images" class="story-detail__images">${imagesHtml}</div>
       </div>
     </div>
 
@@ -163,5 +174,37 @@ export function generateStoryDetailTemplate({
         </div>
       </div>
     </div>
+  `;
+}
+
+export function generateSubscribeButtonTemplate() {
+  return `
+    <button id="subscribe-button" class="btn subscribe-button">
+      Subscribe <i class="fas fa-bell"></i>
+    </button>
+  `;
+}
+
+export function generateUnsubscribeButtonTemplate() {
+  return `
+    <button id="unsubscribe-button" class="btn unsubscribe-button">
+      Unsubscribe <i class="fas fa-bell-slash"></i>
+    </button>
+  `;
+}
+
+export function generateSaveStoryButtonTemplate() {
+  return `
+    <button id="story-detail-save" class="btn btn-transparent">
+      Simpan Cerita <i class="far fa-bookmark"></i>
+    </button>
+  `;
+}
+
+export function generateRemoveStoryButtonTemplate() {
+  return `
+    <button id="story-detail-remove" class="btn btn-transparent">
+      Buang Cerita <i class="fas fa-bookmark"></i>
+    </button>
   `;
 }

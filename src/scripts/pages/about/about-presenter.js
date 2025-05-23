@@ -7,6 +7,6 @@ export default class AboutPresenter {
   }
 
   async showContent() {
-    this.#view.showAbout();
+    // this.#view.showAbout();
   }
 }

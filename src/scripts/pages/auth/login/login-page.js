@@ -1,3 +1,4 @@
+// src/scripts/pages/auth/login/login-page.js
 import LoginPresenter from "./login-presenter";
 import * as OurStoryAPI from "../../../data/api";
 import * as AuthModel from "../../../utils/auth";

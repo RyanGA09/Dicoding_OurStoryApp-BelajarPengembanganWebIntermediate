@@ -1,3 +1,4 @@
+// src/scripts/pages/auth/login/login-presenter.js
 export default class LoginPresenter {
   #view;
   #model;

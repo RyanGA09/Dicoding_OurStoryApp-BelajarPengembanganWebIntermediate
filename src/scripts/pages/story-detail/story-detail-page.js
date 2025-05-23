@@ -4,12 +4,14 @@ import {
   generateStoryDetailErrorTemplate,
   generateStoryDetailTemplate,
   generateSaveStoryButtonTemplate,
+  generateRemoveStoryButtonTemplate,
 } from "../../templates";
 import { createCarousel } from "../../utils";
 import StoryDetailPresenter from "./story-detail-presenter";
 import { parseActivePathname } from "../../routes/url-parser";
 import Map from "../../utils/map";
-import * as StoryAPI from "../../data/api";
+import * as OurStoryAPI from "../../data/api";
+import Database from "../../data/database";
 
 export default class StoryDetailPage {
   #presenter = null;
@@ -29,7 +31,8 @@ export default class StoryDetailPage {
   async afterRender() {
     this.#presenter = new StoryDetailPresenter(parseActivePathname().id, {
       view: this,
-      apiModel: StoryAPI,
+      apiModel: OurStoryAPI,
+      dbModel: Database,
     });
 
     this.#presenter.showStoryDetail();
@@ -42,15 +45,44 @@ export default class StoryDetailPage {
     document
       .getElementById("story-detail-save")
       .addEventListener("click", async () => {
-        alert("Fitur simpan Cerita akan segera hadir!");
+        // alert("Fitur simpan Cerita akan segera hadir!");
+        await this.#presenter.saveStory();
+        await this.#presenter.showSaveButton();
       });
+  }
+
+  saveToBookmarkSuccessfully(message) {
+    // console.log(message);
+  }
+  saveToBookmarkFailed(message) {
+    alert(message);
+  }
+
+  renderRemoveButton() {
+    document.getElementById("save-actions-container").innerHTML =
+      generateRemoveStoryButtonTemplate();
+
+    document
+      .getElementById("story-detail-remove")
+      .addEventListener("click", async () => {
+        await this.#presenter.removeStory();
+        await this.#presenter.showSaveButton();
+      });
+  }
+
+  removeFromBookmarkFailed(message) {
+    alert(message);
+  }
+
+  removeFromBookmarkSuccessfully(message) {
+    // console.log(message);
   }
 
   addNotifyMeEventListener() {
     document
       .getElementById("story-detail-notify-me")
       .addEventListener("click", () => {
-        alert("Fitur notifikasi cerita akan segera hadir!");
+        this.#presenter.notifyMe();
       });
   }
 

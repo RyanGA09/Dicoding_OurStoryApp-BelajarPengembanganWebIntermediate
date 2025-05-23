@@ -7,7 +7,7 @@ import {
 } from "../../templates";
 import HomePresenter from "./home-presenter";
 import Map from "../../utils/map";
-import * as StoryAPI from "../../data/api";
+import * as OurStoryAPI from "../../data/api";
 
 export default class HomePage {
   #presenter = null;
@@ -34,7 +34,7 @@ export default class HomePage {
   }
 
   async afterRender() {
-    this.#presenter = new HomePresenter({ view: this, model: StoryAPI });
+    this.#presenter = new HomePresenter({ view: this, model: OurStoryAPI });
     await this.#presenter.initialGalleryAndMap();
   }
 
@@ -43,7 +43,7 @@ export default class HomePage {
       this.populateStoriesListEmpty();
       return;
     }
-    console.log(stories);
+    // console.log(stories);
 
     const html = stories.reduce((accumulator, story) => {
       if (!story.description) {

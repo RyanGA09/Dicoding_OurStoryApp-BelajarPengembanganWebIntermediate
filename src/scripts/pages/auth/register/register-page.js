@@ -1,3 +1,4 @@
+// src/scripts/pages/auth/register/register-page.js
 import RegisterPresenter from "./register-presenter";
 import * as OurStoryAPI from "../../../data/api";
 
