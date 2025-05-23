@@ -122,11 +122,11 @@ OurStoryApp is a **Single Page Application (SPA)** web app developed to fulfill 
 
      **📌 Note: No API key is required for Dicoding Story API. A token will be obtained via the login process.**
 
-6. **Run in Browser**
+6. **Scripts**
 
-   ```bash
-   npm run dev
-   ```
+   - `npm run build`: Membuat build production menggunakan Webpack.
+   - `npm run start-dev`: Menjalankan server development menggunakan Webpack Dev Server.
+   - `npm run serve`: Menjalankan server HTTP untuk build yang sudah dibuat.
 
 ---
 
