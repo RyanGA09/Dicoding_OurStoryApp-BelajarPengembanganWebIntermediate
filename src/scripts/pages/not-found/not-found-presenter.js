@@ -7,6 +7,6 @@ export default class NotFoundPresenter {
   }
 
   async showContent() {
-    this.#view.showNotFound();
+    // this.#view.showNotFound();
   }
 }

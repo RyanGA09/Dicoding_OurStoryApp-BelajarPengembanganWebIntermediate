@@ -52,7 +52,7 @@ export default class StoryDetailPage {
   }
 
   saveToBookmarkSuccessfully(message) {
-    console.log(message);
+    // console.log(message);
   }
   saveToBookmarkFailed(message) {
     alert(message);
@@ -75,7 +75,7 @@ export default class StoryDetailPage {
   }
 
   removeFromBookmarkSuccessfully(message) {
-    console.log(message);
+    // console.log(message);
   }
 
   addNotifyMeEventListener() {

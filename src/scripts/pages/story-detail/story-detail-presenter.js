@@ -37,7 +37,7 @@ export default class StoryDetailPresenter {
       }
 
       const story = await storyMapper(response.story);
-      console.log(story); // untuk debugging sementara
+      // console.log(story); // untuk debugging sementara
 
       this.#view.populateStoryDetailAndInitialMap(response.message, story);
     } catch (error) {

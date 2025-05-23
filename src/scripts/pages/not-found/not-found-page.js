@@ -20,6 +20,6 @@ export default class NotFoundPage {
   }
 
   showNotFound() {
-    console.log("NotFoundPage ditampilkan - 404");
+    // console.log("NotFoundPage ditampilkan - 404");
   }
 }

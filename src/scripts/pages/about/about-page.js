@@ -20,6 +20,6 @@ export default class AboutPage {
   }
 
   showAbout() {
-    console.log("AboutPage ditampilkan.");
+    // console.log("AboutPage ditampilkan.");
   }
 }

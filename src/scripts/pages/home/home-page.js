@@ -43,7 +43,7 @@ export default class HomePage {
       this.populateStoriesListEmpty();
       return;
     }
-    console.log(stories);
+    // console.log(stories);
 
     const html = stories.reduce((accumulator, story) => {
       if (!story.description) {
