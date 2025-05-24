@@ -124,6 +124,11 @@ OurStoryApp is a **Single Page Application (SPA)** web app developed to fulfill 
 
 6. **Scripts**
 
+   - `npm install --save workbox-routing workbox-strategies`: Menginstal modul Workbox untuk mengatur routing dan strategi caching pada service worker.
+   - `npm install --save-dev workbox-webpack-plugin`: Plugin Webpack untuk menggenerate service worker secara otomatis menggunakan Workbox saat build production.
+   - `npm install --save workbox-precaching`: Digunakan untuk precaching aset-aset statis, sehingga bisa digunakan offline dengan optimal.
+   - `npm install --save workbox-routing workbox-strategies workbox-cacheable-response`: Tambahan modul Workbox untuk mendukung response caching, termasuk menentukan response yang bisa di-cache berdasarkan status code dan header.
+   - `npm install --save idb`: Menginstal library IndexedDB wrapper berbasis Promise, untuk memudahkan penyimpanan data lokal (seperti caching cerita atau token) secara offline.
    - `npm run build`: Membuat build production menggunakan Webpack.
    - `npm run start-dev`: Menjalankan server development menggunakan Webpack Dev Server.
    - `npm run serve`: Menjalankan server HTTP untuk build yang sudah dibuat.
