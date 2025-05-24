@@ -141,7 +141,9 @@ The app integrates with the [Dicoding Story API](https://story-api.dicoding.dev/
 
 ### Submission 1: Building the Our Story App
 
-#### 🎯 Key Features
+#### 🎯 Key Features Submission 1
+
+##### Main Features Submission 1
 
 - ✅ **User Registration**
 - ✅ **Login & Token Authentication**
@@ -152,10 +154,10 @@ The app integrates with the [Dicoding Story API](https://story-api.dicoding.dev/
 - ✅ **Page Transition with View Transition API**
 - ✅ **Push Notification setelah berhasil membuat story**
 - ✅ **Web Accessibility Standards (WCAG)**:
-  - ✅ Skip to content
-  - ✅ Image alt text
-  - ✅ Forms with labels
-  - ✅ Semantic HTML structure
+  - Skip to content
+  - Image alt text
+  - Forms with labels
+  - Semantic HTML structure
 
 #### API Documentation
 
@@ -180,29 +182,71 @@ The app integrates with the [Dicoding Story API](https://story-api.dicoding.dev/
 
 📚 [Full documentation of Dicoding Story API](https://story-api.dicoding.dev/v1)
 
-#### 📷 Screenshots
+#### 📷 Screenshots Submission 1
 
 ![Login Page Screenshot](/public/images/loginpage.png)
 ![Home Page Screenshot](/public/images/homepage.png)
 ![Story Detail Screenshot](/public/images/detailpage.png)
 ![Add Story Screenshot](/public/images/addpage.png)
 
-#### 🛠️ Technology & Tools
+#### 🛠️ Technology & Tools Submission 1
 
 - HTML5 + CSS3 + JavaScript (Vanilla)
 - SPA Router (Hash based)
 - Model-View-Presenter (MVP) Architecture
 - Leaflet.js (OpenStreetMap)
 - View Transition API
-- Web Push Notification
 - Web Content Accessibility Guidelines (WCAG)
-- VAPID Key: BCCs2eonMI-6H2ctvFaWg-UYdDv387Vno_bzUzALpB442r2lCnsHmtrx8biyPi_E-1fSGABK_Qs_GlvPoJJqxbk
 
 ---
 
 ### Submission 2: Deploy the Our Story App
 
-#### Key Features in Submission 2 (Coming Soon)
+#### 🎯 Key Features Submission 2
+
+##### Main Features Submission 2
+
+- ✅ **Mempertahankan seluruh fitur pada Submission 1**:
+  - Memanfaatkan satu API sebagai sumber data (Dicoding Story API).
+  - Menggunakan arsitektur Single Page Application (SPA).
+  - Menampilkan data dari API.
+  - Memiliki fitur tambah cerita baru (unggah foto, deskripsi, lokasi).
+  - Menerapkan aksesibilitas sesuai standar (WCAG).
+  - Merancang transisi halaman yang halus dengan View Transition API.
+- ✅ **Push Notification (Web Push)**:
+  - Menggunakan Web Notification API dan VAPID Key.
+  - Notifikasi dikirim saat pengguna berhasil menambahkan cerita baru.
+- ✅ **Progressive Web App (PWA)**:
+  - Menggunakan arsitektur Application Shell.
+  - Aplikasi dapat diinstal ke Homescreen.
+  - Aplikasi dapat digunakan dalam kondisi offline tanpa kehilangan tampilan UI.
+- ✅ **Offline Data Storage dengan IndexedDB**:
+  - Menyimpan data cerita ke IndexedDB secara lokal.
+  - Menampilkan data yang disimpan di halaman bookmark.
+  - Mendukung fitur hapus data lokal.
+- ✅ **Deploy Secara Publik**:
+  - Aplikasi telah di-deploy dan dapat diakses secara online menggunakan layanan hosting (`GitHub Pages` / `Netlify` / `Firebase Hosting`).
+  - URL hasil deploy tercantum pada file `STUDENT.txt.`
+
+##### Optional Features Submission 2
+
+#### 🛠️ Technology & Tools Submission 2
+
+- HTML5 + CSS3 + JavaScript (Vanilla)
+- SPA Router (Hash based)
+- Model-View-Presenter (MVP) Architecture
+- Leaflet.js (OpenStreetMap)
+- View Transition API
+- Web Content Accessibility Guidelines (WCAG)
+- Web Push Notification
+- Progressive Web App (PWA): Manifest, Application Shell, Offline-ready
+- IndexedDB (via `idb`): Penyimpanan data lokal
+- Workbox:
+  - workbox-webpack-plugin
+  - Routing, precaching, caching strategy
+- Custom 404 Page
+- VAPID Key: BCCs2eonMI-6H2ctvFaWg-UYdDv387Vno_bzUzALpB442r2lCnsHmtrx8biyPi_E-1fSGABK_Qs_GlvPoJJqxbk
+- Deployment Platform: GitHub Pages / Netlify / Firebase Hosting
 
 ## LICENSE
 
