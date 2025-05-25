@@ -251,10 +251,10 @@ The app integrates with the [Dicoding Story API](https://story-api.dicoding.dev/
 
 #### 📷 Screenshots Submission 1
 
-![Login Page Screenshot](/public/images/loginpage.png)
-![Home Page Screenshot](/public/images/homepage.png)
-![Story Detail Screenshot](/public/images/detailpage.png)
-![Add Story Screenshot](/public/images/addpage.png)
+![Login Page Screenshot](/documentation/loginpage.png)
+![Home Page Screenshot](/documentation/homepage.png)
+![Story Detail Screenshot](/documentation/detailpage.png)
+![Add Story Screenshot](/documentation/addpage.png)
 
 #### 🛠️ Technology & Tools Submission 1
 
@@ -307,11 +307,11 @@ The app integrates with the [Dicoding Story API](https://story-api.dicoding.dev/
 
 #### 📷 Screenshots Submission 2
 
-![Responsive display on mobile devices Screenshot](/public/images/loginpage.png)
-![Widescreen display for desktop Screenshot](/public/images/homepage.png)
-![Offline Mode Screenshot](/public/images/detailpage.png)
-![Bookmark Page Screenshot](/public/images/detailpage.png)
-![Not Found Page Screenshot](/public/images/addpage.png)
+![Responsive display on mobile devices Screenshot](/documentation/loginpage.png)
+![Widescreen display for desktop Screenshot](/documentation/homepage.png)
+![Offline Mode Screenshot](/documentation/detailpage.png)
+![Bookmark Page Screenshot](/documentation/detailpage.png)
+![Not Found Page Screenshot](/documentation/addpage.png)
 
 #### 🛠️ Technology & Tools Submission 2
 

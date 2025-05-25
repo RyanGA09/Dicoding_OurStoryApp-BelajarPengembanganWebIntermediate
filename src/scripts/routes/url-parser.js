@@ -1,4 +1,3 @@
-// src/scripts/routes/url-parser.js
 function extractPathnameSegments(path) {
   const splitUrl = path.split("/");
 

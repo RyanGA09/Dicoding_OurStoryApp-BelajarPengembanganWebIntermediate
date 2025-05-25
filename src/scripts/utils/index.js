@@ -19,8 +19,10 @@ export async function createCarousel(containerElement, options = {}) {
     mouseDrag: true,
     swipeAngle: false,
     speed: 600,
+
     nav: true,
     navPosition: "bottom",
+
     autoplay: false,
     controls: false,
 
