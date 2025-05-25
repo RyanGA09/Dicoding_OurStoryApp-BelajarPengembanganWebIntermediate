@@ -1,3 +1,4 @@
+// webpack.prod.js
 const common = require("./webpack.common.js");
 const { merge } = require("webpack-merge");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
