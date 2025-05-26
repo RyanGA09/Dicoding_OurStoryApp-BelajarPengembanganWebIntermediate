@@ -48,20 +48,20 @@ export default class StoryDetailPresenter {
     }
   }
 
-  async notifyMe() {
-    try {
-      const response = await this.#apiModel.sendStoryToMeViaNotification(
-        this.#storyId
-      );
-      if (!response.ok) {
-        console.error("notifyMe: response:", response);
-        return;
-      }
-      console.log("notifyMe:", response.message);
-    } catch (error) {
-      console.error("notifyMe: error:", error);
-    }
-  }
+  // async notifyMe() {
+  //   try {
+  //     const response = await this.#apiModel.sendStoryToMeViaNotification(
+  //       this.#storyId
+  //     );
+  //     if (!response.ok) {
+  //       console.error("notifyMe: response:", response);
+  //       return;
+  //     }
+  //     console.log("notifyMe:", response.message);
+  //   } catch (error) {
+  //     console.error("notifyMe: error:", error);
+  //   }
+  // }
 
   // async notifyStoryOwner(commentId) {
   //   try {

@@ -161,11 +161,6 @@ export function generateStoryDetailTemplate({
           <h2>Aksi</h2>
           <div class="story-detail__actions__buttons">
             <div id="save-actions-container"></div>
-            <div id="notify-me-actions-container">
-              <button id="story-detail-notify-me" class="btn btn-transparent">
-                Try Notify Me <i class="far fa-bell"></i>
-              </button>
-            </div>
           </div>
         </div>
       </div>
