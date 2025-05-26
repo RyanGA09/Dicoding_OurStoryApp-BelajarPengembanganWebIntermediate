@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "description": "Aplikasi pengunggahan cerita untuk memungkinkan siapapun dapat membuat cerita untuk dibaca para pembaca secara langsung",
   "scripts": {
-    "build": "webpack --config webpack.prod.js",
-    "start-dev": "webpack serve --config webpack.dev.js",
-    "serve": "http-server dist"
+    "build": "webpack --config ./webpack.prod.js",
+    "start-dev": "webpack serve --config ./webpack.dev.js",
+    "serve": "http-server ./dist --port 3000"
   },
   "keywords": [],
-  "author": "YOUR_NAME <yourmail@mail.com>",
+  "author": "Your Name <your_email>",
   "license": "ISC",
   "devDependencies": {
     "@babel/preset-env": "^7.26.9",
