@@ -2,7 +2,6 @@ const common = require("./webpack.common.js");
 const { merge } = require("webpack-merge");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-// const { GenerateSW } = require('workbox-webpack-plugin');
 const path = require("path");
 const { InjectManifest } = require("workbox-webpack-plugin");
 
@@ -34,9 +33,9 @@ module.exports = merge(common, {
     // new GenerateSW({
     //   swDest: 'sw.workbox.bundle.js',
     // }),
-    new InjectManifest({
-      swSrc: path.resolve(__dirname, "src/scripts/sw.js"),
-      swDest: "sw.bundle.js",
-    }),
+    // new InjectManifest({
+    //   swSrc: path.resolve(__dirname, "src/sw.js"),
+    //   swDest: "sw.bundle.js",
+    // }),
   ],
 });

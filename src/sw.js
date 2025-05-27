@@ -7,7 +7,7 @@ import {
   CacheFirst,
   StaleWhileRevalidate,
 } from "workbox-strategies";
-import { BASE_URL } from "./config";
+import { BASE_URL } from "./scripts/config";
 
 // Do precaching
 const manifest = self.__WB_MANIFEST;

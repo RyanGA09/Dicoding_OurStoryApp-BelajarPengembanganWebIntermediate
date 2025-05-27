@@ -1,3 +1,5 @@
+// import runtime from 'serviceworker-webpack-plugin/lib/runtime';
+
 export function sleep(time = 1000) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
@@ -19,10 +21,8 @@ export async function createCarousel(containerElement, options = {}) {
     mouseDrag: true,
     swipeAngle: false,
     speed: 600,
-
     nav: true,
     navPosition: "bottom",
-
     autoplay: false,
     controls: false,
 
@@ -114,6 +114,8 @@ export async function registerServiceWorker() {
     const registration = await navigator.serviceWorker.register(
       "/sw.bundle.js"
     );
+    // await runtime.register();
+
     console.log("Service worker telah terpasang", registration);
   } catch (error) {
     console.log("Failed to install service worker:", error);
