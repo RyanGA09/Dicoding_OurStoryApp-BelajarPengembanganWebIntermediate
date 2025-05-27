@@ -1,4 +1,3 @@
-// src/scripts/routes/routes.js
 import RegisterPage from "../pages/auth/register/register-page";
 import LoginPage from "../pages/auth/login/login-page";
 import HomePage from "../pages/home/home-page";

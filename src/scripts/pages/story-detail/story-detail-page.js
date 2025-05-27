@@ -78,13 +78,13 @@ export default class StoryDetailPage {
     // console.log(message);
   }
 
-  addNotifyMeEventListener() {
-    document
-      .getElementById("story-detail-notify-me")
-      .addEventListener("click", () => {
-        this.#presenter.notifyMe();
-      });
-  }
+  // addNotifyMeEventListener() {
+  //   document
+  //     .getElementById("story-detail-notify-me")
+  //     .addEventListener("click", () => {
+  //       this.#presenter.notifyMe();
+  //     });
+  // }
 
   showStoryDetailLoading() {
     document.getElementById("story-detail-loading-container").innerHTML =
@@ -138,7 +138,7 @@ export default class StoryDetailPage {
 
     // Actions buttons
     this.#presenter.showSaveButton();
-    this.addNotifyMeEventListener();
+    // this.addNotifyMeEventListener();
   }
 
   async initialMap() {

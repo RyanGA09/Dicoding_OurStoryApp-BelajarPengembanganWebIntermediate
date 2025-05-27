@@ -48,19 +48,19 @@ export default class NewPresenter {
     }
   }
 
-  async #notifyToAllUser(storyId) {
-    try {
-      const response = await this.#model.sendStoryToAllUserViaNotification(
-        storyId
-      );
-      if (!response.ok) {
-        console.error("#notifyToAllUser: response:", response);
-        return false;
-      }
-      return true;
-    } catch (error) {
-      console.error("#notifyToAllUser: error:", error);
-      return false;
-    }
-  }
+  // async #notifyToAllUser(storyId) {
+  //   try {
+  //     const response = await this.#model.sendStoryToAllUserViaNotification(
+  //       storyId
+  //     );
+  //     if (!response.ok) {
+  //       console.error("#notifyToAllUser: response:", response);
+  //       return false;
+  //     }
+  //     return true;
+  //   } catch (error) {
+  //     console.error("#notifyToAllUser: error:", error);
+  //     return false;
+  //   }
+  // }
 }
