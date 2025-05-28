@@ -1,5 +1,5 @@
 APP_URL=http://localhost:9000
 
-DEPLOYMENT_URL=
+DEPLOYMENT_URL=https://ryanga09.github.io/Dicoding_OurStoryApp-BelajarPengembanganWebIntermediate/
 
 MAP_SERVICE_API_KEY=QhP30VXdqcjA35filTRr

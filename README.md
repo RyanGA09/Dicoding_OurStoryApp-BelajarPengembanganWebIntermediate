@@ -252,7 +252,7 @@ The app integrates with the [Dicoding Story API](https://story-api.dicoding.dev/
 #### 📷 Screenshots Submission 1
 
 ![Login Page Screenshot](/documentation/loginpage.png)
-![Home Page Screenshot](/documentation/homepage.png)
+![Home Page Screenshot](/documentation/homepage-pc.png)
 ![Story Detail Screenshot](/documentation/detailpage.png)
 ![Add Story Screenshot](/documentation/addpage.png)
 
