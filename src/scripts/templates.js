@@ -25,6 +25,7 @@ export function generateAuthenticatedNavigationListTemplate() {
   return `
     <li id="push-notification-tools" class="push-notification-tools"></li>
     <li><a class="btn new-story-button" href="#/new">Buat Cerita <i class="fas fa-plus"></i></a></li>
+    <li><a class="profile-button" href="#/profile"><i class="fas fa-user"></i> Profil</a></li>
     <li><a id="logout-button" class="logout-button" href="#/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
   `;
 }

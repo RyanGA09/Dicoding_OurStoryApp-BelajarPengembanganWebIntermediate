@@ -307,11 +307,13 @@ The app integrates with the [Dicoding Story API](https://story-api.dicoding.dev/
 
 #### 📷 Screenshots Submission 2
 
-![Responsive display on mobile devices Screenshot](/documentation/loginpage.png)
-![Widescreen display for desktop Screenshot](/documentation/homepage.png)
-![Offline Mode Screenshot](/documentation/detailpage.png)
-![Bookmark Page Screenshot](/documentation/detailpage.png)
-![Not Found Page Screenshot](/documentation/addpage.png)
+![Responsive display on mobile devices Screenshot](/documentation/homepage-mobile.png)
+![Widescreen display for desktop Screenshot](/documentation/homepage-pc.png)
+![Push Notification (Web Push)](/documentation/pushnotification.png)
+![Progressive Web App (PWA)](/documentation/pwa.png)
+![Offline Mode Screenshot](/documentation/offline.png)
+![Bookmark Page & Offline Data Storage dengan IndexedDB Screenshot](/documentation/detailpage.png)
+![Not Found Page Screenshot](/documentation/notfound.png)
 
 #### 🛠️ Technology & Tools Submission 2
 
