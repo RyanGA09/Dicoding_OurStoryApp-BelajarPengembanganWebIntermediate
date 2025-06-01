@@ -37,12 +37,14 @@ export default class NewPage {
               <label for="photo-input" class="new-form__documentations__title">Foto Cerita</label>
               <div id="documentations-more-info">Anda dapat menyertakan foto sebagai dokumentasi.</div>
 
-              <div>
-                <button id="upload-photo-button" type="button" class="btn btn-outline">Upload dari Galeri</button>
-                <input id="photo-input" name="documentations" type="file" accept="image/*" multiple
-                    hidden="hidden" aria-multiline="true"
-                    aria-describedby="documentations-more-info" />
-                <button id="open-documentations-camera-button" type="button" class="btn btn-outline">Buka Kamera</button>
+              <div class="new-form__documentations__container">
+                <div class="new-form__documentations__buttons">
+                  <button id="upload-photo-button" type="button" class="btn btn-outline">Upload dari Galeri</button>
+                  <input id="photo-input" name="documentations" type="file" accept="image/*" multiple
+                      hidden="hidden" aria-multiline="true"
+                      aria-describedby="documentations-more-info" />
+                  <button id="open-documentations-camera-button" type="button" class="btn btn-outline">Buka Kamera</button>
+                </div>
               </div>
 
               <div id="camera-container" class="new-form__camera__container">
@@ -112,16 +114,6 @@ export default class NewPage {
       await this.#presenter.postNewStory(data);
     });
 
-    // document
-    //   .getElementById("photo-input")
-    //   .addEventListener("change", async (e) => {
-    //     const file = e.target.files[0];
-    //     if (file) {
-    //       await this.#addTakenPicture(file);
-    //       await this.#populateTakenPictures(); // <--- Tambahkan baris ini
-    //     }
-    //   });
-
     document
       .getElementById("photo-input")
       .addEventListener("change", async (event) => {
@@ -140,10 +132,6 @@ export default class NewPage {
       .addEventListener("click", () => {
         this.#form.elements.namedItem("photo-input").click();
       });
-
-    // document.getElementById("photo-input").addEventListener("click", () => {
-    //   this.#form.elements.namedItem("documentations-input").click();
-    // });
 
     const cameraContainer = document.getElementById("camera-container");
     document
@@ -288,12 +276,19 @@ export default class NewPage {
   }
 
   storeSuccessfully(msg) {
-    alert("Cerita berhasil diunggah!");
+    console.log(msg);
+    this.clearForm();
+
+    // Redirect page
     location.hash = "/";
   }
 
   storeFailed(msg) {
     alert(`Gagal mengunggah cerita: ${msg}`);
+  }
+
+  clearForm() {
+    this.#form.reset();
   }
 
   showMapLoading() {
