@@ -112,34 +112,56 @@ export default class NewPage {
       await this.#presenter.postNewStory(data);
     });
 
+    // document
+    //   .getElementById("photo-input")
+    //   .addEventListener("change", async (e) => {
+    //     const file = e.target.files[0];
+    //     if (file) {
+    //       await this.#addTakenPicture(file);
+    //       await this.#populateTakenPictures(); // <--- Tambahkan baris ini
+    //     }
+    //   });
+
+    document
+      .getElementById("photo-input")
+      .addEventListener("change", async (event) => {
+        const insertingPicturesPromises = Object.values(event.target.files).map(
+          async (file) => {
+            return await this.#addTakenPicture(file);
+          }
+        );
+        await Promise.all(insertingPicturesPromises);
+
+        await this.#populateTakenPictures();
+      });
+
     document
       .getElementById("upload-photo-button")
       .addEventListener("click", () => {
         this.#form.elements.namedItem("photo-input").click();
       });
 
-    document
-      .getElementById("photo-input")
-      .addEventListener("change", async (e) => {
-        const file = e.target.files[0];
-        if (file) {
-          await this.#addTakenPicture(file);
-          await this.#populateTakenPictures(); // <--- Tambahkan baris ini
-        }
-      });
+    // document.getElementById("photo-input").addEventListener("click", () => {
+    //   this.#form.elements.namedItem("documentations-input").click();
+    // });
 
+    const cameraContainer = document.getElementById("camera-container");
     document
       .getElementById("open-documentations-camera-button")
-      .addEventListener("click", async () => {
-        const cameraContainer = document.getElementById("camera-container");
-        this.#isCameraOpen = !this.#isCameraOpen;
-        cameraContainer.style.display = this.#isCameraOpen ? "block" : "none";
+      .addEventListener("click", async (event) => {
+        cameraContainer.classList.toggle("open");
+        this.#isCameraOpen = cameraContainer.classList.contains("open");
+
         if (this.#isCameraOpen) {
+          event.currentTarget.textContent = "Tutup Kamera";
           this.#setupCamera();
           await this.#camera.launch();
-        } else {
-          this.#camera.stop();
+
+          return;
         }
+
+        event.currentTarget.textContent = "Buka Kamera";
+        this.#camera.stop();
       });
   }
 
