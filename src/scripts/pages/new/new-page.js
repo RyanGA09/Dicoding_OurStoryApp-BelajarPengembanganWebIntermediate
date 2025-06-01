@@ -95,9 +95,9 @@ export default class NewPage {
   async afterRender() {
     this.#presenter = new NewPresenter({ view: this, model: OurStoryAPI });
     this.#takenDocumentations = [];
-    this.#form = document.getElementById("new-story-form");
-    this.#setupForm();
+    // this.#form = document.getElementById("new-story-form");
     await this.#presenter.showNewFormMap();
+    this.#setupForm();
   }
 
   #setupForm() {
@@ -275,16 +275,16 @@ export default class NewPage {
     return selectedPicture;
   }
 
-  storeSuccessfully(msg) {
-    console.log(msg);
+  storeSuccessfully(message) {
+    console.log(message);
     this.clearForm();
 
     // Redirect page
     location.hash = "/";
   }
 
-  storeFailed(msg) {
-    alert(`Gagal mengunggah cerita: ${msg}`);
+  storeFailed(message) {
+    alert(`Gagal mengunggah cerita: ${message}`);
   }
 
   clearForm() {
@@ -303,14 +303,14 @@ export default class NewPage {
   showSubmitLoadingButton() {
     document.getElementById("submit-button-container").innerHTML = `
       <button class="btn" type="submit" disabled>
-        <i class="fas fa-spinner loader-button"></i> Mengirim...
+        <i class="fas fa-spinner loader-button"></i> Membuat cerita...
       </button>
     `;
   }
 
   hideSubmitLoadingButton() {
     document.getElementById("submit-button-container").innerHTML = `
-      <button class="btn" type="submit">Kirim Cerita</button>
+      <button class="btn" type="submit">Buat Cerita</button>
     `;
   }
 }

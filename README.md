@@ -18,10 +18,33 @@ OurStoryApp is a **Single Page Application (SPA)** web app developed to fulfill 
 📦 Dicoding_OurStoryApp-BelajarPengembanganWebIntermediate
 ├── 📁 public
 │   ├── 📁 images
+│   │   ├── 📁 icons
+│   │   │   ├── 📄 add-x512.png
+│   │   │   ├── 📄 bookmark-x512.png
+│   │   │   ├── 📄 favicon.png
+│   │   │   ├── 📄 maskable_icon (1).png
+│   │   │   ├── 📄 maskable_icon (2).png
+│   │   │   ├── 📄 maskable-icon-x48.png
+│   │   │   ├── 📄 maskable-icon-x72.png
+│   │   │   ├── 📄 maskable-icon-x96.png
+│   │   │   ├── 📄 maskable-icon-x128.png
+│   │   │   ├── 📄 maskable-icon-x144.png
+│   │   │   ├── 📄 maskable-icon-x192.png
+│   │   │   ├── 📄 maskable-icon-x384.png
+│   │   │   ├── 📄 maskable-icon-x512.png
+│   │   │   ├── 📄 OurStory.png
+│   │   │   ├── 📄 OurStory (1).png
+│   │   │   └── 📄 OurStory (2).png
+│   │   ├── 📁 screenshots
+│   │   │   ├── 📄 OurStoryApp_001.png
+│   │   │   ├── 📄 OurStoryApp_002.png
+│   │   │   ├── 📄 OurStoryApp_003.png
+│   │   │   ├── 📄 OurStoryApp_004.png
+│   │   │   ├── 📄 OurStoryApp_005.png
+│   │   │   └── 📄 OurStoryApp_006.png
 │   │   └── 📄 logo.png
 │   ├── 📄 app.webmanifest
-│   ├── 📄 favicon.png
-│   └── 📄 sw.js
+│   └── 📄 favicon.png
 ├── 📁 src
 │   ├── 📁 scripts
 │   │   ├── 📁 data
@@ -71,6 +94,7 @@ OurStoryApp is a **Single Page Application (SPA)** web app developed to fulfill 
 │   ├── 📁 styles
 │   │   ├── 📄 responsives.css
 │   │   └── 📄 styles.css
+│   ├── 📄 sw.js
 │   └── 📄 index.html
 ├── 📄 .gitignore
 ├── 📄 LICENSE
