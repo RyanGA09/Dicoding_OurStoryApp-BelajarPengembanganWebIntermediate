@@ -37,12 +37,14 @@ export default class NewPage {
               <label for="photo-input" class="new-form__documentations__title">Foto Cerita</label>
               <div id="documentations-more-info">Anda dapat menyertakan foto sebagai dokumentasi.</div>
 
-              <div>
-                <button id="upload-photo-button" type="button" class="btn btn-outline">Upload dari Galeri</button>
-                <input id="photo-input" name="documentations" type="file" accept="image/*" multiple
-                    hidden="hidden" aria-multiline="true"
-                    aria-describedby="documentations-more-info" />
-                <button id="open-documentations-camera-button" type="button" class="btn btn-outline">Buka Kamera</button>
+              <div class="new-form__documentations__container">
+                <div class="new-form__documentations__buttons">
+                  <button id="upload-photo-button" type="button" class="btn btn-outline">Upload dari Galeri</button>
+                  <input id="photo-input" name="documentations" type="file" accept="image/*" multiple
+                      hidden="hidden" aria-multiline="true"
+                      aria-describedby="documentations-more-info" />
+                  <button id="open-documentations-camera-button" type="button" class="btn btn-outline">Buka Kamera</button>
+                </div>
               </div>
 
               <div id="camera-container" class="new-form__camera__container">
@@ -93,9 +95,9 @@ export default class NewPage {
   async afterRender() {
     this.#presenter = new NewPresenter({ view: this, model: OurStoryAPI });
     this.#takenDocumentations = [];
-    this.#form = document.getElementById("new-story-form");
-    this.#setupForm();
+    // this.#form = document.getElementById("new-story-form");
     await this.#presenter.showNewFormMap();
+    this.#setupForm();
   }
 
   #setupForm() {
@@ -113,33 +115,41 @@ export default class NewPage {
     });
 
     document
+      .getElementById("photo-input")
+      .addEventListener("change", async (event) => {
+        const insertingPicturesPromises = Object.values(event.target.files).map(
+          async (file) => {
+            return await this.#addTakenPicture(file);
+          }
+        );
+        await Promise.all(insertingPicturesPromises);
+
+        await this.#populateTakenPictures();
+      });
+
+    document
       .getElementById("upload-photo-button")
       .addEventListener("click", () => {
         this.#form.elements.namedItem("photo-input").click();
       });
 
-    document
-      .getElementById("photo-input")
-      .addEventListener("change", async (e) => {
-        const file = e.target.files[0];
-        if (file) {
-          await this.#addTakenPicture(file);
-          await this.#populateTakenPictures(); // <--- Tambahkan baris ini
-        }
-      });
-
+    const cameraContainer = document.getElementById("camera-container");
     document
       .getElementById("open-documentations-camera-button")
-      .addEventListener("click", async () => {
-        const cameraContainer = document.getElementById("camera-container");
-        this.#isCameraOpen = !this.#isCameraOpen;
-        cameraContainer.style.display = this.#isCameraOpen ? "block" : "none";
+      .addEventListener("click", async (event) => {
+        cameraContainer.classList.toggle("open");
+        this.#isCameraOpen = cameraContainer.classList.contains("open");
+
         if (this.#isCameraOpen) {
+          event.currentTarget.textContent = "Tutup Kamera";
           this.#setupCamera();
           await this.#camera.launch();
-        } else {
-          this.#camera.stop();
+
+          return;
         }
+
+        event.currentTarget.textContent = "Buka Kamera";
+        this.#camera.stop();
       });
   }
 
@@ -265,13 +275,20 @@ export default class NewPage {
     return selectedPicture;
   }
 
-  storeSuccessfully(msg) {
-    alert("Cerita berhasil diunggah!");
+  storeSuccessfully(message) {
+    console.log(message);
+    this.clearForm();
+
+    // Redirect page
     location.hash = "/";
   }
 
-  storeFailed(msg) {
-    alert(`Gagal mengunggah cerita: ${msg}`);
+  storeFailed(message) {
+    alert(`Gagal mengunggah cerita: ${message}`);
+  }
+
+  clearForm() {
+    this.#form.reset();
   }
 
   showMapLoading() {
@@ -286,14 +303,14 @@ export default class NewPage {
   showSubmitLoadingButton() {
     document.getElementById("submit-button-container").innerHTML = `
       <button class="btn" type="submit" disabled>
-        <i class="fas fa-spinner loader-button"></i> Mengirim...
+        <i class="fas fa-spinner loader-button"></i> Membuat cerita...
       </button>
     `;
   }
 
   hideSubmitLoadingButton() {
     document.getElementById("submit-button-container").innerHTML = `
-      <button class="btn" type="submit">Kirim Cerita</button>
+      <button class="btn" type="submit">Buat Cerita</button>
     `;
   }
 }

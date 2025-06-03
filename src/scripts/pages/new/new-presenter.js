@@ -36,9 +36,6 @@ export default class NewPresenter {
         return;
       }
 
-      // No need to wait response
-      // this.#notifyToAllUser(response.data.id);
-
       this.#view.storeSuccessfully(response.message, response.data);
     } catch (error) {
       console.error("postNewStory: error:", error);
@@ -47,20 +44,4 @@ export default class NewPresenter {
       this.#view.hideSubmitLoadingButton();
     }
   }
-
-  // async #notifyToAllUser(storyId) {
-  //   try {
-  //     const response = await this.#model.sendStoryToAllUserViaNotification(
-  //       storyId
-  //     );
-  //     if (!response.ok) {
-  //       console.error("#notifyToAllUser: response:", response);
-  //       return false;
-  //     }
-  //     return true;
-  //   } catch (error) {
-  //     console.error("#notifyToAllUser: error:", error);
-  //     return false;
-  //   }
-  // }
 }
