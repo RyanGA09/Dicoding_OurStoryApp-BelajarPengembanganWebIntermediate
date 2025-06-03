@@ -7,7 +7,7 @@ import "leaflet/dist/leaflet.css";
 
 // Components
 import App from "./pages/app";
-// import Camera from "./utils/camera";
+import Camera from "./utils/camera";
 import { registerServiceWorker } from "./utils";
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -24,6 +24,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     await app.renderPage();
 
     // Stop all active media
-    // Camera.stopAllStreams();
+    Camera.stopAllStreams();
   });
 });
