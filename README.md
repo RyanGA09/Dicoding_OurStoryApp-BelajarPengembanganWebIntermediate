@@ -370,4 +370,6 @@ The app integrates with the [Dicoding Story API](https://story-api.dicoding.dev/
 
 ## LICENSE
 
-[MIT LICENSE](LICENSE)
+Copyright &copy; 2025 Ryan Gading Abdullah. All rights reserved.
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) for details.
